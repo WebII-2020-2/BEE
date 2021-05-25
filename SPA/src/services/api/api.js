@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from '../validation/auth';
 
 const api = axios.create({
-  baseURL: 'http://api-bee.herokuapp.com/api',
+  baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
 api.interceptors.request.use(async (config) => {
