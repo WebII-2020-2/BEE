@@ -7,11 +7,15 @@ import {
 
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import LoginAdmin from './pages/LoginAdmin';
 
 const Routes = () => (
   <Switch>
     <Route exact path="/">
       <Home />
+    </Route>
+    <Route path="/login-admin">
+      <LoginAdmin />
     </Route>
     <Route path="/not-found">
       <NotFound />
