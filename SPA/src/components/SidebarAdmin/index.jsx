@@ -8,7 +8,7 @@ function SidebarAdmin(props) {
     logo, avatar, disabled, click,
   } = props;
   return (
-    <Col xs md={2} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
+    <Col sm md={4} lg={2} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
       <Nav className="admin-sidebar">
         <Image src={logo} className="admin-sidebar-logo" />
 

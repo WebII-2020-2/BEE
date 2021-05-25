@@ -19,7 +19,7 @@
   display: none;
 }
 
-@media screen and (max-width: 720px){
+@media screen and (max-width: 768px){
   .admin-sidebar-toggle {
     display: block;
     margin: 1rem 2.5rem;
