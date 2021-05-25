@@ -1,0 +1,66 @@
+.admin-sidebar {
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--dark-grey);
+    font-family: Roboto;
+}
+.admin-sidebar.wide {
+    padding-left: 0;
+    padding-right: 0;
+}
+.admin-sidebar-logo {
+    width: 60%;
+    height: auto;
+    margin: 10% 20%;
+}
+.admin-sidebar-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10%;
+}
+.admin-sidebar-user-avatar {
+    width: auto;
+    height: 75%;
+    padding: 5%;
+}
+.admin-sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 10%;
+    color: var(--white);
+}
+.admin-sidebar-user-info p {
+    margin-bottom: 0;
+    font-size: 0.8rem;
+}
+.admin-sidebar-user-info-name {
+    font-weight: bold;
+}
+.admin-sidebar-user svg {
+    color: var(--white);
+}
+.admin-sidebar-separador {
+    padding: 5% 0;
+    background-color: var(--black);
+    color: var(--white);
+    font-size: 0.8rem;
+    margin: 5% 0;
+    text-align: center;
+}
+.admin-sidebar-link.nav-link {
+    color: var(--white);
+    padding: 2.5% 10%;
+    width: 100%;
+    font-size: 1.2rem;
+}
+.admin-sidebar-link.nav-link:hover {
+    color: var(--white);
+    text-decoration: underline !important;
+}
+.admin-sidebar-link.nav-link.selected {
+    border-left: 3px solid var(--orange);
+}
