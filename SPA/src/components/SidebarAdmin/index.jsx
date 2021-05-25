@@ -22,12 +22,12 @@ function SidebarAdmin(props) {
         <span className="admin-sidebar-separador">
           Navegação
         </span>
-        <Nav.Link className="admin-sidebar-link selected" disabled href="/produtos">Produtos</Nav.Link>
-        <Nav.Link className="admin-sidebar-link" href="/categorias">Categorias</Nav.Link>
-        <Nav.Link className="admin-sidebar-link" href="/promoções">Promoções</Nav.Link>
-        <Nav.Link className="admin-sidebar-link" href="/vendas">Vendas</Nav.Link>
-        <Nav.Link className="admin-sidebar-link" href="/envios">Envios</Nav.Link>
-        <Nav.Link className="admin-sidebar-link" href="/relatorios">Relatórios</Nav.Link>
+        <Nav.Link className="admin-sidebar-link selected" disabled href="/admin/produtos">Produtos</Nav.Link>
+        <Nav.Link className="admin-sidebar-link" href="/admin/categorias">Categorias</Nav.Link>
+        <Nav.Link className="admin-sidebar-link" href="/admin/promoções">Promoções</Nav.Link>
+        <Nav.Link className="admin-sidebar-link" href="/admin/vendas">Vendas</Nav.Link>
+        <Nav.Link className="admin-sidebar-link" href="/admin/envios">Envios</Nav.Link>
+        <Nav.Link className="admin-sidebar-link" href="/admin/relatorios">Relatórios</Nav.Link>
       </Nav>
     </Col>
   );

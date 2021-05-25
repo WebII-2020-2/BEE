@@ -2,27 +2,29 @@
     flex-direction: column;
     height: 100vh;
     background-color: var(--dark-grey);
-    font-family: Roboto;
+    font-family: "Roboto";
 }
 .admin-sidebar.wide {
     padding-left: 0;
     padding-right: 0;
 }
 .admin-sidebar-logo {
-    width: 60%;
+    width: 8rem;
     height: auto;
-    margin: 10% 20%;
+    align-self: center;
+    margin: 1.5rem 0;
 }
 .admin-sidebar-user {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 10%;
+    height: 2.5rem;
+    margin: .5rem 0;
 }
 .admin-sidebar-user-avatar {
     width: auto;
-    height: 75%;
-    padding: 5%;
+    height: 2.5rem;
+    padding: .5rem 1rem;
 }
 .admin-sidebar-user-info {
     display: flex;
@@ -30,8 +32,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 0 10%;
     color: var(--white);
+    padding: .5rem 1rem;
 }
 .admin-sidebar-user-info p {
     margin-bottom: 0;
@@ -53,9 +55,8 @@
 }
 .admin-sidebar-link.nav-link {
     color: var(--white);
-    padding: 2.5% 10%;
-    width: 100%;
-    font-size: 1.2rem;
+    padding: .5rem 1.5rem;
+    font-size: 1rem;
 }
 .admin-sidebar-link.nav-link:hover {
     color: var(--white);
@@ -64,3 +65,4 @@
 .admin-sidebar-link.nav-link.selected {
     border-left: 3px solid var(--orange);
 }
+
