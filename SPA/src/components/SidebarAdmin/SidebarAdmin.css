@@ -8,7 +8,9 @@
 .admin-sidebar.wide {
     padding-left: 0;
     padding-right: 0;
+    width: auto;
 }
+
 .admin-sidebar-logo {
     width: 8rem;
     height: auto;
