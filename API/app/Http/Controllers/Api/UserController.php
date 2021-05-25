@@ -26,6 +26,9 @@ class UserController extends Controller{
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'cpf' => $data['cpf'] ?? null,
+            'phone' => $data['phone'] ?? null,
+            'birth_date' => $data['birth_date'] ?? null,
             'password' => Hash::make($data['password'])
         ]);
 
