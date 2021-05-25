@@ -7,6 +7,7 @@ import {
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import LoginAdmin from './pages/LoginAdmin';
 
 const Routes = () => (
   <Switch>
@@ -15,6 +16,9 @@ const Routes = () => (
     </Route>
     <Route path="/admin/dashboard">
       <Dashboard />
+    </Route>
+    <Route path="/login-admin">
+      <LoginAdmin />
     </Route>
     <Route path="/not-found">
       <NotFound />

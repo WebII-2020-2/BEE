@@ -8,5 +8,3 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('login', 'Api\UserController@login');
     Route::post('refresh', 'Api\UserController@refresh');
 });
-
-Route::get('test', 'UserController@test');
