@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight } from 'react-feather';
 import {
-  Container, Row, Col,
+  Container, Row, Col, Spinner,
 } from 'react-bootstrap';
 import './FormLogin.css';
 
 function FormLogin(props) {
-  const { image } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const {
+    image, authLogin, error, loading,
+  } = props;
+
   return (
     <div className="login">
       <Container fluid="md">
@@ -22,18 +27,40 @@ function FormLogin(props) {
                 E-mail
                 {' '}
                 <br />
-                <input type="email" className="input-login" id="email-login" />
+                <input
+                  type="email"
+                  className="input-login"
+                  id="email-login"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </label>
               <label htmlFor="password-login" className="input-group">
                 Senha
                 {' '}
                 <br />
-                <input type="password" className="input-login" id="password-login" />
+                <input
+                  type="password"
+                  className="input-login"
+                  id="password-login"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </label>
-
-              <button type="submit" className="rounded-pill mt-3 btn-login">
-                Login
-                <ArrowRight className="ml-2" />
+              {error && (<span className="text-center">{error}</span>)}
+              <button
+                disabled={loading}
+                type="button"
+                className="rounded-pill mt-3 btn-login"
+                onClick={() => authLogin(email, password)}
+              >
+                {loading ? (<Spinner animation="border" variant="warning" />)
+                  : (
+                    <>
+                      Login
+                      <ArrowRight className="ml-2" />
+                    </>
+                  )}
               </button>
             </form>
           </Col>
