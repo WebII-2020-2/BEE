@@ -1,10 +1,29 @@
 .admin-main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: var(--white);
+    height: 100vh;
 }
-.admin-main-logo {
-    width: 40%;
+
+.admin-main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.admin-main-content-logo {
+    width: 50%;
     height: auto;
+}
+
+.admin-sidebar-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 720px){
+  .admin-sidebar-toggle {
+    display: block;
+    margin: 1rem 2.5rem;
+    cursor: pointer;
+    color: var(--dark-grey);
+  }
 }
