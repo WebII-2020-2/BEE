@@ -1,0 +1,10 @@
+.admin-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+}
+.admin-main-logo {
+    width: 40%;
+    height: auto;
+}
