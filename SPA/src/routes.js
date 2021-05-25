@@ -13,7 +13,7 @@ const Routes = () => (
     <Route exact path="/">
       <Home />
     </Route>
-    <Route path="/dashboard">
+    <Route path="/admin/dashboard">
       <Dashboard />
     </Route>
     <Route path="/not-found">
