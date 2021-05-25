@@ -20,7 +20,7 @@ function Dashboard() {
     <Container fluid>
       <Row>
         <SidebarAdmin avatar={user} logo={logoColorful} disabled={!active} click={toggleSidebar} />
-        <Col md={10} xs={12} className="admin-main">
+        <Col sm md={8} lg={10} className="admin-main">
           <Row>
             <Menu size={30} onClick={toggleSidebar} className="admin-sidebar-toggle" />
           </Row>
