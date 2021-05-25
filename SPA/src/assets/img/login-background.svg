@@ -1,6 +1,6 @@
 <svg width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g style="mix-blend-mode:luminosity">
-<rect width="1440" height="1024" fill="url(#pattern0)"/>
+<rect width="1440" height="1024" fill="url(#pattern0)" fill-opacity="0.04"/>
 </g>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
