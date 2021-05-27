@@ -1,12 +1,22 @@
 import React from 'react';
 import { Nav, Col, Image } from 'react-bootstrap';
 import { ArrowLeftCircle, LogOut } from 'react-feather';
+import { useHistory } from 'react-router-dom';
+import { logout } from '../../services/validation/auth';
 import './SidebarAdmin.css';
 
 function SidebarAdmin(props) {
   const {
     logo, avatar, disabled, click,
   } = props;
+
+  const history = useHistory();
+
+  const handleClickLogout = () => {
+    logout();
+    history.push('login-admin');
+  };
+
   return (
     <Col sm md={4} lg={2} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
       <Nav className="admin-sidebar">
@@ -20,7 +30,7 @@ function SidebarAdmin(props) {
             <p className="admin-sidebar-user-info-role">Administrador</p>
           </span>
 
-          <Nav.Link href="/admin/logout">
+          <Nav.Link onClick={handleClickLogout}>
             <LogOut />
           </Nav.Link>
         </div>
