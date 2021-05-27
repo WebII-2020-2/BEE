@@ -15,12 +15,11 @@ function Login() {
     try {
       setLoading(true);
       const response = await AuthApiService.sendLoginAdmin({ email, password });
-      loginAdmin(response.data.token);
+      loginAdmin(response.data.access_token);
       history.push('/admin/dashboard');
     } catch (e) {
       console.log(e);
       setError('Houve um problema com o login, verifique suas credenciais.');
-    } finally {
       setLoading(false);
     }
   }
