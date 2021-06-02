@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use JWTAuth;
 
 class UserController extends Controller{
 
@@ -22,19 +23,25 @@ class UserController extends Controller{
         ]);
         
         $data = $request->only(['name','email','password']);
+        
+        try{
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'cpf' => $data['cpf'] ?? null,
+                'phone' => $data['phone'] ?? null,
+                'birth_date' => $data['birth_date'] ?? null,
+                'password' => Hash::make($data['password'])
+            ]);
+        }catch(\Exception $exception){
+            $error = ['code' => 4, 'error_message' => 'Não autorizado.'];
+        }
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'cpf' => $data['cpf'] ?? null,
-            'phone' => $data['phone'] ?? null,
-            'birth_date' => $data['birth_date'] ?? null,
-            'password' => Hash::make($data['password'])
-        ]);
+        if(isset($user) && !isset($error)){
+            return response()->json(['success' => true, 'data' => $user, 'error' => null], 200);
+        }
 
-        return response()->json([
-            'success' => true,
-        ], 201);
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     public function login(Request $request){
@@ -47,19 +54,28 @@ class UserController extends Controller{
         $data = $request->only(['email', 'password']);
 
         if (!$token = Auth::attempt($data)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['success' => false, 'data' => null, 'error' => ['code' => 4, 'error_message' => 'Não autorizado.']], 400);
         }
 
         return $this->createNewToken($token);
     }
 
-    public function test(){
-        dd('aaa');
-        return response()->json(Auth::user());
-    }
-
     public function refresh(){
         return $this->createNewToken(Auth::refresh());
+    }
+
+    public function logout(){
+        try{
+            JWTAuth::invalidate(JWTAuth::getToken());
+        }catch(\Exception $exception){
+            $error = ['code' => 3, 'error_message' => 'Não foi possivel invalidar o token.'];
+        }
+
+        if(!isset($error)){
+            return response()->json(['success' => true, 'data' => null, 'error' => null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     protected function createNewToken($token){
