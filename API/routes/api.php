@@ -8,3 +8,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('login', 'Api\UserController@login');
     Route::post('refresh', 'Api\UserController@refresh');
 });
+
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($router) {
+    Route::post('/add', 'Api\CardController@store');
+});
