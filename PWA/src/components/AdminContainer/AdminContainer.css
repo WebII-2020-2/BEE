@@ -1,25 +1,21 @@
 .admin-main {
-    background-color: var(--white);
-    height: 100vh;
+  background-color: var(--white);
+  min-height: 100vh;
 }
 
 .admin-main-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  min-height: 90vh;
 }
 
-.admin-main-content-logo {
-    width: 50%;
-    height: auto;
-}
-
-.admin-sidebar-toggle {
+.admin-sidebar-toggle,
+.admin-sidebar-toggle.disabled {
   display: none;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   .admin-sidebar-toggle {
     display: block;
     margin: 1rem 2.5rem;
