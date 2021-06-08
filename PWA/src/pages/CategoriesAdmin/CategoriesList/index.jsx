@@ -1,10 +1,16 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
+import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
+import TableListAdmin from '../../../components/TableListAdmin';
 
 function CategoriesList() {
+  const categories = [{ id: 1, nome: 'Grãos', qtdprodutos: 150 },
+    { id: 2, nome: 'Laticinios', qtdprodutos: 41 }];
+
   return (
     <AdminContainer link="categorias">
-      <h1>Lista das Categorias rs</h1>
+      <ButtonsListAdmin link="/admin/categorias/novo" />
+      <TableListAdmin itens={categories} />
     </AdminContainer>
   );
 }
