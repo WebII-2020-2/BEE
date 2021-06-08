@@ -1,6 +1,6 @@
 .admin-sidebar {
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--dark-grey);
   font-family: "Roboto";
 }
@@ -8,7 +8,7 @@
 .admin-sidebar.wide {
   padding-left: 0;
   padding-right: 0;
-  width: 100%;
+  width: auto;
 }
 
 .admin-sidebar-logo {
@@ -29,6 +29,7 @@
   height: 2.5rem;
   padding: 0.5rem 1rem;
 }
+
 .admin-sidebar-user-info {
   display: flex;
   flex-direction: column;
@@ -75,7 +76,8 @@
 
 @media screen and (max-width: 768px) {
   .admin-sidebar {
-    position: absolute;
+    position: fixed !important;
+    width: auto !important;
     top: 0;
     left: 0;
     z-index: 1;

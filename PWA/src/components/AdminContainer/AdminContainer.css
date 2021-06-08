@@ -5,19 +5,18 @@
 
 .admin-main-content {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   min-height: 90vh;
 }
 
 .admin-sidebar-toggle,
 .admin-sidebar-toggle.disabled {
-  display: none;
+  visibility: hidden;
 }
 
 @media screen and (max-width: 768px) {
   .admin-sidebar-toggle {
-    display: block;
+    visibility: visible;
     margin: 1rem 2.5rem;
     cursor: pointer;
     color: var(--dark-grey);

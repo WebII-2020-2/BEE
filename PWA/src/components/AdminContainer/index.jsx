@@ -17,7 +17,7 @@ function AdminContainer({ children, link }) {
     <Container fluid>
       <Row>
         <SidebarAdmin disabled={!active} click={toggleSidebar} link={link} />
-        <Col sm md={8} lg={10} className="admin-main">
+        <Col sm md={8} lg={9} className="admin-main">
           <Menu size={30} onClick={toggleSidebar} className={`admin-sidebar-toggle ${active && 'disabled'}`} />
           <Row>
             <Col className="admin-main-content">
