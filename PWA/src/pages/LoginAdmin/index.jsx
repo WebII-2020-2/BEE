@@ -16,7 +16,7 @@ function Login() {
       setLoading(true);
       const response = await AuthApiService.sendLoginAdmin({ email, password });
       loginAdmin(response.data.access_token);
-      history.push('/admin/dashboard');
+      history.push('/admin/home');
     } catch (e) {
       console.log(e);
       setError('Houve um problema com o login, verifique suas credenciais.');

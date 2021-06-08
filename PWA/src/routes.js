@@ -4,10 +4,10 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
+import HomeAdmin from './pages/HomeAdmin';
 import NotFound from './pages/NotFound';
 import LoginAdmin from './pages/LoginAdmin';
+import ProductsAdmin from './pages/ProductsAdmin';
 import { isAuthenticated } from './services/validation/auth';
 
 const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
@@ -23,19 +23,11 @@ const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
 
 const Routes = () => (
   <Switch>
-    <Route exact path="/">
-      <Home />
-    </Route>
-    <PrivateRouteAdmin path="/admin/dashboard" component={Dashboard} />
-    <Route path="/login-admin">
-      <LoginAdmin />
-    </Route>
-    <Route path="/not-found">
-      <NotFound />
-    </Route>
-    <Route path="*">
-      <Redirect to="/not-found" />
-    </Route>
+    <PrivateRouteAdmin path="/admin/home" component={HomeAdmin} />
+    <PrivateRouteAdmin path="/admin/produtos" component={ProductsAdmin} />
+    <Route path="/login-admin" component={LoginAdmin} />
+    <Route path="/not-found" component={NotFound} />
+    <Redirect path="*" to="/not-found" />
   </Switch>
 );
 
