@@ -1,0 +1,27 @@
+.btn.btn-cadastrar-item-admin{
+  background-color: var(--white);
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.btn.btn-cadastrar-item-admin:hover{
+  background-color: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.input-search{
+  background-color: var(--white);
+  color: var(--black);
+  border: none;
+  border-radius: 5px;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  flex: 1 1 auto;
+  width: 1%;
+}
+
+.input-group-search{
+  border: 1.1px solid var(--black);
+  border-radius: 5px;
+}
