@@ -1,18 +1,5 @@
-.product-list.admin {
-  display: grid;
-  min-width: 100%;
-  height: auto;
-  min-height: 75%;
-  justify-content: center;
-  gap: 5%;
-  padding: 0 2rem;
-  grid-template-columns: repeat(3, 30%);
-  grid-template-rows: repeat(2, 45%);
+.actions-product-list-admin {
 }
 
-@media screen and (max-width: 768px) {
-  .product-list.admin {
-    grid-template-rows: repeat(3, 30%);
-    grid-template-columns: repeat(2, 45%);
-  }
+.product-list-admin {
 }

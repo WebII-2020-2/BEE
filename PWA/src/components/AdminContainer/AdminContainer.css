@@ -3,22 +3,20 @@
   min-height: 100vh;
 }
 
-.admin-main-content.col {
+.admin-main-content {
   display: flex;
   flex-direction: column;
   min-height: 90vh;
-  margin: 0 2rem;
-  padding: 0;
 }
 
 .admin-sidebar-toggle,
 .admin-sidebar-toggle.disabled {
-  visibility: hidden;
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
   .admin-sidebar-toggle {
-    visibility: visible;
+    display: block;
     margin: 1rem 2.5rem;
     cursor: pointer;
     color: var(--dark-grey);

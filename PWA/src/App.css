@@ -2,26 +2,24 @@
 :root {
   --black: #202020;
   --dark-grey: #333533;
-  --orange: #fca311;
-  --yellow: #f7ca00;
-  --grey: #929292;
-  --light-grey: #c4c4c4;
-  --white: #e5e5e5;
+  --orange: #FCA311;
+  --yellow: #F7CA00;
+  --light-grey: #C4C4C4;
+  --white: #E5E5E5;
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("./assets/fonts/Roboto/Roboto-Regular.ttf");
+  src: url('./assets/fonts/Roboto/Roboto-Regular.ttf');
 }
 
 @font-face {
   font-family: "Poppins";
-  src: url("./assets/fonts/Poppins/Poppins-Regular.ttf");
+  src: url('./assets/fonts/Poppins/Poppins-Regular.ttf');
 }
 
 /* Reset do CSS */
 * {
-  font-family: "Roboto";
   margin: 0;
   padding: 0;
   box-sizing: border-box;

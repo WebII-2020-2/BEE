@@ -1,11 +1,10 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
-import FormProdutoAdmin from '../../../components/FormProdutoAdmin';
 
 function ProductsNew() {
   return (
     <AdminContainer link="produtos">
-      <FormProdutoAdmin formData={{}} isNew />
+      <h1>Novo produto rs</h1>
     </AdminContainer>
   );
 }

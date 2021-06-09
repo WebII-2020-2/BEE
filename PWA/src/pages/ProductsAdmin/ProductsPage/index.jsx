@@ -1,16 +1,10 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
-import FormProdutoAdmin from '../../../components/FormProdutoAdmin';
-import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
 
-function ProductsPage(props) {
-  const { match } = props;
-
-  const formData = ProductAdminApiService.getById(match.params.id);
-
+function ProductsPage() {
   return (
     <AdminContainer link="produtos">
-      <FormProdutoAdmin formData={formData} />
+      <h1>Pagina do Produto rs</h1>
     </AdminContainer>
   );
 }

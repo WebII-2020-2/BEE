@@ -20,7 +20,7 @@ function SidebarAdmin(props) {
   };
 
   return (
-    <Col sm md={4} lg={3} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
+    <Col sm md={4} lg={2} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
       <Nav className="admin-sidebar">
         <Image src={logoColorful} className="admin-sidebar-logo" />
 
