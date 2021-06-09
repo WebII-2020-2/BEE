@@ -137,10 +137,12 @@ function FormProdutoAdmin(props) {
   return (
     <Form>
       <div className="actions-form-product-admin">
-        <Link to="/admin/produtos" className="arrow-back-product-admin">
-          <ArrowLeft />
-          {' '}
-          Voltar
+        <Link to="/admin/produtos">
+          <Button type="button" variant="outline-secondary" className="arrow-back-product-admin">
+            <ArrowLeft />
+            {' '}
+            Voltar
+          </Button>
         </Link>
         {' '}
         {isNew ? buttonsNew() : buttonsView()}

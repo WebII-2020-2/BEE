@@ -7,13 +7,7 @@
   margin: 0 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 5rem;
   color: var(--black);
-}
-
-.arrow-back-product-admin:hover {
-  color: var(--orange);
 }
 
 .btn-admin-produto {
