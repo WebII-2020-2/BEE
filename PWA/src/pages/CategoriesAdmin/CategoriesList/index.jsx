@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminContainer from '../../../components/AdminContainer';
 import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
 import TableListAdmin from '../../../components/TableListAdmin';
+import CategoryAdminApiService from '../../../services/api/CategoryAdminApiService';
 
 function CategoriesList() {
-  const categories = [{ id: 1, nome: 'Grãos', qtdprodutos: 150 },
-    { id: 2, nome: 'Laticinios', qtdprodutos: 41 }];
+  const [categories, setCategories] = useState();
+  const th = { id: 'ID', name: 'Nome' };
+
+  useEffect(() => {
+    try {
+      const response = CategoryAdminApiService.getAll();
+      setCategories(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [categories]);
 
   return (
     <AdminContainer link="categorias">
       <ButtonsListAdmin link="/admin/categorias/novo" />
-      <TableListAdmin itens={categories} />
+      <TableListAdmin itens={categories || []} tablehead={th} />
     </AdminContainer>
   );
 }
