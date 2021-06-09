@@ -20,7 +20,7 @@ function CategoriesList() {
   return (
     <AdminContainer link="categorias">
       <ButtonsListAdmin link="/admin/categorias/novo" />
-      <TableListAdmin itens={categories || []} tablehead={th} />
+      <TableListAdmin itens={categories || []} tableHead={th} linkEdit="/admin/categorias" />
     </AdminContainer>
   );
 }
