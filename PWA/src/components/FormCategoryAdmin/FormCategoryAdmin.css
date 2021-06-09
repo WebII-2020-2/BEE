@@ -1,0 +1,29 @@
+.actions-form-category-admin{
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow-back-category-admin{
+  display: flex;
+  align-items: center;
+  color: var(--black);
+}
+
+.btn-admin-category.editar:hover,
+.btn-admin-category.editar:focus,
+.btn-admin-category.editar:active {
+  color: var(--white) !important;
+}
+
+.form-category-admin{
+  background-color: var(--light-grey);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  color: var(--dark-grey);
+  font-family: "Roboto";
+}

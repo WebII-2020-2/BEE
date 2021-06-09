@@ -1,0 +1,25 @@
+.table-list{
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.table.table-list tr{
+  cursor: pointer;
+}
+
+.table.table-list td{
+  border: 1.5px var(--black);
+  border-style: solid none;
+}
+
+.table.table-list td:first-child {
+  border-left: 1.5px solid var(--black);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.table-list td:last-child {
+  border-right: 1.5px solid var(--black);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
