@@ -12,8 +12,27 @@
   color: var(--black);
 }
 
+.arrow-back-product-admin:hover {
+  color: var(--orange);
+}
+
 .btn-admin-produto {
   margin-right: 1.5rem;
+}
+
+.btn-admin-produto.editar {
+  color: var(--orange);
+  background-color: transparent;
+  border-color: var(--orange);
+}
+
+.btn-admin-produto.editar:hover,
+.btn-admin-produto.editar:focus,
+.btn-admin-produto.editar:active {
+  color: var(--white) !important;
+  background-color: var(--orange) !important;
+  border-color: var(--orange) !important;
+  box-shadow: none !important;
 }
 
 .form-product-admin {
@@ -102,7 +121,17 @@
   border: 1px solid transparent;
   background-color: white;
   border-radius: 50%;
-  box-shadow: 0 0 3px var(--dark-grey);
+  box-shadow: 0 0 5px var(--orange);
+}
+
+.form-control {
+  border-radius: 15px !important;
+}
+
+.form-control:focus,
+.form-control:active {
+  border: 1px solid var(--yellow) !important;
+  box-shadow: 0 0 3px var(--yellow) !important;
 }
 
 @media screen and (max-width: 768px) {

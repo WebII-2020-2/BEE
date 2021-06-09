@@ -102,18 +102,17 @@ function FormProdutoAdmin(props) {
   const buttonsView = () => (isReadOnly ? (
     <div>
       <Button
-        variant="outline-primary"
-        className="btn-admin-produto"
-        onClick={handleEdit}
-      >
-        Editar
-      </Button>
-      <Button
         variant="outline-danger"
         className="btn-admin-produto"
         onClick={handleDelete}
       >
         Excluir
+      </Button>
+      <Button
+        className="btn-admin-produto editar"
+        onClick={handleEdit}
+      >
+        Editar
       </Button>
     </div>
   ) : (
@@ -155,6 +154,7 @@ function FormProdutoAdmin(props) {
           type="text"
           value={name}
           onChange={handleUpdateName}
+          required
         />
 
         <Form.Label className="form-product-label-weight-unity">
@@ -166,6 +166,7 @@ function FormProdutoAdmin(props) {
           type="text"
           value={weightUnity}
           onChange={handleUpdateweightUnity}
+          required
         />
 
         <Form.Label className="form-product-label-weight">Peso</Form.Label>
@@ -175,6 +176,7 @@ function FormProdutoAdmin(props) {
           type="text"
           value={weight}
           onChange={handleUpdateweight}
+          required
         />
 
         <Form.Label className="form-product-label-quantity">
@@ -186,6 +188,7 @@ function FormProdutoAdmin(props) {
           type="number"
           value={quantity}
           onChange={handleUpdateQuantity}
+          required
         />
 
         <Form.Label className="form-product-label-price">Preço</Form.Label>
@@ -195,6 +198,7 @@ function FormProdutoAdmin(props) {
           type="number"
           value={price}
           onChange={handleUpdatePrice}
+          required
         />
 
         <Form.Label className="form-product-label-category">
@@ -205,9 +209,10 @@ function FormProdutoAdmin(props) {
           disabled={isReadOnly}
           as="select"
           onChange={handleUpdateCategory}
-          value={formData.category ? category : 'none'}
+          defaultValue={formData.category ? category : ''}
+          required
         >
-          <option value="none" disabled>
+          <option value="" disabled>
             Escolha uma categoria
           </option>
           <option value="graos">Grãos</option>
@@ -218,11 +223,15 @@ function FormProdutoAdmin(props) {
         <Image className="form-product-image" src={image || emptyImage} />
 
         <Form.Label className="form-product-label-file">Imagem</Form.Label>
+
         <Form.File
+          id="form-product-admin-file"
+          label="Selecione um arquivo"
           className="form-product-file"
           accept="image/*"
           disabled={isReadOnly}
-          onChange={(e) => handleUpdateImage(e)}
+          onChange={handleUpdateImage}
+          custom
         />
       </Form.Group>
     </Form>
