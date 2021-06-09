@@ -1,11 +1,11 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
-import FormCategory from '../../../components/FormCategory';
+import FormCategoryAdmin from '../../../components/FormCategoryAdmin';
 
 function CategoriesNew() {
   return (
     <AdminContainer link="categorias">
-      <FormCategory isNew formData={{}} />
+      <FormCategoryAdmin isNew formData={{}} />
     </AdminContainer>
   );
 }
