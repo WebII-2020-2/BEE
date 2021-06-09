@@ -14,19 +14,10 @@
   margin-right: 1.5rem;
 }
 
-.btn-admin-produto.editar {
-  color: var(--orange);
-  background-color: transparent;
-  border-color: var(--orange);
-}
-
 .btn-admin-produto.editar:hover,
 .btn-admin-produto.editar:focus,
 .btn-admin-produto.editar:active {
   color: var(--white) !important;
-  background-color: var(--orange) !important;
-  border-color: var(--orange) !important;
-  box-shadow: none !important;
 }
 
 .form-product-admin {

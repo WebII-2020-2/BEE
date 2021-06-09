@@ -109,6 +109,7 @@ function FormProdutoAdmin(props) {
         Excluir
       </Button>
       <Button
+        variant="outline-warning"
         className="btn-admin-produto editar"
         onClick={handleEdit}
       >
