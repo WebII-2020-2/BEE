@@ -95,7 +95,7 @@ function FormCategory(props) {
 
   return (
     <Form>
-      <div className="actions-form-category-admin">
+      <div className="actions-form-category-admin mt-3">
         <Link to="/admin/categorias" className="arrow-back-category-admin">
           <Button type="button" variant="outline-secondary">
             <ArrowLeft />
