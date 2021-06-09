@@ -40,13 +40,3 @@
   font-size: 1rem;
   font-weight: bold;
 }
-
-@media screen and (max-width: 768px) {
-  .product-details.admin {
-    font-size: 1.5rem;
-  }
-
-  .product-details-price.admin {
-    font-size: 1.2rem;
-  }
-}
