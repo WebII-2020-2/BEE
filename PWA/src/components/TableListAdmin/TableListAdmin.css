@@ -3,6 +3,10 @@
   border-spacing: 0 10px;
 }
 
+.table.table-list tr{
+  cursor: pointer;
+}
+
 .table.table-list td{
   border: 1.5px var(--black);
   border-style: solid none;
