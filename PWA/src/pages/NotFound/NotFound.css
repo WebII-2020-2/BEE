@@ -8,6 +8,7 @@
   background-color: var(--black);
 }
 
-.not-found .text {
-  color: darkred;
+.not-found-text{
+  color: var(--orange);
+  font-weight: 700;
 }
