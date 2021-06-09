@@ -1,4 +1,6 @@
 .admin-main-content-logo {
-    width: 50%;
-    height: auto;
+  margin: 15% 0;
+  width: 50%;
+  height: auto;
+  align-self: center;
 }

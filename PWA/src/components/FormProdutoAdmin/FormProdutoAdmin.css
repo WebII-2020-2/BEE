@@ -1,0 +1,132 @@
+.actions-form-product-admin {
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow-back-product-admin {
+  display: flex;
+  align-items: center;
+  color: var(--black);
+}
+
+.btn-admin-produto.editar:hover,
+.btn-admin-produto.editar:focus,
+.btn-admin-produto.editar:active {
+  color: var(--white) !important;
+}
+
+.form-product-admin {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 15px;
+  color: var(--dark-grey);
+  font-family: "Roboto";
+  background-color: var(--light-grey);
+  row-gap: 1.5rem;
+  margin-top: 1rem;
+  grid-template-columns: 15% 35% 5% 10% 35%;
+  grid-template-rows: repeat(5, 15%);
+  grid-template-areas:
+    "label-name name name name name"
+    "label-weight-unity weight-unity . label-weight weight"
+    "label-quantity quantity . label-price price"
+    "label-category category category category image"
+    "label-file file file file image";
+}
+
+.form-product-label-name {
+  grid-area: label-name;
+}
+
+.form-product-name {
+  grid-area: name;
+}
+
+.form-product-label-category {
+  grid-area: label-category;
+}
+
+.form-product-category {
+  grid-area: category;
+}
+
+.form-product-label-weight-unity {
+  grid-area: label-weight-unity;
+}
+
+.form-product-weight-unity {
+  grid-area: weight-unity;
+}
+
+.form-product-label-weight {
+  grid-area: label-weight;
+}
+
+.form-product-weight {
+  grid-area: weight;
+}
+
+.form-product-label-quantity {
+  grid-area: label-quantity;
+}
+
+.form-product-quantity {
+  grid-area: quantity;
+}
+
+.form-product-label-price {
+  grid-area: label-price;
+}
+
+.form-product-price {
+  grid-area: price;
+}
+
+.form-product-label-file {
+  grid-area: label-file;
+}
+
+.form-product-file {
+  grid-area: file;
+}
+
+.form-product-image {
+  grid-area: image;
+  max-height: 100%;
+  max-width: 100%;
+  justify-self: center;
+  padding: 1rem;
+  border: 1px solid transparent;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--orange);
+}
+
+.form-control {
+  border-radius: 15px !important;
+}
+
+.form-control:focus,
+.form-control:active {
+  border: 1px solid var(--yellow) !important;
+  box-shadow: 0 0 3px var(--yellow) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .form-product-admin {
+    grid-template-columns: 25% 75%;
+    grid-template-rows: repeat(10, 8%);
+    grid-template-areas:
+      "image image"
+      "image image"
+      "label-file file"
+      "label-name name"
+      "label-weight-unity weight-unity"
+      "label-weight weight"
+      "label-quantity quantity"
+      "label-price price"
+      "label-category category";
+  }
+}
