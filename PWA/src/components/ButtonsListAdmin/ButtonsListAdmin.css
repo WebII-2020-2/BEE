@@ -1,15 +1,3 @@
-.btn.btn-cadastrar-item-admin{
-  background-color: var(--white);
-  color: var(--black);
-  border-color: var(--black);
-}
-
-.btn.btn-cadastrar-item-admin:hover{
-  background-color: var(--black);
-  color: var(--white);
-  border-color: var(--black);
-}
-
 .input-search{
   background-color: var(--white);
   color: var(--black);
