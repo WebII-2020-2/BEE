@@ -1,11 +1,16 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
-import FormCategory from '../../../components/FormCategory';
+import FormCategoryAdmin from '../../../components/FormCategoryAdmin';
+import CategoryAdminApiService from '../../../services/api/CategoryAdminApiService';
 
-function CategoriesPage() {
+function CategoriesPage(props) {
+  const { match } = props;
+
+  const formData = CategoryAdminApiService.getById(match.params.id);
+
   return (
     <AdminContainer link="categorias">
-      <FormCategory isNew={false} />
+      <FormCategoryAdmin isNew={false} formData={formData} />
     </AdminContainer>
   );
 }
