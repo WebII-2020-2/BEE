@@ -1,9 +1,10 @@
 .product-list.admin {
   display: grid;
-  max-width: 100%;
+  min-width: 100%;
   height: 80%;
-  margin: 2rem;
+  justify-content: center;
   gap: 5%;
+  padding: 0 2rem;
   grid-template-columns: repeat(3, 30%);
   grid-template-rows: repeat(2, 45%);
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import { Row } from 'react-bootstrap';
 import AdminContainer from '../../../components/AdminContainer';
 import CardProdutoAdmin from '../../../components/CardProdutoAdmin';
+import PaginationAdmin from '../../../components/PaginationAdmin';
+import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
 import ProdutoAdminApiService from '../../../services/api/ProductAdminApiService';
 import './ProductsList.css';
 
@@ -9,7 +11,7 @@ function ProductsList() {
   const products = ProdutoAdminApiService.getAll();
   return (
     <AdminContainer link="produtos">
-      <Row className="actions-product-list admin" />
+      <ButtonsListAdmin link="/admin/produtos/novo" />
       <Row className="product-list admin">
         {
           products.map(({
@@ -19,6 +21,7 @@ function ProductsList() {
           ))
         }
       </Row>
+      <PaginationAdmin />
     </AdminContainer>
   );
 }

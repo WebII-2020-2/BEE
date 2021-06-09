@@ -4,14 +4,9 @@
 }
 
 .arrow-back-product-admin {
-  margin: 0 1.5rem;
   display: flex;
   align-items: center;
   color: var(--black);
-}
-
-.btn-admin-produto {
-  margin-right: 1.5rem;
 }
 
 .btn-admin-produto.editar:hover,

@@ -3,10 +3,12 @@
   min-height: 100vh;
 }
 
-.admin-main-content {
+.admin-main-content.col {
   display: flex;
   flex-direction: column;
   min-height: 90vh;
+  margin: 0 2rem;
+  padding: 0;
 }
 
 .admin-sidebar-toggle,
