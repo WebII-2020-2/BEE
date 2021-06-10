@@ -4,7 +4,7 @@ import { ArrowLeft } from 'react-feather';
 import { Form, Image, Button } from 'react-bootstrap';
 import ProductAdminApiService from '../../services/api/ProductAdminApiService';
 import emptyImage from '../../assets/img/empty-image.png';
-import './FormProdutoAdmin.css';
+import './FormProductAdmin.css';
 
 function FormProdutoAdmin(props) {
   const { isNew, formData } = props;
