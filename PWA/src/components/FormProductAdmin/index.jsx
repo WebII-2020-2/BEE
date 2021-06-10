@@ -69,23 +69,23 @@ function FormProdutoAdmin(props) {
     };
 
     try {
-      const response = isNew
-        ? ProductAdminApiService.createNew(form)
-        : ProductAdminApiService.update(form);
-      console.log(response);
+      if (isNew) {
+        ProductAdminApiService.createNew(form);
+      } else {
+        ProductAdminApiService.update(form);
+      }
       history.push('/admin/produtos');
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
   const handleDelete = () => {
     try {
-      const response = ProductAdminApiService.remove(id);
-      console.log(response);
+      ProductAdminApiService.remove(id);
       history.push('/admin/produtos');
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

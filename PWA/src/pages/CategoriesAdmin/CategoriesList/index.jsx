@@ -22,7 +22,7 @@ function CategoriesList() {
       setCategories(response);
       size = categories.length;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, [categories]);
 
