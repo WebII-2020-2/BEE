@@ -1,0 +1,42 @@
+.card-product.admin {
+  background-color: var(--light-grey);
+  border-radius: 15px;
+  border: 2px solid transparent;
+  padding: 0;
+  transition: border 0.5s linear;
+  cursor: pointer;
+}
+
+.card-product.admin:hover {
+  border-color: var(--grey);
+}
+
+.image-container.admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 100%;
+}
+
+.image-product.admin {
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 50%;
+}
+
+.product-details.admin {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: white;
+  height: 30%;
+  border-radius: 15px;
+  font-size: 1.2rem;
+}
+
+.product-details-price.admin {
+  font-size: 1rem;
+  font-weight: bold;
+}

@@ -1,15 +1,14 @@
-.input-search{
   background-color: var(--white);
   color: var(--black);
   border: none;
   border-radius: 5px;
-  height: calc(1.5em + .75rem + 2px);
-  padding: .375rem .75rem;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
   flex: 1 1 auto;
   width: 1%;
 }
 
-.input-group-search{
+.input-group-search {
   border: 1.1px solid var(--black);
   border-radius: 5px;
 }

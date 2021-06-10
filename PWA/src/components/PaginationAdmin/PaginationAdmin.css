@@ -1,0 +1,9 @@
+.pagination-component.admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-component.admin button {
+  margin: 0 1rem;
+}
