@@ -19,6 +19,9 @@ Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($ro
 // Products
 Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'product'], function ($router) {
     Route::post('/add', 'Api\ProductController@store');
+    Route::get('/list', 'Api\ProductController@show');
+    Route::post('/update', 'Api\ProductController@update');
+    Route::post('/delete', 'Api\ProductController@delete');
 });
 
 // Categories
