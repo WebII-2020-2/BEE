@@ -12,7 +12,8 @@ class Card extends Model
         'security_code',
         'expiration_date',
         'holder',
-        'type'
+        'type',
+        'payment_method_id'
     ];
 
     protected $table = 'cards';
