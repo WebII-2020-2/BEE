@@ -21,9 +21,9 @@ class UserController extends Controller{
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
-        
+
         $data = $request->only(['name','email','password']);
-        
+
         try{
             $user = User::create([
                 'name' => $data['name'],
@@ -66,23 +66,20 @@ class UserController extends Controller{
 
     public function logout(){
         try{
-            JWTAuth::invalidate(JWTAuth::getToken());
+            auth('api')->logout();
+            return response()->json(['success' => true, 'data' => null, 'error' => null], 200);
         }catch(\Exception $exception){
             $error = ['code' => 3, 'error_message' => 'Não foi possivel invalidar o token.'];
+            return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
         }
 
-        if(!isset($error)){
-            return response()->json(['success' => true, 'data' => null, 'error' => null], 200);
-        }
-
-        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     protected function createNewToken($token){
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 720
+            'expires_in' => Auth::factory()->getTTL()
         ]);
     }
 }
