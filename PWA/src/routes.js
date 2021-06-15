@@ -8,7 +8,8 @@ import HomeAdmin from './pages/HomeAdmin';
 import NotFound from './pages/NotFound';
 import LoginAdmin from './pages/LoginAdmin';
 import ProductsAdmin from './pages/ProductsAdmin';
-import { isAuthenticated } from './services/validation/auth';
+import CategoriesAdmin from './pages/CategoriesAdmin';
+import { isAuthenticated } from './services/auth/authAdmin';
 
 const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
   <Route
@@ -25,6 +26,7 @@ const Routes = () => (
   <Switch>
     <PrivateRouteAdmin path="/admin/home" component={HomeAdmin} />
     <PrivateRouteAdmin path="/admin/produtos" component={ProductsAdmin} />
+    <PrivateRouteAdmin path="/admin/categorias" component={CategoriesAdmin} />
     <Route path="/login-admin" component={LoginAdmin} />
     <Route path="/not-found" component={NotFound} />
     <Redirect path="*" to="/not-found" />

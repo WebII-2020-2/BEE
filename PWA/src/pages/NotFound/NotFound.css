@@ -1,13 +1,29 @@
-.not-found {
+.not-found-container {
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: var(--black);
+  background-color: var(--dark-grey);
 }
 
-.not-found .text {
-  color: darkred;
+.not-found-image {
+  height: 50%;
+}
+
+.not-found-text {
+  width: 50%;
+  color: var(--orange);
+  font-family: "Poppins";
+  font-weight: 400;
+  text-align: center;
+}
+
+h1.not-found-text {
+  font-size: 4rem;
+}
+
+h2.not-found-text {
+  font-size: 2rem;
 }

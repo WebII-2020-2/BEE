@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Col, Image } from 'react-bootstrap';
 import { ArrowLeftCircle, LogOut } from 'react-feather';
 import { useHistory } from 'react-router-dom';
-import { logout } from '../../services/validation/auth';
+import { logout } from '../../services/auth/authAdmin';
 import logoColorful from '../../assets/img/bee-logo-color.svg';
 import user from '../../assets/img/default-user.png';
 import './SidebarAdmin.css';
@@ -20,7 +20,7 @@ function SidebarAdmin(props) {
   };
 
   return (
-    <Col sm md={4} lg={2} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
+    <Col sm md={4} lg={3} className={`admin-sidebar wide ${disabled && 'disabled'}`}>
       <Nav className="admin-sidebar">
         <Image src={logoColorful} className="admin-sidebar-logo" />
 

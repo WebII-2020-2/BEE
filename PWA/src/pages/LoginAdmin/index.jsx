@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FormLogin from '../../components/FormLogin';
 import Logo from '../../assets/img/bee-logo-admin.svg';
 import AuthApiService from '../../services/api/AuthApiService';
-import { loginAdmin } from '../../services/validation/auth';
+import { loginAdmin } from '../../services/auth/authAdmin';
 
 function Login() {
   const history = useHistory();
@@ -18,7 +18,7 @@ function Login() {
       loginAdmin(response.data.access_token);
       history.push('/admin/home');
     } catch (e) {
-      console.log(e);
+      console.error(e);
       setError('Houve um problema com o login, verifique suas credenciais.');
       setLoading(false);
     }
