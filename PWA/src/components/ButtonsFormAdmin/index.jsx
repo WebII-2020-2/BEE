@@ -3,7 +3,9 @@ import { Button } from 'react-bootstrap';
 import './ButtonsFormAdmin.css';
 
 function ButtonsFormAdmin(props) {
-  const { handleSubmit, handleDelete, handleEdit, isNew, isReadOnly } = props;
+  const {
+    handleSubmit, handleDelete, handleEdit, isNew, isReadOnly,
+  } = props;
 
   const buttonsNew = () => (
     <Button
