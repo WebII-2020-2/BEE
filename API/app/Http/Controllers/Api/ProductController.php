@@ -19,9 +19,7 @@ class ProductController extends Controller
                 'unity' => $data['unity'],
                 'quantity' => $data['quantity'],
                 'unitary_value' => $data['unitaryValue'],
-                'barcode' => $data['barcode'],
                 'allotment' => $data['allotment'],
-                'expiration_date' => $data['expirationDate'],
                 'description' => $data['description'],
                 'mime_type' => $data_image[0],
                 'image' => base64_decode($data_image[1]),
@@ -50,9 +48,7 @@ class ProductController extends Controller
                     'unity' => $product->unity,
                     'quantity' => $product->quantity,
                     'unitary_value' => $product->unitary_value,
-                    'barcode' => $product->barcode,
                     'allotment' => $product->allotment,
-                    'expiration_date' => $product->expiration_date,
                     'description' => $product->description,
                     'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                     'category_id' => $product->category_id,
@@ -80,9 +76,7 @@ class ProductController extends Controller
                 'unity' => $product->unity,
                 'quantity' => $product->quantity,
                 'unitary_value' => $product->unitary_value,
-                'barcode' => $product->barcode,
                 'allotment' => $product->allotment,
-                'expiration_date' => $product->expiration_date,
                 'description' => $product->description,
                 'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                 'category_id' => $product->category_id,
@@ -116,14 +110,8 @@ class ProductController extends Controller
         if(isset($data['unitaryValue'])){
             $product['unitary_value'] = $data['unitaryValue'];
         }
-        if(isset($data['barcode'])){
-            $product['barcode'] = $data['barcode'];
-        }
         if(isset($data['allotment'])){
             $product['allotment'] = $data['allotment'];
-        }
-        if(isset($data['expirationDate'])){
-            $product['expiration_date'] = $data['expirationDate'];
         }
         if(isset($data['description'])){
             $product['description'] = $data['description'];

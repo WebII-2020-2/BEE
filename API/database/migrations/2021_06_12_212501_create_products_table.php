@@ -21,9 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('unity', 100);
             $table->integer('quantity');
             $table->float('unitary_value');
-            $table->string('barcode', 100);
             $table->integer('allotment');
-            $table->date('expiration_date');
             $table->string('description', 100);
             $table->string('mime_type', 100);
             $table->binary('image');
