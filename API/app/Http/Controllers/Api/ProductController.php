@@ -19,14 +19,13 @@ class ProductController extends Controller
                 'unity' => $data['unity'],
                 'quantity' => $data['quantity'],
                 'unitary_value' => $data['unitaryValue'],
-                'allotment' => $data['allotment'],
                 'description' => $data['description'],
                 'mime_type' => $data_image[0],
                 'image' => base64_decode($data_image[1]),
                 'category_id' => $data['idCategory']
             ]);
         }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o produto.'];
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o produto.', 'exception' => $exception];
         }
 
         if(isset($result_product) && !isset($error)){
@@ -48,7 +47,6 @@ class ProductController extends Controller
                     'unity' => $product->unity,
                     'quantity' => $product->quantity,
                     'unitary_value' => $product->unitary_value,
-                    'allotment' => $product->allotment,
                     'description' => $product->description,
                     'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                     'category_id' => $product->category_id,
@@ -76,7 +74,6 @@ class ProductController extends Controller
                 'unity' => $product->unity,
                 'quantity' => $product->quantity,
                 'unitary_value' => $product->unitary_value,
-                'allotment' => $product->allotment,
                 'description' => $product->description,
                 'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                 'category_id' => $product->category_id,
@@ -109,9 +106,6 @@ class ProductController extends Controller
         }
         if(isset($data['unitaryValue'])){
             $product['unitary_value'] = $data['unitaryValue'];
-        }
-        if(isset($data['allotment'])){
-            $product['allotment'] = $data['allotment'];
         }
         if(isset($data['description'])){
             $product['description'] = $data['description'];

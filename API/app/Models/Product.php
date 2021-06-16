@@ -11,7 +11,6 @@ class Product extends Model
         'unity',
         'quantity',
         'unitary_value',
-        'allotment',
         'description',
         'mime_type',
         'image',
