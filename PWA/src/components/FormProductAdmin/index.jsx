@@ -8,35 +8,55 @@ import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormProductAdmin.css';
 
 function FormProdutoAdmin(props) {
-  const { isNew, formData } = props;
+  const { isNew, productId } = props;
   const history = useHistory();
 
-  const [categories, setCategories] = useState([]);
   const [values, setValues] = useState({
-    id: formData.id || '',
-    name: formData.name || '',
-    unity: formData.unity || '',
-    description: formData.description || '',
-    quantity: formData.quantity || '',
-    idCategory: formData.idCategory || '',
-    unitaryValue: formData.unitaryValue || '',
+    id: '',
+    name: '',
+    unity: '',
+    description: '',
+    quantity: '',
+    idCategory: '',
+    unitary_value: '',
+    image: '',
   });
-  const [image, setImage] = useState(formData.image);
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
+  const [categories, setCategories] = useState([]);
 
   const getCategories = async () => {
     try {
       const resp = await CategoryAdminApiService.getAll().then((r) => r.data);
       if (resp.success) {
         setCategories(resp.data);
+      } else {
+        throw new Error(`Failed to get categories: ${resp.error}`);
       }
-      throw new Error(`Failed to get categories: ${resp.error}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getProduct = async () => {
+    try {
+      const resp = await ProductAdminApiService.getAll().then((r) => r.data);
+      if (resp.success) {
+        const productData = resp.data.find((p) => p.id === Number(productId));
+        if (productData !== undefined) {
+          setValues(productData);
+        } else {
+          history.push('/admin/produtos');
+        }
+      } else {
+        throw new Error(`Unable to get products: ${resp.error}`);
+      }
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
+    getProduct();
     getCategories();
   }, []);
 
@@ -45,24 +65,28 @@ function FormProdutoAdmin(props) {
   };
 
   const handleUpdate = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleUpdateImage = (event) => {
-    const file = event.target.files.item(0);
-    const reader = new FileReader();
-    reader.onload = (e) => setImage(e.target.result);
-    reader.readAsDataURL(file);
+    if (event.target.name === 'image') {
+      const file = event.target.files.item(0);
+      const reader = new FileReader();
+      reader.onload = (e) =>
+        setValues({
+          ...values,
+          [event.target.name]: e.target.result,
+        });
+      reader.readAsDataURL(file);
+    } else {
+      setValues({
+        ...values,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
 
   const handleSubmit = async () => {
     let form = {
-      image,
+      image: values.image,
       name: values.name,
-      unitaryValue: Number(values.unitaryValue),
+      unitaryValue: Number(values.unitary_value),
       idCategory: values.idCategory,
       quantity: Number(values.quantity),
       description: values.description,
@@ -96,13 +120,13 @@ function FormProdutoAdmin(props) {
         throw new Error(`Failed to update product: ${resp.error}`);
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
   };
 
   const handleDelete = async () => {
     try {
-      const resp = await ProductAdminApiService.delete(values.id).then(
+      const resp = await ProductAdminApiService.remove(values.id).then(
         (r) => r.data
       );
       if (resp.succes) {
@@ -111,7 +135,7 @@ function FormProdutoAdmin(props) {
         throw new Error(`Failed to delete product: ${resp.error}`);
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
   };
 
@@ -149,7 +173,7 @@ function FormProdutoAdmin(props) {
             as="select"
             name="idCategory"
             onChange={handleUpdate}
-            defaultValue={formData.idCategory ? values.idCategory : ''}
+            defaultValue={values.idCategory}
           >
             <option value="" disabled>
               Escolha uma categoria
@@ -195,7 +219,7 @@ function FormProdutoAdmin(props) {
             readOnly={isReadOnly}
             type="number"
             name="unitaryValue"
-            value={values.unitaryValue}
+            value={values.unitary_value}
             onChange={handleUpdate}
           />
         </Form.Group>
@@ -203,14 +227,15 @@ function FormProdutoAdmin(props) {
         <Form.Group className="form-product-admin group image">
           <Image
             className="form-product-admin image"
-            src={image || emptyImage}
+            src={values.image || emptyImage}
           />
           <Form.File
             label="Selecione um arquivo"
             className="form-product-admin control"
             accept="image/*"
             disabled={isReadOnly}
-            onChange={handleUpdateImage}
+            name="image"
+            onChange={handleUpdate}
             custom
           />
         </Form.Group>

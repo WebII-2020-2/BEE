@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Spinner } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import AdminContainer from '../../../components/AdminContainer';
 import CardProdutoAdmin from '../../../components/CardProductAdmin';
 import PaginationAdmin from '../../../components/PaginationAdmin';
 import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
-import './ProductsList.css';
+import LoadingPageAdmin from '../../../components/LoadingPageAdmin';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import './ProductsList.css';
 
 function ProductsList() {
   const [actualPage, setActualPage] = useState(1);
@@ -40,10 +41,10 @@ function ProductsList() {
     <AdminContainer link="produtos">
       <ButtonsListAdmin link="/admin/produtos/novo" />
       {isLoading ? (
-        <Spinner animation="border" variant="warning" />
+        <LoadingPageAdmin />
       ) : (
         <Row className="product-list admin">
-          {products.map(({ id, image, name, price }) => (
+          {products.map(({ id, image, name, unitary_value: price }) => (
             <CardProdutoAdmin
               id={id}
               key={id}
