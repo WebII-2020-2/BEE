@@ -1,44 +1,36 @@
-// import api from './api';
+import api from './api';
 
-// const ENDPOINT_BASE = '/example';
-
-let categories = [
-  { id: 1, name: 'Grãos', description: 'Grãos são dahora' },
-  { id: 2, name: 'Laticinios', description: '' },
-];
+const ENDPOINT_BASE = '/category';
 
 /** traz todos */
 function getAll() {
-  return categories;
+  return api.get(`${ENDPOINT_BASE}/list`);
 }
 
 /** busca por ID */
 function getById(id) {
-  return categories.find((category) => category.id === Number(id));
+  return api.get(`${ENDPOINT_BASE}/${id}`);
 }
 
 /** cria um novo */
 function createNew(form) {
-  categories.push({
+  return api.post(`${ENDPOINT_BASE}/add`, {
     ...form,
   });
-  return 'SUCCESS';
 }
 
 /** deleta */
 function remove(id) {
-  categories = categories.filter((category) => category.id !== id);
-  return 'SUCCESS';
+  return api.post(`${ENDPOINT_BASE}/delete`, {
+    id,
+  });
 }
 
 /** atualiza */
 function update(form) {
-  remove(form.id);
-
-  categories.push({
+  return api.post(`${ENDPOINT_BASE}/update`, {
     ...form,
   });
-  return 'SUCCESS';
 }
 
 const CategoryAdminApiService = {
