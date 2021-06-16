@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Row, Col, Container,
-} from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import { Menu } from 'react-feather';
 import SidebarAdmin from '../SidebarAdmin';
 import './AdminContainer.css';
@@ -18,11 +16,13 @@ function AdminContainer({ children, link }) {
       <Row>
         <SidebarAdmin disabled={!active} click={toggleSidebar} link={link} />
         <Col sm md={8} lg={9} className="admin-main">
-          <Menu size={30} onClick={toggleSidebar} className={`admin-sidebar-toggle ${active && 'disabled'}`} />
+          <Menu
+            size={30}
+            onClick={toggleSidebar}
+            className={`admin-sidebar-toggle ${active && 'disabled'}`}
+          />
           <Row>
-            <Col className="admin-main-content">
-              {children}
-            </Col>
+            <Col className="admin-main-content">{children}</Col>
           </Row>
         </Col>
       </Row>
