@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Col, InputGroup, Row, Button,
-} from 'react-bootstrap';
+import { Col, InputGroup, Row, Button } from 'react-bootstrap';
 import { Search } from 'react-feather';
 import './ButtonsListAdmin.css';
 
@@ -13,7 +11,7 @@ function ButtonsListAdmin(props) {
     <Row className="mt-3 mb-4">
       <Col>
         <Link to={link}>
-          <Button type="button" variant="outline-dark">
+          <Button type="button" variant="dark">
             Cadastrar
           </Button>
         </Link>

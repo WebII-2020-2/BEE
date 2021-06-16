@@ -4,9 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './CardProductAdmin.css';
 
 function CardProdutoAdmin(props) {
-  const {
-    id, image, price, name,
-  } = props;
+  const { id, image, price, name } = props;
   const history = useHistory();
 
   const handleClick = () => {
@@ -14,15 +12,13 @@ function CardProdutoAdmin(props) {
   };
 
   return (
-    <Col className="card-product admin" onClick={handleClick}>
-      <div className="image-container admin">
-        <Image src={image} className="image-product admin" />
+    <Col className="card-product admin container" onClick={handleClick}>
+      <div className="card-product admin image container">
+        <Image src={image} className="card-product admin image" />
       </div>
-      <div className="product-details admin">
+      <div className="card-product admin info">
         {name}
-        <span className="product-details-price admin">
-          {`R$ ${price}`}
-        </span>
+        <span className="card-product admin info price">{`R$ ${price}`}</span>
       </div>
     </Col>
   );

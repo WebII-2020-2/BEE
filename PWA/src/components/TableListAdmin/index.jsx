@@ -12,27 +12,27 @@ function TableList(props) {
     history.push(`${linkEdit}/${id}`);
   };
 
-  const th = () => Object.values(tableHead).map((thValue) => (<th key={thValue}>{thValue}</th>));
+  const th = () =>
+    Object.values(tableHead).map((thValue) => <th key={thValue}>{thValue}</th>);
 
   const filterTd = (row) => {
     const td = Object.entries(row).filter((item) => item[0] in tableHead);
     return td.map((t) => <td key={t[0]}>{t[1]}</td>);
   };
 
-  const tr = () => itens.map((row) => (
-    <tr key={row.id} onClick={() => handleCLickEdit(row.id)}>
-      {filterTd(row)}
-    </tr>
-  ));
+  const tr = () =>
+    itens.map((row) => (
+      <tr key={row.id} onClick={() => handleCLickEdit(row.id)}>
+        {filterTd(row)}
+      </tr>
+    ));
 
   return (
     <table className="w-100 table table-list table-hover">
       <thead>
-        {th()}
+        <tr>{th()}</tr>
       </thead>
-      <tbody>
-        {tr()}
-      </tbody>
+      <tbody>{tr()}</tbody>
     </table>
   );
 }

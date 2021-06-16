@@ -25,7 +25,12 @@ function Login() {
   }
 
   return (
-    <FormLogin image={Logo} authLogin={authLogin} error={error} loading={loading} />
+    <FormLogin
+      image={Logo}
+      authLogin={authLogin}
+      error={error}
+      loading={loading}
+    />
   );
 }
 

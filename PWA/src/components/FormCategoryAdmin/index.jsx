@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { ArrowLeft } from 'react-feather';
-import { Link, useHistory } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
+import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormCategoryAdmin.css';
 
 function FormCategory(props) {
@@ -14,6 +14,10 @@ function FormCategory(props) {
   const [description, setDescription] = useState(formData.description);
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
 
+  const handleEdit = () => {
+    setIsReadOnly(!isReadOnly);
+  };
+
   const handleUpdateName = (event) => {
     setName(event.target.value);
   };
@@ -22,103 +26,58 @@ function FormCategory(props) {
     setDescription(event.target.value);
   };
 
-  const handleEdit = () => {
-    setIsReadOnly(!isReadOnly);
-  };
-
-  const handleDelete = () => {
-    //
-  };
-
   const handleSubmit = () => {
     const form = {
-      id: Math.floor((Math.random() * 1000) + 1),
+      id: formData.id,
       name,
       description,
     };
 
     try {
-      CategoryAdminApiService.createNew(form);
-      history.push('/admin/categorias');
+      if (isNew) {
+        CategoryAdminApiService.createNew({
+          name: form.name,
+          description: form.description,
+        });
+        history.push('/admin/categorias');
+      } else {
+        CategoryAdminApiService.update(form);
+        handleEdit();
+      }
     } catch (e) {
       console.error(e);
     }
   };
 
-  const buttonsNew = () => (
-    <Button
-      variant="outline-success"
-      className="btn-admin-category"
-      onClick={handleSubmit}
-    >
-      Salvar
-    </Button>
-  );
-
-  const buttonsView = () => (isReadOnly ? (
-    <div>
-      <Button
-        variant="outline-danger"
-        className="btn-admin-category mr-2"
-        onClick={handleDelete}
-      >
-        Excluir
-      </Button>
-      <Button
-        variant="outline-warning"
-        className="btn-admin-category editar"
-        onClick={handleEdit}
-      >
-        Editar
-      </Button>
-    </div>
-  ) : (
-    <div>
-      <Button
-        variant="outline-danger"
-        className="btn-admin-category mr-2"
-        onClick={handleEdit}
-      >
-        Cancelar
-      </Button>
-      <Button
-        variant="outline-success"
-        className="btn-admin-category"
-        onClick={handleSubmit}
-      >
-        Salvar
-      </Button>
-    </div>
-  )
-  );
+  const handleDelete = () => {
+    try {
+      CategoryAdminApiService.remove(formData.id);
+      history.push('/admin/produtos');
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <Form>
-      <div className="actions-form-category-admin mt-3">
-        <Link to="/admin/categorias" className="arrow-back-category-admin">
-          <Button type="button" variant="outline-secondary">
-            <ArrowLeft />
-            {' '}
-            Voltar
-          </Button>
-        </Link>
-        {' '}
-        {isNew ? buttonsNew() : buttonsView()}
-      </div>
+      <ButtonsFormAdmin
+        path="/admin/categorias"
+        handleSubmit={handleSubmit}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        isNew={isNew}
+        isReadOnly={isReadOnly}
+      />
 
       <Form.Group className="form-category-admin">
-        <Form.Label>
-          Nome
-        </Form.Label>
+        <Form.Label>Nome</Form.Label>
         <Form.Control
           readOnly={isReadOnly}
           type="text"
           value={name}
           onChange={handleUpdateName}
         />
-        <Form.Label className="mt-2">
-          Descrição
-        </Form.Label>
+        <Form.Label className="mt-2">Descrição</Form.Label>
         <Form.Control
           readOnly={isReadOnly}
           as="textarea"

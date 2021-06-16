@@ -1,97 +1,43 @@
-// import api from './api';
-import imagemProduto from '../../assets/img/mock-data-product.svg';
+import api from './api';
 
-// const ENDPOINT_BASE = '/example';
-
-let products = [
-  {
-    id: 1,
-    image: imagemProduto,
-    name: 'Amendoim',
-    price: 40.5,
-    category: 'Grãos',
-    quantity: 8,
-    weight: 2.5,
-    weightUnity: 'Kg',
-  },
-  {
-    id: 3123,
-    image: imagemProduto,
-    name: 'Amendoim',
-    price: 40.5,
-    category: 'Grãos',
-    quantity: 8,
-    weight: 2.5,
-    weightUnity: 'Kg',
-  },
-  {
-    id: 12212,
-    image: imagemProduto,
-    name: 'Amendoim',
-    price: 40.5,
-    category: 'Grãos',
-    quantity: 8,
-    weight: 2.5,
-    weightUnity: 'Kg',
-  },
-  {
-    id: 52352,
-    image: imagemProduto,
-    name: 'Amendoim',
-    price: 40.5,
-    category: 'Grãos',
-    quantity: 8,
-    weight: 2.5,
-    weightUnity: 'Kg',
-  },
-];
+const ENDPOINT_BASE = '/product';
 
 /** traz todos */
 function getAll() {
-  return products;
+  return api.get(`${ENDPOINT_BASE}/list`);
 }
 
 /** busca por ID */
 function getById(id) {
-  return products.find((product) => product.id === Number(id));
+  return api.get(`${ENDPOINT_BASE}/list/${id}`);
 }
 
 /** cria um novo */
-function createNew(form) {
-  products.push({
+function create(form) {
+  return api.post(`${ENDPOINT_BASE}/add`, {
     ...form,
   });
-  return 'SUCCESS';
-}
-
-/** deleta */
-function remove(id) {
-  const tempProducts = products;
-  products = [];
-  tempProducts.forEach((product) => {
-    if (product.id !== id) {
-      products.push(product);
-    }
-  });
-  return 'SUCCESS';
 }
 
 /** atualiza */
-function update(form) {
-  remove(form.id);
-
-  products.push({
+function update(id, form) {
+  return api.post(`${ENDPOINT_BASE}/updade/`, {
     ...form,
   });
-  return 'SUCCESS';
+}
+
+function remove(id) {
+  return api.post(`${ENDPOINT_BASE}/delete/`, {
+    id,
+  });
 }
 
 const ProductAdminApiService = {
   getAll,
   getById,
-  createNew,
-  remove,
+  create,
   update,
+  remove,
 };
 
 export default ProductAdminApiService;

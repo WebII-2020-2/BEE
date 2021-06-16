@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'react-feather';
-import {
-  Container, Row, Col, Spinner,
-} from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import './FormLogin.css';
 
 function FormLogin(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {
-    image, authLogin, error, loading,
-  } = props;
+  const { image, authLogin, error, loading } = props;
 
   return (
     <div className="login">
@@ -24,9 +20,7 @@ function FormLogin(props) {
           <Col lg={4} sm={8} xs={10}>
             <form className="form-login">
               <label htmlFor="email-login" className="mt-3 input-group">
-                E-mail
-                {' '}
-                <br />
+                E-mail <br />
                 <input
                   type="email"
                   className="input-login"
@@ -36,9 +30,7 @@ function FormLogin(props) {
                 />
               </label>
               <label htmlFor="password-login" className="input-group">
-                Senha
-                {' '}
-                <br />
+                Senha <br />
                 <input
                   type="password"
                   className="input-login"
@@ -47,20 +39,21 @@ function FormLogin(props) {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </label>
-              {error && (<span className="text-center">{error}</span>)}
+              {error && <span className="text-center">{error}</span>}
               <button
                 disabled={loading}
                 type="button"
                 className="rounded-pill mt-3 btn-login"
                 onClick={() => authLogin(email, password)}
               >
-                {loading ? (<Spinner animation="border" variant="warning" />)
-                  : (
-                    <>
-                      Login
-                      <ArrowRight className="ml-2" />
-                    </>
-                  )}
+                {loading ? (
+                  <Spinner animation="border" variant="warning" />
+                ) : (
+                  <>
+                    Login
+                    <ArrowRight className="ml-2" />
+                  </>
+                )}
               </button>
             </form>
           </Col>
