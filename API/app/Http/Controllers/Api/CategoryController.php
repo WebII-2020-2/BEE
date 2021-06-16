@@ -54,6 +54,27 @@ class CategoryController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
+    public function get($id){
+        try{
+            $category = Category::find($id);
+            $count = Product::where('category_id', $category->id)->count("id");
+            $mounted_categoriy = array(
+                'id' => $category->id,
+                'name' => $category->name,
+                'description' => $category->description,
+                'count_products' => $count
+            );
+        }catch(\Exception $exception){
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar a categoria.'];
+        }
+
+        if(isset($mounted_categoriy) && !isset($error)){
+            return response()->json(['success' => true, 'data' => $mounted_categoriy, 'error' => $error ?? null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
     public function update(Request $request){
         $data = $request->all();
 

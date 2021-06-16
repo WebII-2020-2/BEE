@@ -37,7 +37,7 @@ class ProductController extends Controller
 
     public function show(){
         try{
-            $products = Product::join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();;
+            $products = Product::join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
 
             $mounted_products = [];
             foreach($products as $product){
@@ -62,6 +62,35 @@ class ProductController extends Controller
 
         if(isset($mounted_products) && !isset($error)){
             return response()->json(['success' => true, 'data' => $mounted_products, 'error' => $error ?? null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
+    public function get($id){
+        try{
+            $product = Product::where('products.id', $id)->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->first();
+
+            $mounted_product = array(
+                "id" => $product->id,
+                'name' => $product->name,
+                'unity' => $product->unity,
+                'quantity' => $product->quantity,
+                'unitary_value' => $product->unitary_value,
+                'barcode' => $product->barcode,
+                'allotment' => $product->allotment,
+                'expiration_date' => $product->expiration_date,
+                'description' => $product->description,
+                'image' => base64_encode($product->image),
+                'category_id' => $product->category_id,
+                'category' => $product->category
+            );
+        }catch(\Exception $exception){
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar o produto.'];
+        }
+
+        if(isset($mounted_product) && !isset($error)){
+            return response()->json(['success' => true, 'data' => $mounted_product, 'error' => $error ?? null], 200);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
