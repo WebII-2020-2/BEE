@@ -1,0 +1,12 @@
+.loading-page.admin.container {
+  min-height: 75%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-page.admin {
+  height: 100px;
+  width: 100px;
+  border-width: 0.5rem;
+}
