@@ -25,7 +25,7 @@ class ProductController extends Controller
                 'category_id' => $data['idCategory']
             ]);
         }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o produto.', 'exception' => $exception];
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o produto.'];
         }
 
         if(isset($result_product) && !isset($error)){
