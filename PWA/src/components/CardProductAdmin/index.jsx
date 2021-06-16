@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Image } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import './CardProdutoAdmin.css';
+import './CardProductAdmin.css';
 
 function CardProdutoAdmin(props) {
   const {

@@ -9,7 +9,7 @@ import NotFound from './pages/NotFound';
 import LoginAdmin from './pages/LoginAdmin';
 import ProductsAdmin from './pages/ProductsAdmin';
 import CategoriesAdmin from './pages/CategoriesAdmin';
-import { isAuthenticated } from './services/validation/auth';
+import { isAuthenticated } from './services/auth/authAdmin';
 
 const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
   <Route

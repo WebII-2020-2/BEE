@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row } from 'react-bootstrap';
 import AdminContainer from '../../../components/AdminContainer';
-import CardProdutoAdmin from '../../../components/CardProdutoAdmin';
+import CardProdutoAdmin from '../../../components/CardProductAdmin';
 import PaginationAdmin from '../../../components/PaginationAdmin';
 import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
 import ProdutoAdminApiService from '../../../services/api/ProductAdminApiService';
