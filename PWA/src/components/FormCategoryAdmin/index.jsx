@@ -32,7 +32,7 @@ function FormCategory(props) {
 
   const handleSubmit = () => {
     const form = {
-      id: Math.floor((Math.random() * 1000) + 1),
+      id: formData.id,
       name,
       description,
     };
