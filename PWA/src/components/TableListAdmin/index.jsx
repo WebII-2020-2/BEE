@@ -12,7 +12,8 @@ function TableList(props) {
     history.push(`${linkEdit}/${id}`);
   };
 
-  const th = () => Object.values(tableHead).map((thValue) => (<th key={thValue}>{thValue}</th>));
+  const th = () => Object.values(tableHead)
+    .map((thValue) => (<th key={thValue}>{thValue}</th>));
 
   const filterTd = (row) => {
     const td = Object.entries(row).filter((item) => item[0] in tableHead);
@@ -28,7 +29,9 @@ function TableList(props) {
   return (
     <table className="w-100 table table-list table-hover">
       <thead>
-        {th()}
+        <tr>
+          {th()}
+        </tr>
       </thead>
       <tbody>
         {tr()}
