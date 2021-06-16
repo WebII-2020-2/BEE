@@ -5,16 +5,11 @@ import { ArrowLeft } from 'react-feather';
 import { Link } from 'react-router-dom';
 
 function ButtonsFormAdmin(props) {
-  const {
-    handleSubmit, handleDelete, handleEdit, isNew, isReadOnly, path,
-  } = props;
+  const { handleSubmit, handleDelete, handleEdit, isNew, isReadOnly, path } =
+    props;
 
   const buttonsNew = () => (
-    <Button
-      variant="success"
-      className="btn-form-admin"
-      onClick={handleSubmit}
-    >
+    <Button variant="success" className="btn-form-admin" onClick={handleSubmit}>
       Salvar
     </Button>
   );
@@ -61,14 +56,9 @@ function ButtonsFormAdmin(props) {
   }
   return (
     <div className="actions-form-admin">
-      <Link to={path} className="arrow-back-form-admin">
-        <Button type="button" variant="secondary">
-          <ArrowLeft />
-          {' '}
-          Voltar
-        </Button>
+      <Link to={path} className="btn btn-secondary btn-form-admin voltar">
+        <ArrowLeft /> Voltar
       </Link>
-      {' '}
       {isNew ? buttonsNew() : buttonsView()}
     </div>
   );

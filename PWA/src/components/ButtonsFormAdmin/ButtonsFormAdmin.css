@@ -1,4 +1,4 @@
-.actions-form-product-admin {
+.actions-form-admin {
   display: flex;
   justify-content: space-between;
 }
@@ -20,16 +20,4 @@
 .btn-form-admin.editar:focus,
 .btn-form-admin.editar:active {
   color: var(--white) !important;
-}
-
-.actions-form-admin{
-  display: flex;
-  justify-content: space-between;
-}
-
-
-.arrow-back-form-admin{
-  display: flex;
-  align-items: center;
-  color: var(--black);
 }

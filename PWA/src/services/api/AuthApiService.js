@@ -1,10 +1,9 @@
 import api from './api';
 
 function sendLoginAdmin(dados) {
-  return api.post('/login',
-    {
-      ...dados,
-    });
+  return api.post('/login', {
+    ...dados,
+  });
 }
 
 const AuthApiService = {

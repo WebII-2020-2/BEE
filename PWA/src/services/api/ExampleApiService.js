@@ -14,18 +14,16 @@ function getById(id) {
 
 /** cria um novo */
 function createNew(form) {
-  return api.post(`${ENDPOINT_BASE}/create`,
-    {
-      ...form,
-    });
+  return api.post(`${ENDPOINT_BASE}/create`, {
+    ...form,
+  });
 }
 
 /** atualiza */
 function updateOne(id, form) {
-  return api.put(`${ENDPOINT_BASE}/updade/${id}`,
-    {
-      ...form,
-    });
+  return api.put(`${ENDPOINT_BASE}/updade/${id}`, {
+    ...form,
+  });
 }
 
 function removeOne(id) {

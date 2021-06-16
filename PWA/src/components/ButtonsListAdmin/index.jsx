@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Col, InputGroup, Row, Button,
-} from 'react-bootstrap';
+import { Col, InputGroup, Row, Button } from 'react-bootstrap';
 import { Search } from 'react-feather';
 import './ButtonsListAdmin.css';
 

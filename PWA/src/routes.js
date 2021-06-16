@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Redirect,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { Redirect, Switch, Route } from 'react-router-dom';
 import HomeAdmin from './pages/HomeAdmin';
 import NotFound from './pages/NotFound';
 import LoginAdmin from './pages/LoginAdmin';
@@ -14,11 +10,13 @@ import { isAuthenticated } from './services/auth/authAdmin';
 const PrivateRouteAdmin = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => (isAuthenticated() ? (
-      <Component {...props} />
-    ) : (
-      <Redirect to="/login-admin" {...props} />
-    ))}
+    render={(props) =>
+      isAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login-admin" {...props} />
+      )
+    }
   />
 );
 

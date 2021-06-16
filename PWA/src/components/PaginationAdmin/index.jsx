@@ -9,13 +9,21 @@ function PaginationAdmin(props) {
 
   return (
     <Row className="pagination-component admin">
-      <Button variant="outline-secondary" disabled={actualPage === 1} onClick={() => click(actualPage - 1)}>
+      <Button
+        variant="outline-secondary"
+        disabled={actualPage === 1}
+        onClick={() => click(actualPage - 1)}
+      >
         <ChevronLeft />
       </Button>
       <Button variant="secondary" disabled={actualPage === 1}>
         {actualPage}
       </Button>
-      <Button variant="outline-secondary" disabled={actualPage === totalPages} onClick={() => click(actualPage + 1)}>
+      <Button
+        variant="outline-secondary"
+        disabled={actualPage === totalPages}
+        onClick={() => click(actualPage + 1)}
+      >
         <ChevronRight />
       </Button>
     </Row>

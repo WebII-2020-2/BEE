@@ -35,7 +35,10 @@ function FormCategory(props) {
 
     try {
       if (isNew) {
-        CategoryAdminApiService.createNew({ name: form.name, description: form.description });
+        CategoryAdminApiService.createNew({
+          name: form.name,
+          description: form.description,
+        });
         history.push('/admin/categorias');
       } else {
         CategoryAdminApiService.update(form);
@@ -67,18 +70,14 @@ function FormCategory(props) {
       />
 
       <Form.Group className="form-category-admin">
-        <Form.Label>
-          Nome
-        </Form.Label>
+        <Form.Label>Nome</Form.Label>
         <Form.Control
           readOnly={isReadOnly}
           type="text"
           value={name}
           onChange={handleUpdateName}
         />
-        <Form.Label className="mt-2">
-          Descrição
-        </Form.Label>
+        <Form.Label className="mt-2">Descrição</Form.Label>
         <Form.Control
           readOnly={isReadOnly}
           as="textarea"
