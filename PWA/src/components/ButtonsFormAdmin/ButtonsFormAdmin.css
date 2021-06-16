@@ -1,0 +1,23 @@
+.actions-form-product-admin {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-admin-produto {
+  margin-left: 0.5rem;
+  flex-basis: 100px;
+}
+
+.btn-admin-produto.voltar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.btn-admin-produto.editar,
+.btn-admin-produto.editar:hover,
+.btn-admin-produto.editar:focus,
+.btn-admin-produto.editar:active {
+  color: var(--white) !important;
+}

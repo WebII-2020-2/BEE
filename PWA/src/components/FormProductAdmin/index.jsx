@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { ArrowLeft } from 'react-feather';
-import { Form, Image, Button } from 'react-bootstrap';
+import { Form, Image } from 'react-bootstrap';
 import ProductAdminApiService from '../../services/api/ProductAdminApiService';
 import emptyImage from '../../assets/img/empty-image.png';
+import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormProductAdmin.css';
 
 function FormProdutoAdmin(props) {
   const { isNew, formData } = props;
-
   const history = useHistory();
 
-  const [id] = useState(formData.id);
-  const [name, setName] = useState(formData.name);
-  const [weightUnity, setWeightUnity] = useState(formData.weightUnity);
-  const [weight, setWeight] = useState(formData.weight);
-  const [quantity, setQuantity] = useState(formData.quantity);
-  const [category, setCategory] = useState(formData.category);
-  const [price, setPrice] = useState(formData.price);
+  const [values, setValues] = useState({
+    id: formData.id,
+    name: formData.name,
+    weightUnity: formData.weightUnity,
+    weight: formData.weight,
+    quantity: formData.quantity,
+    category: formData.category,
+    price: formData.price,
+  });
   const [image, setImage] = useState(formData.image);
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
 
@@ -25,56 +27,41 @@ function FormProdutoAdmin(props) {
     setIsReadOnly(!isReadOnly);
   };
 
-  const handleUpdateName = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleUpdateweightUnity = (event) => {
-    setWeightUnity(event.target.value);
-  };
-
-  const handleUpdateweight = (event) => {
-    setWeight(event.target.value);
-  };
-
-  const handleUpdateQuantity = (event) => {
-    setQuantity(event.target.value);
-  };
-
-  const handleUpdatePrice = (event) => {
-    setPrice(event.target.value);
-  };
-
-  const handleUpdateCategory = (event) => {
-    setCategory(event.target.value);
+  const handleUpdate = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleUpdateImage = (event) => {
     const file = event.target.files.item(0);
-    const reader = new FileReader();
-    reader.onload = (e) => setImage(e.target.result);
-    reader.readAsDataURL(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => setImage(e.target.result);
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = () => {
     const form = {
-      id: id || Math.floor(Math.random() * 1000 + 1),
+      id: values.id || Math.floor(Math.random() * 1000 + 1),
       image,
-      name,
-      price: Number(price),
-      category,
-      quantity,
-      weight,
-      weightUnity,
+      name: values.name,
+      price: Number(values.price),
+      category: values.category,
+      quantity: values.quantity,
+      weight: values.weight,
+      weightUnity: values.weightUnity,
     };
 
     try {
       if (isNew) {
         ProductAdminApiService.createNew(form);
-      } else {
-        ProductAdminApiService.update(form);
+        history.push('/admin/produtos');
       }
-      history.push('/admin/produtos');
+      ProductAdminApiService.update(form);
+      handleEdit();
     } catch (e) {
       console.error(e);
     }
@@ -82,71 +69,30 @@ function FormProdutoAdmin(props) {
 
   const handleDelete = () => {
     try {
-      ProductAdminApiService.remove(id);
+      ProductAdminApiService.remove(values.id);
       history.push('/admin/produtos');
     } catch (e) {
       console.error(e);
     }
   };
 
-  const buttonsNew = () => (
-    <Button
-      variant="outline-success"
-      className="btn-admin-produto"
-      onClick={handleSubmit}
-    >
-      Salvar
-    </Button>
-  );
-
-  const buttonsView = () => (isReadOnly ? (
-    <div>
-      <Button
-        variant="outline-danger"
-        className="btn-admin-produto"
-        onClick={handleDelete}
-      >
-        Excluir
-      </Button>
-      <Button
-        variant="outline-warning"
-        className="btn-admin-produto editar"
-        onClick={handleEdit}
-      >
-        Editar
-      </Button>
-    </div>
-  ) : (
-    <div>
-      <Button
-        variant="outline-danger"
-        className="btn-admin-produto"
-        onClick={handleEdit}
-      >
-        Cancelar
-      </Button>
-      <Button
-        variant="outline-success"
-        className="btn-admin-produto"
-        onClick={handleSubmit}
-      >
-        Salvar
-      </Button>
-    </div>
-  ));
-
   return (
     <Form>
       <div className="actions-form-product-admin">
-        <Link to="/admin/produtos">
-          <Button type="button" variant="outline-secondary" className="arrow-back-product-admin">
-            <ArrowLeft />
-            {' '}
-            Voltar
-          </Button>
+        <Link
+          to="/admin/produtos"
+          className="btn btn-admin-produto voltar btn-secondary"
+        >
+          <ArrowLeft />
+          Voltar
         </Link>
-        {' '}
-        {isNew ? buttonsNew() : buttonsView()}
+        <ButtonsFormAdmin
+          handleSubmit={handleSubmit}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          isNew={isNew}
+          isReadOnly={isReadOnly}
+        />
       </div>
 
       <Form.Group className="form-product-admin">
@@ -155,9 +101,9 @@ function FormProdutoAdmin(props) {
           className="form-product-name"
           readOnly={isReadOnly}
           type="text"
-          value={name}
-          onChange={handleUpdateName}
-          required
+          name="name"
+          value={values.name}
+          onChange={handleUpdate}
         />
 
         <Form.Label className="form-product-label-weight-unity">
@@ -167,8 +113,9 @@ function FormProdutoAdmin(props) {
           className="form-product-weight-unity"
           readOnly={isReadOnly}
           type="text"
-          value={weightUnity}
-          onChange={handleUpdateweightUnity}
+          name="weightUnity"
+          value={values.weightUnity}
+          onChange={handleUpdate}
           required
         />
 
@@ -177,8 +124,9 @@ function FormProdutoAdmin(props) {
           className="form-product-weight"
           readOnly={isReadOnly}
           type="text"
-          value={weight}
-          onChange={handleUpdateweight}
+          name="weight"
+          value={values.weight}
+          onChange={handleUpdate}
           required
         />
 
@@ -189,8 +137,9 @@ function FormProdutoAdmin(props) {
           className="form-product-quantity"
           readOnly={isReadOnly}
           type="number"
-          value={quantity}
-          onChange={handleUpdateQuantity}
+          name="quantity"
+          value={values.quantity}
+          onChange={handleUpdate}
           required
         />
 
@@ -199,8 +148,9 @@ function FormProdutoAdmin(props) {
           className="form-product-price"
           readOnly={isReadOnly}
           type="number"
-          value={price}
-          onChange={handleUpdatePrice}
+          name="price"
+          value={values.price}
+          onChange={handleUpdate}
           required
         />
 
@@ -211,8 +161,9 @@ function FormProdutoAdmin(props) {
           className="form-product-category"
           disabled={isReadOnly}
           as="select"
-          onChange={handleUpdateCategory}
-          defaultValue={formData.category ? category : ''}
+          name="category"
+          onChange={handleUpdate}
+          defaultValue={formData.category ? values.category : ''}
           required
         >
           <option value="" disabled>
