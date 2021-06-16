@@ -1,39 +1,22 @@
-.actions-form-product-admin {
-  display: flex;
-  justify-content: space-between;
-}
-
-.arrow-back-product-admin {
-  display: flex;
-  align-items: center;
-  color: var(--black);
-}
-
-.btn-admin-produto.editar:hover,
-.btn-admin-produto.editar:focus,
-.btn-admin-produto.editar:active {
-  color: var(--white) !important;
-}
-
 .form-product-admin {
   display: grid;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
-  border-radius: 15px;
+  border-radius: 5px;
   color: var(--dark-grey);
-  font-family: "Roboto";
+  font-family: 'Roboto';
   background-color: var(--light-grey);
   row-gap: 1.5rem;
   margin-top: 1rem;
   grid-template-columns: 15% 35% 5% 10% 35%;
   grid-template-rows: repeat(5, 15%);
   grid-template-areas:
-    "label-name name name name name"
-    "label-weight-unity weight-unity . label-weight weight"
-    "label-quantity quantity . label-price price"
-    "label-category category category category image"
-    "label-file file file file image";
+    'label-name name name name name'
+    'label-weight-unity weight-unity . label-weight weight'
+    'label-quantity quantity . label-price price'
+    'label-category category category category image'
+    'label-file file file file image';
 }
 
 .form-product-label-name {
@@ -105,7 +88,7 @@
 }
 
 .form-control {
-  border-radius: 15px !important;
+  border-radius: 5px !important;
 }
 
 .form-control:focus,
@@ -119,14 +102,14 @@
     grid-template-columns: 25% 75%;
     grid-template-rows: repeat(10, 8%);
     grid-template-areas:
-      "image image"
-      "image image"
-      "label-file file"
-      "label-name name"
-      "label-weight-unity weight-unity"
-      "label-weight weight"
-      "label-quantity quantity"
-      "label-price price"
-      "label-category category";
+      'image image'
+      'image image'
+      'label-file file'
+      'label-name name'
+      'label-weight-unity weight-unity'
+      'label-weight weight'
+      'label-quantity quantity'
+      'label-price price'
+      'label-category category';
   }
 }
