@@ -11,9 +11,10 @@ function Products(props) {
 
   return (
     <Switch>
-      <Route path={match.path} exact component={ProductsList} />
+      <Route path={`${match.path}/page/:number`} component={ProductsList} />
       <Route path={`${match.path}/novo`} component={ProductsNew} />
       <Route path={`${match.path}/:id`} component={ProductsPage} />
+      <Route path={`${match.path}`} exact component={ProductsList} />
     </Switch>
   );
 }

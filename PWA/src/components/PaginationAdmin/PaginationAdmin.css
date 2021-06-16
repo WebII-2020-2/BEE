@@ -2,8 +2,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .pagination-component.admin button {
   margin: 0 1rem;
+}
+
+.pagination-component.admin p {
+  line-height: 2rem;
+  margin: 0 1rem;
+  border-radius: 50%;
+  background-color: var(--black);
+  color: var(--white);
+  width: 2rem;
+  height: 2rem;
 }

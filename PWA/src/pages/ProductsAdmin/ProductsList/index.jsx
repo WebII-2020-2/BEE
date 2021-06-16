@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Spinner } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import AdminContainer from '../../../components/AdminContainer';
 import CardProdutoAdmin from '../../../components/CardProductAdmin';
 import PaginationAdmin from '../../../components/PaginationAdmin';
 import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
-import './ProductsList.css';
+import LoadingPageAdmin from '../../../components/LoadingPageAdmin';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import './ProductsList.css';
 
-function ProductsList() {
-  const [actualPage, setActualPage] = useState(1);
+function ProductsList(props) {
+  const { match } = props;
   const [products, setProducts] = useState([]);
+  const [productsPerPage, setProductsPerPage] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [actualPage, setActualPage] = useState(1);
+  const totalPages = Math.ceil(products.length / 8);
 
   const getProducts = async () => {
     try {
@@ -28,22 +32,38 @@ function ProductsList() {
     }
   };
 
+  const getProductsPerPage = () => {
+    const indexMin = (actualPage - 1) * 8;
+    const indexMax = indexMin + 8;
+    const productList = products.filter(
+      (x, index) => index >= indexMin && index < indexMax
+    );
+    setProductsPerPage(productList);
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
 
-  const handleChangePage = (value) => {
-    setActualPage(value);
+  useEffect(() => {
+    if (match.params.number) {
+      setActualPage(Number(match.params.number));
+    }
+    getProductsPerPage();
+  }, [products, actualPage]);
+
+  const handleChangePage = (page) => {
+    setActualPage(page);
   };
 
   return (
     <AdminContainer link="produtos">
       <ButtonsListAdmin link="/admin/produtos/novo" />
       {isLoading ? (
-        <Spinner animation="border" variant="warning" />
+        <LoadingPageAdmin />
       ) : (
         <Row className="product-list admin">
-          {products.map(({ id, image, name, price }) => (
+          {productsPerPage.map(({ id, image, name, unitary_value: price }) => (
             <CardProdutoAdmin
               id={id}
               key={id}
@@ -55,9 +75,10 @@ function ProductsList() {
         </Row>
       )}
       <PaginationAdmin
-        itensCount={products.length}
+        totalPages={totalPages}
         actualPage={actualPage}
-        click={handleChangePage}
+        changePage={handleChangePage}
+        baseUrl="/admin/produtos"
       />
     </AdminContainer>
   );
