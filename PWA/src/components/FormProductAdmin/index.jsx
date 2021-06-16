@@ -56,7 +56,9 @@ function FormProdutoAdmin(props) {
   };
 
   useEffect(() => {
-    getProduct();
+    if (!isNew) {
+      getProduct();
+    }
     getCategories();
   }, []);
 
