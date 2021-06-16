@@ -1,17 +1,19 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import './ButtonsFormAdmin.css';
+import { ArrowLeft } from 'react-feather';
+import { Link } from 'react-router-dom';
 
 function ButtonsFormAdmin(props) {
   const {
-    handleSubmit, handleDelete, handleEdit, isNew, isReadOnly,
+    handleSubmit, handleDelete, handleEdit, isNew, isReadOnly, path,
   } = props;
 
   const buttonsNew = () => (
     <Button
-      variant="outline-success"
-      className="btn-admin-produto"
-      onSubmit={handleSubmit}
+      variant="success"
+      className="btn-form-admin"
+      onClick={handleSubmit}
     >
       Salvar
     </Button>
@@ -23,14 +25,14 @@ function ButtonsFormAdmin(props) {
         <div>
           <Button
             variant="danger"
-            className="btn-admin-produto"
+            className="btn-form-admin"
             onClick={handleDelete}
           >
             Excluir
           </Button>
           <Button
             variant="warning"
-            className="btn-admin-produto editar"
+            className="btn-form-admin editar"
             onClick={handleEdit}
           >
             Editar
@@ -42,14 +44,14 @@ function ButtonsFormAdmin(props) {
       <div>
         <Button
           variant="danger"
-          className="btn-admin-produto"
+          className="btn-form-admin"
           onClick={handleEdit}
         >
           Cancelar
         </Button>
         <Button
           variant="success"
-          className="btn-admin-produto"
+          className="btn-form-admin"
           onClick={handleSubmit}
         >
           Salvar
@@ -57,7 +59,19 @@ function ButtonsFormAdmin(props) {
       </div>
     );
   }
-  return <>{isNew ? buttonsNew() : buttonsView()}</>;
+  return (
+    <div className="actions-form-admin">
+      <Link to={path} className="arrow-back-form-admin">
+        <Button type="button" variant="secondary">
+          <ArrowLeft />
+          {' '}
+          Voltar
+        </Button>
+      </Link>
+      {' '}
+      {isNew ? buttonsNew() : buttonsView()}
+    </div>
+  );
 }
 
 export default ButtonsFormAdmin;

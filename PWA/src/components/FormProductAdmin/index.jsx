@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import { ArrowLeft } from 'react-feather';
+import { useHistory } from 'react-router-dom';
 import { Form, Image } from 'react-bootstrap';
 import ProductAdminApiService from '../../services/api/ProductAdminApiService';
 import emptyImage from '../../assets/img/empty-image.png';
@@ -98,22 +97,14 @@ function FormProdutoAdmin(props) {
 
   return (
     <Form>
-      <div className="actions-form-product-admin">
-        <Link
-          to="/admin/produtos"
-          className="btn btn-admin-produto voltar btn-secondary"
-        >
-          <ArrowLeft />
-          Voltar
-        </Link>
-        <ButtonsFormAdmin
-          handleSubmit={handleSubmit}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          isNew={isNew}
-          isReadOnly={isReadOnly}
-        />
-      </div>
+      <ButtonsFormAdmin
+        path="/admin/produtos"
+        handleSubmit={handleSubmit}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        isNew={isNew}
+        isReadOnly={isReadOnly}
+      />
 
       <Form.Group className="form-product-admin">
         <Form.Label className="form-product-label-name">Nome</Form.Label>

@@ -19,7 +19,8 @@ class CardController extends Controller
                 'security_code' => $data['security_code'],
                 'expiration_date' => $data['expiration_date'],
                 'holder' => $data['holder'],
-                'type' => $data['type']
+                'type' => $data['type'],
+                'payment_method_id' => $data['payment_method']
             ]);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o cartão.'];

@@ -16,10 +16,9 @@ class JwtMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {   
         try {
-            $authorization = apache_request_headers()['Authorization'];
-            JWTAuth::setToken($authorization);
+            $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return response()->json(['success' => false, 'data' => null, 'error' => ['code' => 1, 'error_message' => 'Token invalido']]);
@@ -29,6 +28,7 @@ class JwtMiddleware
                 return response()->json(['success' => false, 'data' => null, 'error' => ['code' => 1, 'error_message' => 'Token de autorização não encontrado']]);
             }
         }
+
         return $next($request);
     }
 }

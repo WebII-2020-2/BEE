@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-
+use JWTAuth;
 class Handler extends ExceptionHandler
 {
     /**
@@ -50,6 +50,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        return parent::render($request, $exception);
+        if($_SERVER["PATH_INFO"] == "/api/logout"){
+            return response()->json(['success' => true, 'data' => null, 'error' => null], 200);
+        }else{
+            return parent::render($request, $exception);
+        }
     }
 }

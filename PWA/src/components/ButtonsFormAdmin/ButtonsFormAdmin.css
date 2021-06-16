@@ -3,21 +3,33 @@
   justify-content: space-between;
 }
 
-.btn-admin-produto {
+.btn-form-admin {
   margin-left: 0.5rem;
   flex-basis: 100px;
 }
 
-.btn-admin-produto.voltar {
+.btn-form-admin.voltar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 0;
 }
 
-.btn-admin-produto.editar,
-.btn-admin-produto.editar:hover,
-.btn-admin-produto.editar:focus,
-.btn-admin-produto.editar:active {
+.btn-form-admin.editar,
+.btn-form-admin.editar:hover,
+.btn-form-admin.editar:focus,
+.btn-form-admin.editar:active {
   color: var(--white) !important;
+}
+
+.actions-form-admin{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.arrow-back-form-admin{
+  display: flex;
+  align-items: center;
+  color: var(--black);
 }
