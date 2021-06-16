@@ -11,6 +11,8 @@ class ProductController extends Controller
     public function store(Request $request){
         $data = $request->all();
 
+        $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+
         try{
             $result_product = Product::create([
                 'name' => $data['name'],
@@ -21,7 +23,8 @@ class ProductController extends Controller
                 'allotment' => $data['allotment'],
                 'expiration_date' => $data['expirationDate'],
                 'description' => $data['description'],
-                'image' => base64_decode($data['image']),
+                'mime_type' => $data_image[0],
+                'image' => base64_decode($data_image[1]),
                 'category_id' => $data['idCategory']
             ]);
         }catch(\Exception $exception){
@@ -51,7 +54,7 @@ class ProductController extends Controller
                     'allotment' => $product->allotment,
                     'expiration_date' => $product->expiration_date,
                     'description' => $product->description,
-                    'image' => base64_encode($product->image),
+                    'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                     'category_id' => $product->category_id,
                     'category' => $product->category
                 ));
@@ -81,7 +84,7 @@ class ProductController extends Controller
                 'allotment' => $product->allotment,
                 'expiration_date' => $product->expiration_date,
                 'description' => $product->description,
-                'image' => base64_encode($product->image),
+                'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                 'category_id' => $product->category_id,
                 'category' => $product->category
             );
@@ -98,6 +101,8 @@ class ProductController extends Controller
 
     public function update(Request $request){
         $data = $request->all();
+
+        $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
         if(isset($data['name'])){
             $product['name'] = $data['name'];
@@ -124,7 +129,10 @@ class ProductController extends Controller
             $product['description'] = $data['description'];
         }
         if(isset($data['image'])){
-            $product['image'] = base64_decode($data['image']);
+            $product['mime_type'] = base64_decode($data_image[0]);
+        }
+        if(isset($data['image'])){
+            $product['image'] = base64_decode($data_image[1]);
         }
         if(isset($data['idCategory'])){
             $product['category_id'] = $data['idCategory'];
@@ -157,4 +165,5 @@ class ProductController extends Controller
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
+
 }

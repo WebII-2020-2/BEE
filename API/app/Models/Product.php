@@ -15,6 +15,7 @@ class Product extends Model
         'allotment',
         'expiration_date',
         'description',
+        'mime_type',
         'image',
         'category_id'
     ];
