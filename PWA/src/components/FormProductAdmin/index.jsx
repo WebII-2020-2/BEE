@@ -12,14 +12,15 @@ function FormProdutoAdmin(props) {
   const history = useHistory();
 
   const [values, setValues] = useState({
-    id: formData.id,
-    name: formData.name,
-    weightUnity: formData.weightUnity,
-    weight: formData.weight,
-    quantity: formData.quantity,
-    category: formData.category,
-    price: formData.price,
+    id: formData.id || '',
+    name: formData.name || '',
+    weightUnity: formData.weightUnity || '',
+    weight: formData.weight || '',
+    quantity: formData.quantity || '',
+    category: formData.category || '',
+    price: formData.price || '',
   });
+
   const [image, setImage] = useState(formData.image);
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
 
@@ -36,16 +37,13 @@ function FormProdutoAdmin(props) {
 
   const handleUpdateImage = (event) => {
     const file = event.target.files.item(0);
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setImage(e.target.result);
-      reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onload = (e) => setImage(e.target.result);
+    reader.readAsDataURL(file);
   };
 
-  const handleSubmit = () => {
-    const form = {
-      id: values.id || Math.floor(Math.random() * 1000 + 1),
+  const handleSubmit = async () => {
+    let form = {
       image,
       name: values.name,
       price: Number(values.price),
@@ -57,20 +55,42 @@ function FormProdutoAdmin(props) {
 
     try {
       if (isNew) {
-        ProductAdminApiService.createNew(form);
-        history.push('/admin/produtos');
+        const resp = await ProductAdminApiService.create(form).then(
+          (r) => r.data
+        );
+        if (resp.success) {
+          history.push('/admin/produtos');
+        } else {
+          throw new Error(`Failed to create product: ${resp.error}`);
+        }
       }
-      ProductAdminApiService.update(form);
-      handleEdit();
+      form = {
+        id: values.id,
+        ...form,
+      };
+      const resp = await ProductAdminApiService.update(form).then(
+        (r) => r.data
+      );
+      if (resp.success) {
+        handleEdit();
+      } else {
+        throw new Error(`Failed to update product: ${resp.error}`);
+      }
     } catch (e) {
       console.error(e);
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      ProductAdminApiService.remove(values.id);
-      history.push('/admin/produtos');
+      const resp = await ProductAdminApiService.delete(values.id).then(
+        (r) => r.data
+      );
+      if (resp.succes) {
+        history.push('/admin/produtos');
+      } else {
+        throw new Error(`Failed to delete product: ${resp.error}`);
+      }
     } catch (e) {
       console.error(e);
     }
