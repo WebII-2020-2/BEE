@@ -1,42 +1,52 @@
-.card-product.admin {
+.card-product.admin.container {
   background-color: var(--light-grey);
-  border-radius: 15px;
-  border: 2px solid transparent;
   padding: 0;
+  border: 2px solid transparent;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   transition: border 0.5s linear;
   cursor: pointer;
+  flex-basis: 200px;
+  flex-grow: 0;
+  margin-bottom: 0.5rem;
 }
 
-.card-product.admin:hover {
+.card-product.admin.container:hover {
   border-color: var(--grey);
 }
 
-.image-container.admin {
+.card-product.admin.image.container {
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70%;
-  width: 100%;
 }
 
-.image-product.admin {
-  max-width: 85%;
-  max-height: 85%;
+.card-product.admin.image {
+  max-height: 150px;
+  max-width: 150px;
+  transform: scale(0.9);
   border-radius: 50%;
-}
-
-.product-details.admin {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  flex-direction: column;
   background-color: white;
-  height: 30%;
-  border-radius: 15px;
-  font-size: 1.2rem;
 }
 
-.product-details-price.admin {
+.card-product.admin.info {
+  background-color: var(--white);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 1.2rem;
+  padding: 0.1rem 0;
+}
+
+.card-product.admin.info.price {
   font-size: 1rem;
   font-weight: bold;
 }
