@@ -3,10 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-header("access-control-allow-origin: https://localhost:3000");
-header("access-control-allow-origin: http://localhost:3000");
-header("access-control-allow-origin: https://bee-web2.vercel.app");
-
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('register', 'Api\UserController@register');
