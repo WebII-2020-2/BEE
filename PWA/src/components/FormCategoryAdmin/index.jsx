@@ -38,11 +38,10 @@ function FormCategory(props) {
     };
 
     try {
-      const response = CategoryAdminApiService.createNew(form);
-      console.log(response);
+      CategoryAdminApiService.createNew(form);
       history.push('/admin/categorias');
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

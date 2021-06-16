@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
-import FormProdutoAdmin from '../../../components/FormProdutoAdmin';
+import FormProdutoAdmin from '../../../components/FormProductAdmin';
 
 function ProductsNew() {
   return (
