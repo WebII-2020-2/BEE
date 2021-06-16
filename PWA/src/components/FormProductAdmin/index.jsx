@@ -220,7 +220,7 @@ function FormProdutoAdmin(props) {
             className="form-product-admin control"
             readOnly={isReadOnly}
             type="number"
-            name="unitaryValue"
+            name="unitary_value"
             value={values.unitary_value}
             onChange={handleUpdate}
           />
