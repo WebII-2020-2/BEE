@@ -3,6 +3,8 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  min-height: 80%;
+  min-height: 75%;
+  max-width: 900px;
+  align-self: center;
   padding-bottom: 0.5rem;
 }
