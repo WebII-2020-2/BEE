@@ -28,12 +28,14 @@ function TableList(props) {
     ));
 
   return (
-    <table className="w-100 table table-list table-hover">
-      <thead>
-        <tr>{th()}</tr>
-      </thead>
-      <tbody>{tr()}</tbody>
-    </table>
+    <div className="admin-container table">
+      <table className="w-100 table table-list table-hover">
+        <thead>
+          <tr>{th()}</tr>
+        </thead>
+        <tbody>{tr()}</tbody>
+      </table>
+    </div>
   );
 }
 
