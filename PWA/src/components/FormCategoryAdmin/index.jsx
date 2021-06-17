@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
@@ -6,31 +6,50 @@ import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormCategoryAdmin.css';
 
 function FormCategory(props) {
-  const { isNew, formData } = props;
-
+  const { isNew, categoryId } = props;
   const history = useHistory();
 
-  const [name, setName] = useState(formData.name);
-  const [description, setDescription] = useState(formData.description);
+  const [category, setCategory] = useState({
+    id: '',
+    name: '',
+    description: '',
+  });
+
+  const getCategoryById = async () => {
+    try {
+      const resp = await CategoryAdminApiService.getById(categoryId).then(
+        (r) => r.data
+      );
+      if (resp.success) {
+        setCategory(resp.data);
+      } else {
+        throw new Error(`Unable to get categories: ${resp.error}`);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getCategoryById();
+  }, []);
+
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
 
   const handleEdit = () => {
     setIsReadOnly(!isReadOnly);
   };
 
-  const handleUpdateName = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleUpdateDescription = (event) => {
-    setDescription(event.target.value);
+  const handleChange = (event) => {
+    setCategory({
+      ...category,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleSubmit = () => {
     const form = {
-      id: formData.id,
-      name,
-      description,
+      ...category,
     };
 
     try {
@@ -51,8 +70,8 @@ function FormCategory(props) {
 
   const handleDelete = () => {
     try {
-      CategoryAdminApiService.remove(formData.id);
-      history.push('/admin/produtos');
+      CategoryAdminApiService.remove(category.id);
+      history.push('/admin/categorias');
     } catch (e) {
       console.error(e);
     }
@@ -74,16 +93,18 @@ function FormCategory(props) {
         <Form.Control
           readOnly={isReadOnly}
           type="text"
-          value={name}
-          onChange={handleUpdateName}
+          value={category.name}
+          name="name"
+          onChange={handleChange}
         />
         <Form.Label className="mt-2">Descrição</Form.Label>
         <Form.Control
           readOnly={isReadOnly}
           as="textarea"
           rows={3}
-          value={description}
-          onChange={handleUpdateDescription}
+          value={category.description}
+          name="description"
+          onChange={handleChange}
         />
       </Form.Group>
     </Form>
