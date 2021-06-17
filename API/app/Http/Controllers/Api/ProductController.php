@@ -111,7 +111,7 @@ class ProductController extends Controller
             $product['description'] = $data['description'];
         }
         if(isset($data['image'])){
-            $product['mime_type'] = base64_decode($data_image[0]);
+            $product['mime_type'] = $data_image[0];
         }
         if(isset($data['image'])){
             $product['image'] = base64_decode($data_image[1]);
@@ -122,7 +122,7 @@ class ProductController extends Controller
         try{
             $result_product = Product::where('id', $data['id'])->update($product);
         }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar o produto.'];
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar o produto.', $exception];
         }
 
         if(isset($result_product) && !isset($error)){
