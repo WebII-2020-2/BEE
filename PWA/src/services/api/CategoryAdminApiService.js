@@ -9,7 +9,7 @@ function getAll() {
 
 /** busca por ID */
 function getById(id) {
-  return api.get(`${ENDPOINT_BASE}/${id}`);
+  return api.get(`${ENDPOINT_BASE}/list/${id}`);
 }
 
 /** cria um novo */
