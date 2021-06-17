@@ -93,9 +93,6 @@ function FormProdutoAdmin(props) {
       quantity: Number(values.quantity),
       description: values.description,
       unity: values.unity,
-      barcode: '2333ABR',
-      allotment: 8,
-      expirationDate: '2021-06-15',
     };
 
     try {
