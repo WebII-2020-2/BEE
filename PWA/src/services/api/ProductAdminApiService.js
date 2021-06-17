@@ -21,13 +21,13 @@ function create(form) {
 
 /** atualiza */
 function update(id, form) {
-  return api.post(`${ENDPOINT_BASE}/updade/`, {
+  return api.post(`${ENDPOINT_BASE}/updade`, {
     ...form,
   });
 }
 
 function remove(id) {
-  return api.post(`${ENDPOINT_BASE}/delete/`, {
+  return api.post(`${ENDPOINT_BASE}/delete`, {
     id,
   });
 }
