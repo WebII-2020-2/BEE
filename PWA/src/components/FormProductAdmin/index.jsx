@@ -39,19 +39,17 @@ function FormProdutoAdmin(props) {
 
   const getProduct = async () => {
     try {
-      const resp = await ProductAdminApiService.getAll().then((r) => r.data);
+      const resp = await ProductAdminApiService.getById(Number(productId)).then(
+        (r) => r.data
+      );
       if (resp.success) {
-        const productData = resp.data.find((p) => p.id === Number(productId));
-        if (productData !== undefined) {
-          setValues(productData);
-        } else {
-          history.push('/admin/produtos');
-        }
+        setValues(resp.data);
       } else {
         throw new Error(`Unable to get products: ${resp.error}`);
       }
     } catch (err) {
       console.error(err);
+      history.push('/admin/produtos');
     }
   };
 
