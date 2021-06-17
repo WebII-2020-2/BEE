@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Button } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-feather';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +7,12 @@ import './PaginationAdmin.css';
 function PaginationAdmin(props) {
   const { actualPage, totalPages, baseUrl, changePage } = props;
   const history = useHistory();
+
+  useEffect(() => {
+    if (actualPage > totalPages || actualPage < 1) {
+      history.push(`${baseUrl}/page/1`);
+    }
+  }, []);
 
   const handlePrevious = () => {
     changePage(actualPage - 1);
@@ -22,7 +28,7 @@ function PaginationAdmin(props) {
     <Row className="pagination-component admin">
       <Button
         variant="outline-dark"
-        disabled={actualPage === 1}
+        disabled={actualPage <= 1}
         onClick={handlePrevious}
       >
         <ChevronLeft />
@@ -30,7 +36,7 @@ function PaginationAdmin(props) {
       <p>{actualPage}</p>
       <Button
         variant="outline-dark"
-        disabled={actualPage === totalPages}
+        disabled={actualPage >= totalPages}
         onClick={handleNext}
       >
         <ChevronRight />
