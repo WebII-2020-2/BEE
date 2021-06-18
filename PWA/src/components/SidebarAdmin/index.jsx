@@ -61,7 +61,7 @@ function SidebarAdmin(props) {
         <Nav.Link
           className={`admin-sidebar-link ${link === 'promocoes' && 'selected'}`}
           disabled={link === 'promocoes'}
-          href="/admin/promoções"
+          href="/admin/promocoes"
         >
           Promoções
         </Nav.Link>
