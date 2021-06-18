@@ -93,6 +93,7 @@ function FormProdutoAdmin(props) {
     const form = {
       ...values,
     };
+    delete form.id;
     try {
       const isValid = await validationSchema
         .validate(form, { abortEarly: false })
@@ -106,7 +107,6 @@ function FormProdutoAdmin(props) {
         });
       if (isValid !== undefined) {
         if (isNew) {
-          delete form.id;
           const resp = await ProductAdminApiService.create(form).then(
             (r) => r.data
           );
@@ -116,9 +116,10 @@ function FormProdutoAdmin(props) {
             throw new Error(`Failed to create product: ${resp.error}`);
           }
         } else {
-          const resp = await ProductAdminApiService.update(form).then(
-            (r) => r.data
-          );
+          const resp = await ProductAdminApiService.update(
+            values.id,
+            form
+          ).then((r) => r.data);
           if (resp.success) {
             handleEdit();
           } else {
