@@ -4,16 +4,21 @@ import { useHistory } from 'react-router-dom';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
 import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormCategoryAdmin.css';
+import validationSchema from '../../services/validations/validationCategoryAdmin';
+import ValidationErrorsContainer from '../ValidationErrorsContainer';
 
 function FormCategory(props) {
   const { isNew, categoryId } = props;
   const history = useHistory();
 
   const [category, setCategory] = useState({
-    id: '',
     name: '',
     description: '',
   });
+
+  const [isReadOnly, setIsReadOnly] = useState(!isNew);
+  const [isSaving, setIsSaving] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const getCategoryById = async () => {
     try {
@@ -34,8 +39,6 @@ function FormCategory(props) {
     getCategoryById();
   }, []);
 
-  const [isReadOnly, setIsReadOnly] = useState(!isNew);
-
   const handleEdit = () => {
     setIsReadOnly(!isReadOnly);
   };
@@ -47,34 +50,63 @@ function FormCategory(props) {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsSaving(true);
     const form = {
       ...category,
     };
 
     try {
-      if (isNew) {
-        CategoryAdminApiService.createNew({
-          name: form.name,
-          description: form.description,
+      const isValid = await validationSchema
+        .validate(form, { abortEarly: false })
+        .then(() => {
+          setErrors([]);
+          return true;
+        })
+        .catch((err) => {
+          setErrors([...err.errors]);
+          return undefined;
         });
-        history.push('/admin/categorias');
-      } else {
-        CategoryAdminApiService.update(form);
-        handleEdit();
+      if (isValid !== undefined) {
+        if (isNew) {
+          const resp = await CategoryAdminApiService.createNew(form).then(
+            (r) => r.data
+          );
+          if (resp.success) {
+            history.push('/admin/categorias');
+          } else {
+            throw new Error(`Failed to create category: ${resp.error}`);
+          }
+        } else {
+          const resp = await CategoryAdminApiService.update(
+            form,
+            categoryId
+          ).then((r) => r.data);
+          if (resp.success) {
+            handleEdit();
+          } else {
+            throw new Error(`Failed to update category: ${resp.error}`);
+          }
+        }
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const handleDelete = () => {
     try {
-      CategoryAdminApiService.remove(category.id);
+      CategoryAdminApiService.remove(categoryId);
       history.push('/admin/categorias');
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
+  };
+
+  const handleClearErrors = () => {
+    setErrors([]);
   };
 
   return (
@@ -86,6 +118,12 @@ function FormCategory(props) {
         handleEdit={handleEdit}
         isNew={isNew}
         isReadOnly={isReadOnly}
+        isSaving={isSaving}
+      />
+
+      <ValidationErrorsContainer
+        errors={[...errors]}
+        clear={handleClearErrors}
       />
 
       <Form.Group className="form-category-admin">
