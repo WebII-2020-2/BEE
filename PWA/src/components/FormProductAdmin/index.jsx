@@ -5,7 +5,9 @@ import ProductAdminApiService from '../../services/api/ProductAdminApiService';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
 import emptyImage from '../../assets/img/empty-image.png';
 import ButtonsFormAdmin from '../ButtonsFormAdmin';
+import validationSchema from '../../services/validations/validationProductAdmin';
 import './FormProductAdmin.css';
+import ValidationErrorsContainer from '../ValidationErrorsContainer';
 
 function FormProdutoAdmin(props) {
   const { isNew, productId } = props;
@@ -16,14 +18,15 @@ function FormProdutoAdmin(props) {
     name: '',
     unity: '',
     description: '',
-    quantity: '',
+    quantity: 0,
     category_id: '',
-    unitary_value: '',
+    unitary_value: 0,
     image: '',
   });
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
   const [categories, setCategories] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const getCategories = async () => {
     try {
@@ -90,27 +93,37 @@ function FormProdutoAdmin(props) {
     const form = {
       ...values,
     };
-
     try {
-      if (isNew) {
-        delete form.id;
-        console.warn(form);
-        const resp = await ProductAdminApiService.create(form).then(
-          (r) => r.data
-        );
-        if (resp.success) {
-          history.push('/admin/produtos');
+      const isValid = await validationSchema
+        .validate(form, { abortEarly: false })
+        .then(() => {
+          setErrors([]);
+          return true;
+        })
+        .catch((err) => {
+          setErrors([...err.errors]);
+          return undefined;
+        });
+      if (isValid !== undefined) {
+        if (isNew) {
+          delete form.id;
+          const resp = await ProductAdminApiService.create(form).then(
+            (r) => r.data
+          );
+          if (resp.success) {
+            history.push('/admin/produtos');
+          } else {
+            throw new Error(`Failed to create product: ${resp.error}`);
+          }
         } else {
-          throw new Error(`Failed to create product: ${resp.error}`);
-        }
-      } else {
-        const resp = await ProductAdminApiService.update(form).then(
-          (r) => r.data
-        );
-        if (resp.success) {
-          handleEdit();
-        } else {
-          throw new Error(`Failed to update product: ${resp.error}`);
+          const resp = await ProductAdminApiService.update(form).then(
+            (r) => r.data
+          );
+          if (resp.success) {
+            handleEdit();
+          } else {
+            throw new Error(`Failed to update product: ${resp.error}`);
+          }
         }
       }
     } catch (e) {
@@ -135,6 +148,10 @@ function FormProdutoAdmin(props) {
     }
   };
 
+  const handleClearErrors = () => {
+    setErrors([]);
+  };
+
   return (
     <Form>
       <ButtonsFormAdmin
@@ -146,6 +163,13 @@ function FormProdutoAdmin(props) {
         isReadOnly={isReadOnly}
         isSaving={isSaving}
       />
+
+      {errors.length > 0 && (
+        <ValidationErrorsContainer
+          errors={[...errors]}
+          clear={handleClearErrors}
+        />
+      )}
 
       <Form.Group className="form-product-admin container">
         <Form.Group className="form-product-admin group">
@@ -203,6 +227,7 @@ function FormProdutoAdmin(props) {
             className="form-product-admin control"
             readOnly={isReadOnly}
             type="number"
+            min="0"
             name="quantity"
             value={values.quantity}
             onChange={handleUpdate}
@@ -215,6 +240,7 @@ function FormProdutoAdmin(props) {
             className="form-product-admin control"
             readOnly={isReadOnly}
             type="number"
+            min="0"
             name="unitary_value"
             value={values.unitary_value}
             onChange={handleUpdate}
