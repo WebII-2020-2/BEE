@@ -17,12 +17,13 @@ function FormProdutoAdmin(props) {
     unity: '',
     description: '',
     quantity: '',
-    idCategory: '',
+    category_id: '',
     unitary_value: '',
     image: '',
   });
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
   const [categories, setCategories] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const getCategories = async () => {
     try {
@@ -54,10 +55,10 @@ function FormProdutoAdmin(props) {
   };
 
   useEffect(() => {
+    getCategories();
     if (!isNew) {
       getProduct();
     }
-    getCategories();
   }, []);
 
   const handleEdit = () => {
@@ -67,34 +68,33 @@ function FormProdutoAdmin(props) {
   const handleUpdate = (event) => {
     if (event.target.name === 'image') {
       const file = event.target.files.item(0);
-      const reader = new FileReader();
-      reader.onload = (e) =>
-        setValues({
-          ...values,
-          [event.target.name]: e.target.result,
-        });
-      reader.readAsDataURL(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) =>
+          setValues({
+            ...values,
+            [event.target.name]: e.target.result,
+          });
+        reader.readAsDataURL(file);
+      }
     } else {
       setValues({
         ...values,
-        [event.target.name]: event.target.value,
+        [event.target.name]: Number(event.target.value) || event.target.value,
       });
     }
   };
 
   const handleSubmit = async () => {
-    let form = {
-      image: values.image,
-      name: values.name,
-      unitaryValue: Number(values.unitary_value),
-      idCategory: values.idCategory,
-      quantity: Number(values.quantity),
-      description: values.description,
-      unity: values.unity,
+    setIsSaving(true);
+    const form = {
+      ...values,
     };
 
     try {
       if (isNew) {
+        delete form.id;
+        console.warn(form);
         const resp = await ProductAdminApiService.create(form).then(
           (r) => r.data
         );
@@ -103,21 +103,20 @@ function FormProdutoAdmin(props) {
         } else {
           throw new Error(`Failed to create product: ${resp.error}`);
         }
-      }
-      form = {
-        id: values.id,
-        ...form,
-      };
-      const resp = await ProductAdminApiService.update(form).then(
-        (r) => r.data
-      );
-      if (resp.success) {
-        handleEdit();
       } else {
-        throw new Error(`Failed to update product: ${resp.error}`);
+        const resp = await ProductAdminApiService.update(form).then(
+          (r) => r.data
+        );
+        if (resp.success) {
+          handleEdit();
+        } else {
+          throw new Error(`Failed to update product: ${resp.error}`);
+        }
       }
     } catch (e) {
       console.warn(e);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -126,7 +125,7 @@ function FormProdutoAdmin(props) {
       const resp = await ProductAdminApiService.remove(values.id).then(
         (r) => r.data
       );
-      if (resp.succes) {
+      if (resp.success) {
         history.push('/admin/produtos');
       } else {
         throw new Error(`Failed to delete product: ${resp.error}`);
@@ -145,6 +144,7 @@ function FormProdutoAdmin(props) {
         handleEdit={handleEdit}
         isNew={isNew}
         isReadOnly={isReadOnly}
+        isSaving={isSaving}
       />
 
       <Form.Group className="form-product-admin container">
@@ -168,16 +168,16 @@ function FormProdutoAdmin(props) {
             className="form-product-admin control"
             disabled={isReadOnly}
             as="select"
-            name="idCategory"
+            name="category_id"
             onChange={handleUpdate}
-            defaultValue={values.idCategory}
+            value={values.category_id}
           >
             <option value="" disabled>
               Escolha uma categoria
             </option>
-            {categories.map((idCategory) => (
-              <option value={idCategory.id} key={idCategory.id}>
-                {idCategory.name}
+            {categories.map((category) => (
+              <option value={category.id} key={category.id}>
+                {category.name}
               </option>
             ))}
           </Form.Control>
