@@ -21,7 +21,7 @@ function create(form) {
 
 /** atualiza */
 function update(form) {
-  return api.post(`${ENDPOINT_BASE}/updade`, {
+  return api.post(`${ENDPOINT_BASE}/update`, {
     ...form,
   });
 }
