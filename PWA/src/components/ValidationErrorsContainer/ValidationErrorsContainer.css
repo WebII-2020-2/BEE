@@ -13,13 +13,13 @@
 .validation-errors.list {
   flex-direction: row;
   flex-wrap: wrap;
+  border-radius: 0px;
 }
 
 .validation-errors.list-item {
   flex-basis: 300px;
   flex-grow: 1;
   border: 0px solid var(--orange);
-  border-radius: 0;
   border-left-width: 2px;
   color: var(--orange);
   background-color: transparent;
