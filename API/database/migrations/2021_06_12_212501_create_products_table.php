@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('unity', 100);
             $table->integer('quantity');
             $table->float('unitary_value');
-            $table->string('description', 100);
+            $table->text('description');
             $table->string('mime_type', 100);
             $table->binary('image');
             $table->timestamps();

@@ -15,7 +15,11 @@ function CategoriesList(props) {
   const [actualPage, setActualPage] = useState(1);
   const totalPages = Math.ceil(categories.length / 5);
 
-  const th = { id: 'ID', name: 'Nome' };
+  const th = {
+    id: 'ID',
+    name: 'Nome',
+    count_products: 'Quantidade de produtos',
+  };
 
   const getCategories = async () => {
     try {

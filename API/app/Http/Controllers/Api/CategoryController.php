@@ -75,7 +75,7 @@ class CategoryController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function update(Request $request){
+    public function update($id, Request $request){
         $data = $request->all();
 
         try{
@@ -86,29 +86,31 @@ class CategoryController extends Controller
                 $update_values['description'] = $data['description'];
             }
 
-            $category = Category::where('id', $data['id'])->update($update_values);
+            $category = Category::where('id', $id)->update($update_values);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a categoria.'];
         }
 
         if(isset($category) && !isset($error) && $category){
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        }else{
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a categoria.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function delete(Request $request){
-        $data = $request->all();
-
+    public function delete($id){
         try{
-            $category = Category::where('id', $data['id'])->delete();
+            $category = Category::where('id', $id)->delete();
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
         }
 
         if(isset($category) && !isset($error) && $category){
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        }else{
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);

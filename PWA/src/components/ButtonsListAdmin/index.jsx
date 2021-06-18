@@ -9,7 +9,7 @@ function ButtonsListAdmin(props) {
   const [valueSearch, setValueSearch] = useState('');
 
   useEffect(() => {
-    funcFilter(valueSearch);
+    funcFilter(valueSearch.toLowerCase());
   }, [valueSearch]);
 
   return (
