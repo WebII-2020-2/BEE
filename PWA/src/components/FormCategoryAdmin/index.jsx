@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Alert } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
 import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormCategoryAdmin.css';
 import validationSchema from '../../services/validations/validationCategoryAdmin';
+import ValidationErrorsContainer from '../ValidationErrorsContainer';
 
 function FormCategory(props) {
   const { isNew, categoryId } = props;
   const history = useHistory();
 
   const [category, setCategory] = useState({
-    id: '',
     name: '',
     description: '',
   });
@@ -59,25 +59,38 @@ function FormCategory(props) {
     try {
       const isValid = await validationSchema
         .validate(form, { abortEarly: false })
-        .then(() => true)
+        .then(() => {
+          setErrors([]);
+          return true;
+        })
         .catch((err) => {
-          setErrors(err.errors);
-          return false;
+          setErrors([...err.errors]);
+          return undefined;
         });
-      if (isValid) {
+      if (isValid !== undefined) {
         if (isNew) {
-          await CategoryAdminApiService.createNew({
-            name: form.name,
-            description: form.description,
-          });
-          history.push('/admin/categorias');
+          const resp = await CategoryAdminApiService.createNew(form).then(
+            (r) => r.data
+          );
+          if (resp.success) {
+            history.push('/admin/categorias');
+          } else {
+            throw new Error(`Failed to create category: ${resp.error}`);
+          }
         } else {
-          await CategoryAdminApiService.update(form);
-          handleEdit();
+          const resp = await CategoryAdminApiService.update(
+            form,
+            categoryId
+          ).then((r) => r.data);
+          if (resp.success) {
+            handleEdit();
+          } else {
+            throw new Error(`Failed to update category: ${resp.error}`);
+          }
         }
       }
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     } finally {
       setIsSaving(false);
     }
@@ -85,11 +98,15 @@ function FormCategory(props) {
 
   const handleDelete = () => {
     try {
-      CategoryAdminApiService.remove(category.id);
+      CategoryAdminApiService.remove(categoryId);
       history.push('/admin/categorias');
     } catch (e) {
-      console.error(e);
+      console.warn(e);
     }
+  };
+
+  const handleClearErrors = () => {
+    setErrors([]);
   };
 
   return (
@@ -103,18 +120,12 @@ function FormCategory(props) {
         isReadOnly={isReadOnly}
         isSaving={isSaving}
       />
-      {errors.length > 0 && (
-        <Alert
-          variant="danger"
-          onClose={() => setErrors([])}
-          dismissible
-          className="mt-3"
-        >
-          {errors.map((e) => (
-            <p>{e}</p>
-          ))}
-        </Alert>
-      )}
+
+      <ValidationErrorsContainer
+        errors={[...errors]}
+        clear={handleClearErrors}
+      />
+
       <Form.Group className="form-category-admin">
         <Form.Label>Nome</Form.Label>
         <Form.Control
