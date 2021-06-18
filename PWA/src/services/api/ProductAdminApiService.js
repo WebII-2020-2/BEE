@@ -20,16 +20,14 @@ function create(form) {
 }
 
 /** atualiza */
-function update(form) {
-  return api.post(`${ENDPOINT_BASE}/update`, {
+function update(id, form) {
+  return api.post(`${ENDPOINT_BASE}/update/${id}`, {
     ...form,
   });
 }
 
 function remove(id) {
-  return api.post(`${ENDPOINT_BASE}/delete`, {
-    id,
-  });
+  return api.post(`${ENDPOINT_BASE}/delete/${id}`);
 }
 
 const ProductAdminApiService = {

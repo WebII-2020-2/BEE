@@ -1,10 +1,10 @@
 import React from 'react';
 import { Nav, Col, Image } from 'react-bootstrap';
-import { ArrowLeftCircle, LogOut } from 'react-feather';
+import { X, LogOut } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../services/auth/authAdmin';
 import logoColorful from '../../assets/img/bee-logo-color.svg';
-import user from '../../assets/img/default-user.png';
+import user from '../../assets/img/user.jpeg';
 import './SidebarAdmin.css';
 
 function SidebarAdmin(props) {
@@ -25,14 +25,17 @@ function SidebarAdmin(props) {
       className={`admin-sidebar wide ${disabled && 'disabled'}`}
     >
       <Nav className="admin-sidebar">
+        <span className="admin-sidebar-close">
+          <X size={30} onClick={click} />
+        </span>
         <Image src={logoColorful} className="admin-sidebar-logo" />
 
         <div className="admin-sidebar-user">
-          <Image src={user} className="admin-sidebar-user-avatar" rounded />
+          <Image src={user} className="admin-sidebar-user-avatar" />
 
           <span className="admin-sidebar-user-info">
-            <p className="admin-sidebar-user-info-name">Fabio Banana</p>
-            <p className="admin-sidebar-user-info-role">Administrador</p>
+            <p className="admin-sidebar-user-info-name">Beanie</p>
+            <p className="admin-sidebar-user-info-role">Administrator</p>
           </span>
 
           <Nav.Link onClick={handleClickLogout}>
@@ -81,10 +84,6 @@ function SidebarAdmin(props) {
         >
           Relatórios
         </Nav.Link>
-
-        <span className="admin-sidebar-close">
-          <ArrowLeftCircle size={30} onClick={click} />
-        </span>
       </Nav>
     </Col>
   );
