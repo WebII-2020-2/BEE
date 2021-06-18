@@ -14,7 +14,8 @@ function ProductsList(props) {
   const [productsPerPage, setProductsPerPage] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actualPage, setActualPage] = useState(1);
-  const totalPages = Math.ceil(products.length / 8);
+  const [totalPages, setTotalPages] = useState(Math.ceil(products.length / 8));
+  const [productsFilter, setProductsFilter] = useState([]);
 
   const getProducts = async () => {
     try {
@@ -32,33 +33,53 @@ function ProductsList(props) {
     }
   };
 
-  const getProductsPerPage = () => {
-    const indexMin = (actualPage - 1) * 8;
-    const indexMax = indexMin + 8;
-    const productList = products.filter(
-      (x, index) => index >= indexMin && index < indexMax
-    );
-    setProductsPerPage(productList);
-  };
-
   useEffect(() => {
     getProducts();
   }, []);
+
+  const getProductsPerPage = () => {
+    const indexMin = (actualPage - 1) * 8;
+    const indexMax = indexMin + 8;
+    if (productsFilter.length > 0) {
+      const productList = productsFilter.filter(
+        (x, index) => index >= indexMin && index < indexMax
+      );
+      setProductsPerPage(productList);
+    } else {
+      const productList = products.filter(
+        (x, index) => index >= indexMin && index < indexMax
+      );
+      setProductsPerPage(productList);
+    }
+  };
 
   useEffect(() => {
     if (match.params.number) {
       setActualPage(Number(match.params.number));
     }
     getProductsPerPage();
-  }, [products, actualPage]);
+  }, [products, productsFilter, actualPage]);
 
   const handleChangePage = (page) => {
     setActualPage(page);
   };
 
+  const getProductFilter = (valueSearch) => {
+    const filter = valueSearch || undefined;
+    setProductsFilter(
+      products.filter(
+        (product) => product.name.toLowerCase().indexOf(filter) !== -1
+      )
+    );
+    setTotalPages(Math.ceil(productsPerPage.length / 8));
+  };
+
   return (
     <AdminContainer link="produtos">
-      <ButtonsListAdmin link="/admin/produtos/novo" />
+      <ButtonsListAdmin
+        link="/admin/produtos/novo"
+        funcFilter={getProductFilter}
+      />
       {isLoading ? (
         <LoadingPageAdmin />
       ) : (
