@@ -94,7 +94,6 @@ function FormProdutoAdmin(props) {
     try {
       if (isNew) {
         delete form.id;
-        console.warn(form);
         const resp = await ProductAdminApiService.create(form).then(
           (r) => r.data
         );
