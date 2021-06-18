@@ -6,7 +6,7 @@ const validationSchema = yup.object().shape({
     .required('Campo obrigatório: Nome')
     .nullable(false)
     .max(100, 'Nome deve conter menos de 100 caracteres'),
-  category: yup.number().required('Escolha uma categoria'),
+  category_id: yup.number().min(1, 'Escolha uma categoria'),
   unity: yup
     .string()
     .required('Campo obrigatório: Unidade')

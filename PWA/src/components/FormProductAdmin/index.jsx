@@ -19,7 +19,7 @@ function FormProdutoAdmin(props) {
     unity: '',
     description: '',
     quantity: 0,
-    category_id: '',
+    category_id: 0,
     unitary_value: 0,
     image: '',
   });
@@ -164,12 +164,10 @@ function FormProdutoAdmin(props) {
         isSaving={isSaving}
       />
 
-      {errors.length > 0 && (
-        <ValidationErrorsContainer
-          errors={[...errors]}
-          clear={handleClearErrors}
-        />
-      )}
+      <ValidationErrorsContainer
+        errors={[...errors]}
+        clear={handleClearErrors}
+      />
 
       <Form.Group className="form-product-admin container">
         <Form.Group className="form-product-admin group">
@@ -196,7 +194,7 @@ function FormProdutoAdmin(props) {
             onChange={handleUpdate}
             value={values.category_id}
           >
-            <option value="" disabled>
+            <option value="0" disabled>
               Escolha uma categoria
             </option>
             {categories.map((category) => (
