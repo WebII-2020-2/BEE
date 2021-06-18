@@ -9,6 +9,7 @@
   min-height: 90vh;
   margin: 0 2rem;
   padding: 0;
+  padding-bottom: 1rem;
 }
 
 .admin-sidebar-toggle,
