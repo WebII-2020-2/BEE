@@ -18,7 +18,7 @@ function ValidationErrorsContainer(props) {
               variant="warning"
               className="validation-errors list-item"
             >
-              {value}
+              {value};
             </ListGroup.Item>
           ))}
         </ListGroup>

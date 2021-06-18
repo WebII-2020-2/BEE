@@ -3,17 +3,26 @@
   border-radius: 5px;
 }
 
+.validation-errors.container button {
+  padding: 0.5rem 1rem;
+  color: var(--orange);
+  font-size: 2rem;
+  font-weight: 400;
+}
+
 .validation-errors.list {
   flex-direction: row;
   flex-wrap: wrap;
 }
 
 .validation-errors.list-item {
-  flex-basis: 250px;
+  flex-basis: 300px;
   flex-grow: 1;
   border: 0px solid var(--orange);
-  border-left-width: 1px;
+  border-radius: 0;
+  border-left-width: 2px;
+  color: var(--orange);
   background-color: transparent;
   margin: 0px 0.1rem;
-  padding: 0.5rem;
+  padding: 0 1rem;
 }
