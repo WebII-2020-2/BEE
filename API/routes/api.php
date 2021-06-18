@@ -12,24 +12,24 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
 // Cards
-Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($router) {
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'card'], function ($router) {
     Route::post('/add', 'Api\CardController@store');
 });
 
 // Products
-Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'product'], function ($router) {
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'product'], function ($router) {
     Route::post('/add', 'Api\ProductController@store');
     Route::get('/list', 'Api\ProductController@show');
     Route::get('/list/{id}', 'Api\ProductController@get');
-    Route::post('/update', 'Api\ProductController@update');
-    Route::post('/delete', 'Api\ProductController@delete');
+    Route::post('/update/{id}', 'Api\ProductController@update');
+    Route::post('/delete/{id}', 'Api\ProductController@delete');
 });
 
 // Categories
-Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'category'], function ($router) {
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'category'], function ($router) {
     Route::post('/add', 'Api\CategoryController@store');
     Route::get('/list', 'Api\CategoryController@show');
     Route::get('/list/{id}', 'Api\CategoryController@get');
-    Route::post('/update', 'Api\CategoryController@update');
-    Route::post('/delete', 'Api\CategoryController@delete');
+    Route::post('/update/{id}', 'Api\CategoryController@update');
+    Route::post('/delete/{id}', 'Api\CategoryController@delete');
 });
