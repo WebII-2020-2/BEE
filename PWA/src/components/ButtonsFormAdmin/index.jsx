@@ -1,16 +1,32 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import './ButtonsFormAdmin.css';
 import { ArrowLeft } from 'react-feather';
 import { Link } from 'react-router-dom';
 
 function ButtonsFormAdmin(props) {
-  const { handleSubmit, handleDelete, handleEdit, isNew, isReadOnly, path } =
-    props;
+  const {
+    handleSubmit,
+    handleDelete,
+    handleEdit,
+    isNew,
+    isReadOnly,
+    path,
+    isSaving,
+  } = props;
 
   const buttonsNew = () => (
-    <Button variant="success" className="btn-form-admin" onClick={handleSubmit}>
-      Salvar
+    <Button
+      variant="success"
+      className="btn-form-admin"
+      disabled={isSaving}
+      onClick={handleSubmit}
+    >
+      {isSaving ? (
+        <Spinner animation="border" variant="light" size="sm" />
+      ) : (
+        'Salvar'
+      )}
     </Button>
   );
 
@@ -48,8 +64,13 @@ function ButtonsFormAdmin(props) {
           variant="success"
           className="btn-form-admin"
           onClick={handleSubmit}
+          disabled={isSaving}
         >
-          Salvar
+          {isSaving ? (
+            <Spinner animation="border" variant="light" size="sm" />
+          ) : (
+            'Salvar'
+          )}
         </Button>
       </div>
     );
