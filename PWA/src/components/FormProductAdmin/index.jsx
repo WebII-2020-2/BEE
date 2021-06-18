@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Image, Alert } from 'react-bootstrap';
+import { Form, Image } from 'react-bootstrap';
 import ProductAdminApiService from '../../services/api/ProductAdminApiService';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
 import emptyImage from '../../assets/img/empty-image.png';
 import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import validationSchema from '../../services/validations/validationProductAdmin';
 import './FormProductAdmin.css';
+import ValidationErrorsContainer from '../ValidationErrorsContainer';
 
 function FormProdutoAdmin(props) {
   const { isNew, productId } = props;
@@ -100,7 +101,6 @@ function FormProdutoAdmin(props) {
           return true;
         })
         .catch((err) => {
-          console.warn([...err.errors]);
           setErrors([...err.errors]);
           return undefined;
         });
@@ -125,8 +125,6 @@ function FormProdutoAdmin(props) {
             throw new Error(`Failed to update product: ${resp.error}`);
           }
         }
-      } else {
-        console.warn(isValid);
       }
     } catch (e) {
       console.warn(e);
@@ -150,6 +148,10 @@ function FormProdutoAdmin(props) {
     }
   };
 
+  const handleClearErrors = () => {
+    setErrors([]);
+  };
+
   return (
     <Form>
       <ButtonsFormAdmin
@@ -162,20 +164,12 @@ function FormProdutoAdmin(props) {
         isSaving={isSaving}
       />
 
-      <div
-        style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-      >
-        {errors.map((value) => (
-          <Alert
-            variant="warning"
-            onClose={() => setErrors([...errors.filter((e) => e !== value)])}
-            dismissible
-            style={{ flexBasis: '400px', margin: '.5rem' }}
-          >
-            {value}
-          </Alert>
-        ))}
-      </div>
+      {errors.length > 0 && (
+        <ValidationErrorsContainer
+          errors={[...errors]}
+          clear={handleClearErrors}
+        />
+      )}
 
       <Form.Group className="form-product-admin container">
         <Form.Group className="form-product-admin group">
