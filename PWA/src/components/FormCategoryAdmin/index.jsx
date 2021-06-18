@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import CategoryAdminApiService from '../../services/api/CategoryAdminApiService';
 import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import './FormCategoryAdmin.css';
+import validationSchema from '../../services/validations/validationCategoryAdmin';
 
 function FormCategory(props) {
   const { isNew, categoryId } = props;
@@ -14,6 +15,10 @@ function FormCategory(props) {
     name: '',
     description: '',
   });
+
+  const [isReadOnly, setIsReadOnly] = useState(!isNew);
+  const [isSaving, setIsSaving] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const getCategoryById = async () => {
     try {
@@ -34,8 +39,6 @@ function FormCategory(props) {
     getCategoryById();
   }, []);
 
-  const [isReadOnly, setIsReadOnly] = useState(!isNew);
-
   const handleEdit = () => {
     setIsReadOnly(!isReadOnly);
   };
@@ -47,24 +50,36 @@ function FormCategory(props) {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsSaving(true);
     const form = {
       ...category,
     };
 
     try {
-      if (isNew) {
-        CategoryAdminApiService.createNew({
-          name: form.name,
-          description: form.description,
+      const isValid = await validationSchema
+        .validate(form, { abortEarly: false })
+        .then(() => true)
+        .catch((err) => {
+          setErrors(err.errors);
+          return false;
         });
-        history.push('/admin/categorias');
-      } else {
-        CategoryAdminApiService.update(form);
-        handleEdit();
+      if (isValid) {
+        if (isNew) {
+          await CategoryAdminApiService.createNew({
+            name: form.name,
+            description: form.description,
+          });
+          history.push('/admin/categorias');
+        } else {
+          await CategoryAdminApiService.update(form);
+          handleEdit();
+        }
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -86,8 +101,20 @@ function FormCategory(props) {
         handleEdit={handleEdit}
         isNew={isNew}
         isReadOnly={isReadOnly}
+        isSaving={isSaving}
       />
-
+      {errors.length > 0 && (
+        <Alert
+          variant="danger"
+          onClose={() => setErrors([])}
+          dismissible
+          className="mt-3"
+        >
+          {errors.map((e) => (
+            <p>{e}</p>
+          ))}
+        </Alert>
+      )}
       <Form.Group className="form-category-admin">
         <Form.Label>Nome</Form.Label>
         <Form.Control
