@@ -16,25 +16,19 @@ class UserController extends Controller{
     }
 
     public function register(Request $request){
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
-
-        $data = $request->only(['name','email','password']);
+        $data = $request->all();
 
         try{
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'cpf' => $data['cpf'] ?? null,
-                'phone' => $data['phone'] ?? null,
-                'birth_date' => $data['birth_date'] ?? null,
+                'cpf' => $data['cpf'],
+                'phone' => $data['phone'],
+                'birth_date' => $data['birth_date'],
                 'password' => Hash::make($data['password'])
             ]);
         }catch(\Exception $exception){
-            $error = ['code' => 4, 'error_message' => 'Não autorizado.'];
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o usuário.'];
         }
 
         if(isset($user) && !isset($error)){
@@ -45,16 +39,10 @@ class UserController extends Controller{
     }
 
     public function login(Request $request){
-
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
-
         $data = $request->only(['email', 'password']);
 
         if (!$token = Auth::attempt($data)) {
-            return response()->json(['success' => false, 'data' => null, 'error' => ['code' => 4, 'error_message' => 'Não autorizado.']], 400);
+            return response()->json(['success' => false, 'data' => null, 'error' => ['code' => 2, 'error_message' => 'Credenciais incorretas.']], 400);
         }
 
         return $this->createNewToken($token);

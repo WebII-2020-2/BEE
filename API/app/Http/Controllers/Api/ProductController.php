@@ -18,11 +18,11 @@ class ProductController extends Controller
                 'name' => $data['name'],
                 'unity' => $data['unity'],
                 'quantity' => $data['quantity'],
-                'unitary_value' => $data['unitaryValue'],
+                'unitary_value' => $data['unitary_value'],
                 'description' => $data['description'],
                 'mime_type' => $data_image[0],
                 'image' => base64_decode($data_image[1]),
-                'category_id' => $data['idCategory']
+                'category_id' => $data['category_id']
             ]);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o produto.'];
@@ -90,7 +90,7 @@ class ProductController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function update(Request $request){
+    public function update($id, Request $request){
         $data = $request->all();
 
         $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
@@ -104,8 +104,8 @@ class ProductController extends Controller
         if(isset($data['quantity'])){
             $product['quantity'] = $data['quantity'];
         }
-        if(isset($data['unitaryValue'])){
-            $product['unitary_value'] = $data['unitaryValue'];
+        if(isset($data['unitary_value'])){
+            $product['unitary_value'] = $data['unitary_value'];
         }
         if(isset($data['description'])){
             $product['description'] = $data['description'];
@@ -116,33 +116,37 @@ class ProductController extends Controller
         if(isset($data['image'])){
             $product['image'] = base64_decode($data_image[1]);
         }
-        if(isset($data['idCategory'])){
-            $product['category_id'] = $data['idCategory'];
+        if(isset($data['category_id'])){
+            $product['category_id'] = $data['category_id'];
         }
         try{
-            $result_product = Product::where('id', $data['id'])->update($product);
+            $result_product = Product::where('id', $id)->update($product);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar o produto.', $exception];
         }
 
-        if(isset($result_product) && !isset($error)){
+        if(isset($result_product) && !isset($error) && $result_product){
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        }else{
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar o produto.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function delete(Request $request){
+    public function delete($id, Request $request){
         $data = $request->all();
 
         try{
-            $product = Product::where('id', $data['id'])->delete();
+            $product = Product::where('id', $id)->delete();
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o produto.'];
         }
 
         if(isset($product) && !isset($error) && $product){
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        }else{
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o produto.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
