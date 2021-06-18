@@ -164,12 +164,10 @@ function FormProdutoAdmin(props) {
         isSaving={isSaving}
       />
 
-      {errors.length > 0 && (
-        <ValidationErrorsContainer
-          errors={[...errors]}
-          clear={handleClearErrors}
-        />
-      )}
+      <ValidationErrorsContainer
+        errors={[...errors]}
+        clear={handleClearErrors}
+      />
 
       <Form.Group className="form-product-admin container">
         <Form.Group className="form-product-admin group">
