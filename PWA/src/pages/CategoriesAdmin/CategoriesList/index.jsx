@@ -10,6 +10,7 @@ function CategoriesList(props) {
   const { match } = props;
   const [categories, setCategories] = useState([]);
   const [categoriesPerPage, setCategoriesPerPage] = useState([]);
+  const [categoriesFilter, setCategoriesFilter] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actualPage, setActualPage] = useState(1);
   const totalPages = Math.ceil(categories.length / 5);
@@ -56,14 +57,26 @@ function CategoriesList(props) {
     setActualPage(page);
   };
 
+  const getCategoryFilter = (valueSearch) => {
+    const filter = valueSearch || undefined;
+    setCategoriesFilter(
+      categories.filter(
+        (category) => category.name.toLowerCase().indexOf(filter) !== -1
+      )
+    );
+  };
+
   return (
     <AdminContainer link="categorias">
-      <ButtonsListAdmin link="/admin/categorias/novo" />
+      <ButtonsListAdmin
+        link="/admin/categorias/novo"
+        funcFilter={getCategoryFilter}
+      />
       {isLoading ? (
         <LoadingPageAdmin />
       ) : (
         <TableListAdmin
-          itens={categoriesPerPage}
+          itens={categoriesFilter.length ? categoriesFilter : categoriesPerPage}
           tableHead={th}
           linkEdit="/admin/categorias"
         />
