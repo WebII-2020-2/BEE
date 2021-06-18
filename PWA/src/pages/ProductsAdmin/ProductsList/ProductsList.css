@@ -5,6 +5,13 @@
   align-items: center;
   min-height: 75%;
   max-width: 900px;
+  min-width: calc(450px);
   align-self: center;
   padding-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .product-list.admin {
+    min-width: calc(300px);
+  }
 }
