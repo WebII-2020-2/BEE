@@ -21,14 +21,12 @@ function createNew(form) {
 
 /** deleta */
 function remove(id) {
-  return api.post(`${ENDPOINT_BASE}/delete`, {
-    id,
-  });
+  return api.post(`${ENDPOINT_BASE}/delete/${id}`);
 }
 
 /** atualiza */
-function update(form) {
-  return api.post(`${ENDPOINT_BASE}/update`, {
+function update(form, id) {
+  return api.post(`${ENDPOINT_BASE}/update/${id}`, {
     ...form,
   });
 }
