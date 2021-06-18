@@ -11,9 +11,10 @@ function Categories(props) {
 
   return (
     <Switch>
-      <Route path={match.path} exact component={CategoriesList} />
+      <Route path={`${match.path}/page/:number`} component={CategoriesList} />
       <Route path={`${match.path}/novo`} component={CategoriesNew} />
       <Route path={`${match.path}/:id`} component={CategoriesPage} />
+      <Route path={match.path} exact component={CategoriesList} />
     </Switch>
   );
 }
