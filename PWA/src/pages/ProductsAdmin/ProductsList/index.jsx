@@ -41,13 +41,13 @@ function ProductsList(props) {
         (x, index) => index >= indexMin && index < indexMax
       );
       setProductsPerPage(productList);
-      setTotalPages(Math.ceil(productList.length / 8));
+      setTotalPages(Math.ceil(productsFilter.length / 8));
     } else {
       const productList = products.filter(
         (x, index) => index >= indexMin && index < indexMax
       );
       setProductsPerPage(productList);
-      setTotalPages(Math.ceil(productList.length / 8));
+      setTotalPages(Math.ceil(products.length / 8));
     }
   };
 
