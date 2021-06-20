@@ -64,6 +64,7 @@
             "@php artisan migrate --path=database/migrations/2014_10_12_000000_create_users_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_212359_create_payment_methods_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_212445_create_send_methods_table.php",
+            "@php artisan migrate --path=database/migrations/2021_06_12_212311_create_addresses_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_212409_create_orders_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_212509_create_categories_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_212501_create_products_table.php",
@@ -72,14 +73,12 @@
             "@php artisan migrate --path=database/migrations/2021_06_12_212524_create_promotions_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_215302_create_product_promotions_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_215245_create_category_promotions_table.php",
-            "@php artisan migrate --path=database/migrations/2021_06_12_212311_create_addresses_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_01_204652_create_cards_table.php",
             "@php artisan migrate --path=database/migrations/2021_06_12_212349_create_logs_table.php"
         ],
         "db-drop":[
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212349_create_logs_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_01_204652_create_cards_table.php",
-            "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212311_create_addresses_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_215245_create_category_promotions_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_215302_create_product_promotions_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212524_create_promotions_table.php",
@@ -88,6 +87,7 @@
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212501_create_products_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212509_create_categories_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212409_create_orders_table.php",
+            "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212311_create_addresses_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212445_create_send_methods_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2021_06_12_212359_create_payment_methods_table.php",
             "@php artisan migrate:rollback --path=database/migrations/2014_10_12_000000_create_users_table.php"
