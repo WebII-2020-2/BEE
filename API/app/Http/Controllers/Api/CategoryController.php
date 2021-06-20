@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
     public function show(){
         try{
-            $categories = Category::all();
+            $categories = Category::orderBy('name', 'asc')->get();
             $mounted_categories = [];
             foreach($categories as $category){
                 $count = Product::where('category_id', $category->id)->count("id");

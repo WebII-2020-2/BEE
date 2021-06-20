@@ -37,7 +37,7 @@ class ProductController extends Controller
 
     public function show(){
         try{
-            $products = Product::join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
+            $products = Product::orderBy('name', 'asc')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
 
             $mounted_products = [];
             foreach($products as $product){

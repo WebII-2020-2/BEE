@@ -15,49 +15,24 @@ class OrderController extends Controller
                         ::join('users as u', 'u.id', '=','orders.user_id')
                         ->join('payment_methods as pm', 'pm.id', '=', 'orders.payment_method_id')
                         ->join('send_methods as sm', 'sm.id', '=', 'orders.send_method_id')
+                        ->orderBy('orders.created_at', 'desc')
                         ->select(
                             'orders.id',
                             'orders.quantity',
                             'orders.value_total',
-                            'orders.invoice',
                             'orders.status_order',
-                            'orders.shipped_date',
-                            'orders.estimated_date',
-                            'orders.tracking_code',
-                            'orders.finished_date',
+                            'orders.created_at',
                             'u.name as name_user',
-                            'pm.name as payment_method',
-                            'sm.name as send_method'
                         )->get();
             $mounted_orders_data = [];
             foreach($orders as $order){
-                $products = $order->productOrder()
-                                ->join('products as p','p.id','=','product_orders.product_id')
-                                ->select('product_orders.*','p.name', 'p.unitary_value as unitary_value_product')
-                                ->get();
-                $mounted_products_data = [];
-                foreach($products as $product){
-                    array_push($mounted_products_data, array(
-                        'name' => $product->name,
-                        'unitary_value_product' => $product->unitary_value_product,
-                        'quantity' => $product->quantity,
-                        'unitary_value_selled' => $product->unitary_value
-                    ));
-                }
                 array_push($mounted_orders_data, array(
                     'id' => $order->id,
                     'quantity' => $order->quantity,
                     'value_total' => $order->value_total,
-                    'invoice' => $order->invoice,
                     'status_order' => $order->status_order,
-                    'shipped_date' => $order->shipped_date,
-                    'estimated_date' => $order->estimated_date,
-                    'finished_date' => $order->finished_date,
-                    'tracking_code' => $order->tracking_code,
                     'name_user' => $order->name_user,
-                    'payment_method' => $order->payment_method,
-                    'send_method' => $order->send_method,
-                    'products' => $mounted_products_data
+                    'selled_date' => $order->created_at,
                 ));
             }
         }catch(\Exception $exception){
@@ -88,6 +63,7 @@ class OrderController extends Controller
                             'orders.estimated_date',
                             'orders.tracking_code',
                             'orders.finished_date',
+                            'orders.created_at',
                             'u.name as name_user',
                             'pm.name as payment_method',
                             'sm.name as send_method'
@@ -119,6 +95,7 @@ class OrderController extends Controller
                                 'name_user' => $order->name_user,
                                 'payment_method' => $order->payment_method,
                                 'send_method' => $order->send_method,
+                                'selled_date' => $order->created_at,
                                 'products' => $mounted_products_data
                             );
                         }else{
