@@ -40,3 +40,9 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'order
     Route::get('/list/{id}', 'Api\OrderController@get');
     Route::post('/update/{id}', 'Api\OrderController@update');
 });
+
+// Reports
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'reports'], function ($router) {
+    Route::get('/list', 'Api\ReportsController@index');
+    Route::get('/list/{date}', 'Api\ReportsController@get');
+});
