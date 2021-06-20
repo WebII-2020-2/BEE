@@ -14,7 +14,7 @@ function ProductsList(props) {
   const [productsPerPage, setProductsPerPage] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actualPage, setActualPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(Math.ceil(products.length / 8));
+  const [totalPages, setTotalPages] = useState(1);
   const [productsFilter, setProductsFilter] = useState([]);
 
   const getProducts = async () => {
@@ -33,32 +33,23 @@ function ProductsList(props) {
     }
   };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
   const getProductsPerPage = () => {
     const indexMin = (actualPage - 1) * 8;
     const indexMax = indexMin + 8;
-    if (productsFilter.length > 0) {
+    if (productsFilter !== -1) {
       const productList = productsFilter.filter(
         (x, index) => index >= indexMin && index < indexMax
       );
       setProductsPerPage(productList);
+      setTotalPages(Math.ceil(productsFilter.length / 8));
     } else {
       const productList = products.filter(
         (x, index) => index >= indexMin && index < indexMax
       );
       setProductsPerPage(productList);
+      setTotalPages(Math.ceil(products.length / 8));
     }
   };
-
-  useEffect(() => {
-    if (match.params.number) {
-      setActualPage(Number(match.params.number));
-    }
-    getProductsPerPage();
-  }, [products, productsFilter, actualPage]);
 
   const handleChangePage = (page) => {
     setActualPage(page);
@@ -66,13 +57,26 @@ function ProductsList(props) {
 
   const getProductFilter = (valueSearch) => {
     const filter = valueSearch || undefined;
-    setProductsFilter(
-      products.filter(
+    if (filter) {
+      const filtered = products.filter(
         (product) => product.name.toLowerCase().indexOf(filter) !== -1
-      )
-    );
-    setTotalPages(Math.ceil(productsPerPage.length / 8));
+      );
+      setProductsFilter(filtered);
+    } else {
+      setProductsFilter(-1);
+    }
   };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    if (match.params.number) {
+      setActualPage(Number(match.params.number));
+    }
+    getProductsPerPage();
+  }, [products, productsFilter, actualPage, totalPages]);
 
   return (
     <AdminContainer link="produtos">

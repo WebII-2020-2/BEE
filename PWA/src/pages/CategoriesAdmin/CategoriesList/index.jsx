@@ -13,9 +13,15 @@ function CategoriesList(props) {
   const [categoriesFilter, setCategoriesFilter] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actualPage, setActualPage] = useState(1);
-  const totalPages = Math.ceil(categories.length / 5);
+  const [totalPages, setTotalPages] = useState(
+    Math.ceil(categories.length / 5)
+  );
 
-  const th = { id: 'ID', name: 'Nome' };
+  const th = {
+    id: 'ID',
+    name: 'Nome',
+    count_products: 'Quantidade de produtos',
+  };
 
   const getCategories = async () => {
     try {
@@ -40,10 +46,19 @@ function CategoriesList(props) {
   const getCategoriesPerPage = () => {
     const indexMin = (actualPage - 1) * 5;
     const indexMax = indexMin + 5;
-    const categoryList = categories.filter(
-      (x, index) => index >= indexMin && index < indexMax
-    );
-    setCategoriesPerPage(categoryList);
+    if (categoriesFilter !== -1) {
+      const categoryList = categoriesFilter.filter(
+        (x, index) => index >= indexMin && index < indexMax
+      );
+      setTotalPages(Math.ceil(categoriesFilter.length / 5));
+      setCategoriesPerPage(categoryList);
+    } else {
+      const categoryList = categories.filter(
+        (x, index) => index >= indexMin && index < indexMax
+      );
+      setTotalPages(Math.ceil(categories.length / 5));
+      setCategoriesPerPage(categoryList);
+    }
   };
 
   useEffect(() => {
@@ -51,7 +66,7 @@ function CategoriesList(props) {
       setActualPage(Number(match.params.number));
     }
     getCategoriesPerPage();
-  }, [categories, actualPage]);
+  }, [categories, categoriesFilter, actualPage]);
 
   const handleChangePage = (page) => {
     setActualPage(page);
@@ -59,11 +74,15 @@ function CategoriesList(props) {
 
   const getCategoryFilter = (valueSearch) => {
     const filter = valueSearch || undefined;
-    setCategoriesFilter(
-      categories.filter(
+
+    if (filter) {
+      const filtered = categories.filter(
         (category) => category.name.toLowerCase().indexOf(filter) !== -1
-      )
-    );
+      );
+      setCategoriesFilter(filtered);
+    } else {
+      setCategoriesFilter(-1);
+    }
   };
 
   return (
@@ -76,7 +95,7 @@ function CategoriesList(props) {
         <LoadingPageAdmin />
       ) : (
         <TableListAdmin
-          itens={categoriesFilter.length ? categoriesFilter : categoriesPerPage}
+          itens={categoriesPerPage}
           tableHead={th}
           linkEdit="/admin/categorias"
         />

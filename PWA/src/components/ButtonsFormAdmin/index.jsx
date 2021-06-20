@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import './ButtonsFormAdmin.css';
 import { ArrowLeft } from 'react-feather';
 import { Link } from 'react-router-dom';
+import ConfirmationAlert from '../ConfirmationAlert';
 
 function ButtonsFormAdmin(props) {
   const {
@@ -14,6 +15,21 @@ function ButtonsFormAdmin(props) {
     path,
     isSaving,
   } = props;
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const getModal = () => (
+    <ConfirmationAlert
+      show={showModal}
+      handleShow={handleShowModal}
+      handleSubmit={handleDelete}
+      modalInfo="Tem certeza? Essa opção não poderá ser desfeita!"
+    />
+  );
 
   const buttonsNew = () => (
     <Button
@@ -37,7 +53,7 @@ function ButtonsFormAdmin(props) {
           <Button
             variant="danger"
             className="btn-form-admin"
-            onClick={handleDelete}
+            onClick={handleShowModal}
           >
             Excluir
           </Button>
@@ -80,6 +96,7 @@ function ButtonsFormAdmin(props) {
       <Link to={path} className="btn btn-secondary btn-form-admin voltar">
         <ArrowLeft /> Voltar
       </Link>
+      {getModal()}
       {isNew ? buttonsNew() : buttonsView()}
     </div>
   );
