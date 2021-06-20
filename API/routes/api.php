@@ -33,3 +33,10 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'categ
     Route::post('/update/{id}', 'Api\CategoryController@update');
     Route::post('/delete/{id}', 'Api\CategoryController@delete');
 });
+
+// Orders
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'order'], function ($router) {
+    Route::get('/list', 'Api\OrderController@show');
+    Route::get('/list/{id}', 'Api\OrderController@get');
+    Route::post('/update/{id}', 'Api\OrderController@update');
+});

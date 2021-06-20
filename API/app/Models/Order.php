@@ -13,9 +13,15 @@ class Order extends Model
         'status_order',
         'shipped_date',
         'estimated_date',
+        'finished_date',
         'payment_method_id',
-        'send_method_id'
+        'send_method_id',
+        'tracking_code'
     ];
 
     protected $table = 'orders';
+
+    public function productOrder(){
+        return $this->hasMany('App\Models\ProductOrder');
+    }
 }
