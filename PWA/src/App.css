@@ -10,20 +10,25 @@
 }
 
 @font-face {
-  font-family: "Roboto";
-  src: url("./assets/fonts/Roboto/Roboto-Regular.ttf");
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto/Roboto-Regular.ttf');
 }
 
 @font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins/Poppins-Regular.ttf");
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins/Poppins-Regular.ttf');
 }
 
 /* Reset do CSS */
 * {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   outline: none;
+}
+
+.form-control:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 0.1rem var(--yellow);
 }

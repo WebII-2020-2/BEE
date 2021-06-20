@@ -55,9 +55,3 @@ textarea.form-product-admin.control {
 .form-product-admin.label {
   font-size: 1.2rem;
 }
-
-.form-product-admin.control:focus,
-.form-product-admin.control:active {
-  border: 1px solid var(--yellow);
-  box-shadow: 0 0 2px var(--yellow);
-}
