@@ -5,7 +5,7 @@ import { Search } from 'react-feather';
 import './ButtonsListAdmin.css';
 
 function ButtonsListAdmin(props) {
-  const { link, funcFilter } = props;
+  const { link, funcFilter, filterType } = props;
   const [valueSearch, setValueSearch] = useState('');
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function ButtonsListAdmin(props) {
 
   return (
     <Row className="mt-3 mb-4">
-      <Col>
+      <Col style={{ visibility: link ? 'visible' : 'hidden' }}>
         <Link to={link}>
           <Button type="button" variant="dark">
             Cadastrar
@@ -26,12 +26,15 @@ function ButtonsListAdmin(props) {
           <input
             placeholder="Pesquisar"
             className="input-search"
+            type={filterType || 'text'}
             value={valueSearch}
             onChange={(e) => setValueSearch(e.target.value)}
           />
-          <InputGroup.Append className="d-flex align-items-center px-2">
-            <Search />
-          </InputGroup.Append>
+          {!filterType && (
+            <InputGroup.Append className="d-flex align-items-center px-2">
+              <Search />
+            </InputGroup.Append>
+          )}
         </InputGroup>
       </Col>
     </Row>
