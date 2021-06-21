@@ -5,7 +5,7 @@ import FormCategoryAdmin from '../../../components/FormCategoryAdmin';
 function CategoriesNew() {
   return (
     <AdminContainer link="categorias">
-      <FormCategoryAdmin isNew formData={{}} />
+      <FormCategoryAdmin isNew />
     </AdminContainer>
   );
 }
