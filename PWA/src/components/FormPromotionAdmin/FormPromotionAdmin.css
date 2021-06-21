@@ -1,0 +1,39 @@
+.form-promotion-admin.container{
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-radius: 5px;
+  color: var(--dark-grey);
+  background-color: var(--light-grey);
+  margin-top: 1rem;
+}
+
+.form-promotion-admin.group{
+  flex-basis:350px;
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.form-promotion-admin.group.lg{
+  flex-basis: 700px;
+}
+
+.form-promotion-admin.label {
+  flex-basis: 100px;
+  flex-grow: 1;
+  font-size: 1.2rem;
+}
+
+.form-promotion-admin.control {
+  flex-basis: 200px;
+  flex-grow: 2;
+}
+
+/* .form-promotion-admin.group.sm {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 300px;
+  flex-grow: 1;
+  text-align: center;
+} */
