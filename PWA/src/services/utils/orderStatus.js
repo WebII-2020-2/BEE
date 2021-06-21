@@ -16,8 +16,10 @@ const convert = (status) => {
       return 'Pedido entrege';
     case 8:
       return 'Pedido devolvido';
+    case 9:
+      return 'Pedido cancelado pelo cliente';
     default:
-      return 'Cancelado';
+      return '';
   }
 };
 
