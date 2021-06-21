@@ -5,7 +5,7 @@ import Logo from '../../assets/img/bee-logo-admin.svg';
 import AuthApiService from '../../services/api/AuthApiService';
 import { loginAdmin } from '../../services/auth/authAdmin';
 
-function Login() {
+function LoginAdmin() {
   const history = useHistory();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,12 +14,20 @@ function Login() {
     setError('');
     try {
       setLoading(true);
-      const response = await AuthApiService.sendLoginAdmin({ email, password });
-      loginAdmin(response.data.access_token);
-      history.push('/admin/home');
+      const resp = await AuthApiService.sendLoginAdmin({
+        email,
+        password,
+      }).then((r) => r.data);
+      if (resp.success) {
+        loginAdmin(resp.data.token.access_token);
+        history.push('/admin/home');
+      } else {
+        throw new Error(`Unable to login: ${resp.error}`);
+      }
     } catch (e) {
       console.error(e);
       setError('Houve um problema com o login, verifique suas credenciais.');
+    } finally {
       setLoading(false);
     }
   }
@@ -34,4 +42,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginAdmin;
