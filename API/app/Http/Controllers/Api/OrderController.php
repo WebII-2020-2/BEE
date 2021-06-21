@@ -147,6 +147,16 @@ class OrderController extends Controller
             $order_data['status_order'] = $data['status_order'];
         }
 
+        if(isset($data['status_order']) && $data['status_order'] == 6){
+            $address = Order::where('id', $id)->join('addresses as a', 'a.id', '=', 'orders.address_id')->select('a.*')->fisrt();
+            $order_data['shipped_date'] = Carbon::today()->format('Y-m-d');
+            $order_data['estimated_date'] = Carbon::today()->add($address->deadline, 'day')->format('Y-m-d');
+        }
+
+        if(isset($data['status_order']) && $data['status_order'] == 7){
+            $order_data['finished_date'] = Carbon::today()->format('Y-m-d');
+        }
+
         try{
             $order = Order::where('id', $id)->update($order_data);
         }catch(\Exception $exception){
