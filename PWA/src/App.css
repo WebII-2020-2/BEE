@@ -28,6 +28,27 @@
   outline: none;
 }
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--dark-grey) var(--white);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 1rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--white);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--dark-grey);
+  border-radius: 15px;
+  border: 1px solid var(--white);
+}
+
 .form-control:focus {
   border-color: var(--yellow);
   box-shadow: 0 0 0 0.1rem var(--yellow);
