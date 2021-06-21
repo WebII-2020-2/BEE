@@ -15,7 +15,10 @@ class ReportsController extends Controller
 
             $mounted_dates = [];
             foreach($orders as $order){
-                $mounted_dates[] = Carbon::parse($order->created_at)->format('m/Y');
+                $date = Carbon::parse($order->created_at)->format('m/Y');
+                if(!in_array($date, $mounted_dates)){
+                    $mounted_dates[] = $date;
+                }
             }
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar os mêses fechados.', 'exception' => $exception];
@@ -35,21 +38,26 @@ class ReportsController extends Controller
             $orders = Order::whereRaw('MONTH(orders.created_at) = ? and YEAR(orders.created_at) = ?', [$month, $year])
                         ->orderBy('created_at', 'desc')
                         ->select(
+                            'orders.id',
                             'orders.quantity',
                             'orders.value_total',
                             'orders.created_at'
                         )->get();
             $mounted_orders_data = [];
-            $value_total = 0;
-            $products_total = 0;
             foreach($orders as $order){
-                $products_total += $order->quantity;
-                $value_total += $order->value_total;
+                $products = $order->productOrder()
+                                ->join('products as p','p.id','=','product_orders.product_id')
+                                ->select('product_orders.*')
+                                ->get();
+                $value_total_products = 0;
+                foreach($products as $product){
+                    $value_total_products += $product->unitary_value*$product->quantity;
+                }
 
                 array_push($mounted_orders_data, array(
-                    'quantity' => $order->quantity,
-                    'value_total' => $order->value_total,
-                    'selled_date' => Carbon::parse($order->created_at)->format('Y-m-d'),
+                    'products' => $order->quantity,
+                    'value' => (float) number_format($value_total_products, 2, '.', ''),
+                    'day' => Carbon::parse($order->created_at)->format('d'),
                 ));
             }
         }catch(\Exception $exception){
@@ -57,7 +65,7 @@ class ReportsController extends Controller
         }
 
         if(isset($mounted_orders_data) && !isset($error)){
-            return response()->json(['success' => true, 'data' => array('orders' => $mounted_orders_data, 'value_total' => $value_total, 'product_total' => $products_total), 'error' => $error ?? null], 200);
+            return response()->json(['success' => true, 'data' => $mounted_orders_data, 'error' => $error ?? null], 200);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
