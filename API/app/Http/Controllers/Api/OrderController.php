@@ -33,7 +33,7 @@ class OrderController extends Controller
                     'value_total' => $order->value_total,
                     'status_order' => $order->status_order,
                     'name_user' => $order->name_user,
-                    'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
+                    'selled_date' => Carbon::parse($order->created_at)->format('Y-m-d'),
                 ));
             }
         }catch(\Exception $exception){
@@ -98,7 +98,7 @@ class OrderController extends Controller
                             $mounted_orders_data = array(
                                 'id' => $order->id,
                                 'invoice' => $order->invoice,
-                                'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
+                                'selled_date' => Carbon::parse($order->created_at)->format('Y-m-d'),
                                 'value_total_products' => (float) number_format($value_total_products, 2, '.', ''),
                                 'value_shipping' => (float) number_format((number_format($order->value_total, 2, '.', '') - number_format($value_total_products, 2, '.','')), 2, '.', ''),
                                 'value_total' => (float) number_format($order->value_total, 2, '.', ''),
