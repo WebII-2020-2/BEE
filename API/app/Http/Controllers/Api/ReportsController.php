@@ -49,7 +49,7 @@ class ReportsController extends Controller
                 array_push($mounted_orders_data, array(
                     'quantity' => $order->quantity,
                     'value_total' => $order->value_total,
-                    'selled_date' => $order->created_at,
+                    'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
                 ));
             }
         }catch(\Exception $exception){
