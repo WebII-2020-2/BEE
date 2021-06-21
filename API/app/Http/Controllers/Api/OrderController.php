@@ -33,7 +33,7 @@ class OrderController extends Controller
                     'value_total' => $order->value_total,
                     'status_order' => $order->status_order,
                     'name_user' => $order->name_user,
-                    'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
+                    'selled_date' => Carbon::parse($order->created_at)->format('Y-m-d'),
                 ));
             }
         }catch(\Exception $exception){
@@ -98,9 +98,10 @@ class OrderController extends Controller
                             $mounted_orders_data = array(
                                 'id' => $order->id,
                                 'invoice' => $order->invoice,
-                                'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
+                                'selled_date' => Carbon::parse($order->created_at)->format('Y-m-d'),
                                 'value_total_products' => (float) number_format($value_total_products, 2, '.', ''),
-                                'value_shipping' => number_format($order->value_total, 2, '.', '') - number_format($value_total_products, 2, '.',''),
+                                'value_shipping' => (float) number_format((number_format($order->value_total, 2, '.', '') - number_format($value_total_products, 2, '.','')), 2, '.', ''),
+                                'value_total' => (float) number_format($order->value_total, 2, '.', ''),
                                 'quantity' => $order->quantity,
                                 'status_order' => $order->status_order,
                                 'send_method' => $order->send_method,
@@ -144,6 +145,16 @@ class OrderController extends Controller
 
         if(isset($data['status_order'])){
             $order_data['status_order'] = $data['status_order'];
+        }
+
+        if(isset($data['status_order']) && $data['status_order'] == 6){
+            $address = Order::where('id', $id)->join('addresses as a', 'a.id', '=', 'orders.address_id')->select('a.*')->fisrt();
+            $order_data['shipped_date'] = Carbon::today()->format('Y-m-d');
+            $order_data['estimated_date'] = Carbon::today()->add($address->deadline, 'day')->format('Y-m-d');
+        }
+
+        if(isset($data['status_order']) && $data['status_order'] == 7){
+            $order_data['finished_date'] = Carbon::today()->format('Y-m-d');
         }
 
         try{
