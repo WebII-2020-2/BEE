@@ -1,73 +1,84 @@
+.order-page-admin.nav {
+  margin-top: 1rem;
+  max-width: 900px;
+  align-self: center;
+  background-color: var(--white);
+}
+
+.order-page-admin.nav .nav-item a {
+  color: var(--orange);
+}
+
+.order-page-admin.nav .nav-item .active {
+  border: none;
+  background-color: var(--white);
+  color: var(--dark-grey);
+  cursor: default;
+}
+
 .order-page-admin.container {
   display: flex;
-  max-width: 1200px;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
   align-self: center;
-  flex-wrap: wrap;
+  border: 0.1rem solid var(--light-grey);
   border-radius: 5px;
-  justify-content: center;
-  min-height: 80vh;
-  margin-top: 1rem;
-  border: 0.2rem solid var(--light-grey);
-  border-left: 0.2rem solid var(--orange);
-  padding: 0.5rem 0;
+  padding: 1rem;
 }
 
-.order-page-admin.info {
-  flex-basis: 400px;
-  flex-grow: 1;
-  padding: 1rem;
+.order-page-admin.info.container,
+.order-page-admin.shipping.container {
   display: flex;
   flex-wrap: wrap;
-}
-
-.order-page-admin.info.label {
-  flex-basis: 150px;
-  flex-grow: 1;
-  margin: 0.1rem 0;
-  line-height: 2rem;
+  border: none;
+  max-width: 750px;
   padding: 0;
 }
 
-.order-page-admin.info.control {
-  flex-basis: 250px;
+.order-page-admin.label {
+  flex-basis: 300px;
   flex-grow: 1;
-  margin: 0.1rem 0;
+  line-height: 2rem;
+  padding: 0;
+  margin: 0.5rem;
+}
+
+.order-page-admin.control {
+  flex-basis: 300px;
+  flex-grow: 3;
   text-align: right;
   line-height: 2rem;
-  padding: 0;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  margin: 0;
 }
 
-.order-page-admin.produtos {
-  flex-basis: 250px;
-  flex-grow: 1;
-  border-left: 2px solid var(--light-grey);
-  padding: 1rem;
-  padding-top: 0;
-  overflow: hidden;
+.order-page-admin.control.address {
+  height: 6rem;
+  line-height: 1.2rem;
+  padding: 0.3rem;
+  resize: none;
 }
 
 @media screen and (max-width: 768px) {
   .order-page-admin.container {
-    border-top: 0.2rem solid var(--orange);
-    border-left: 0.2rem solid var(--light-grey);
-    padding: 0.5rem;
+    min-width: 300px;
   }
 
-  .order-page-admin.info {
-    flex-basis: 150px;
+  .order-page-admin.label {
+    flex-basis: 200px;
+    max-width: 85%;
   }
 
-  .order-page-admin.info.label {
-    flex-basis: 50px;
+  .order-page-admin.control {
+    flex-basis: 200px;
+    max-width: 85%;
+    text-align: left;
+    margin: 0 0.5rem;
   }
 
-  .order-page-admin.info.control {
-    flex-basis: 100px;
-  }
-
-  .order-page-admin.produtos {
-    border-left: none;
-    border-top: 2px solid var(--light-grey);
-    flex-basis: 150px;
+  .order-page-admin.nav .nav-item .active {
+    border: none;
   }
 }

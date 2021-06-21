@@ -18,7 +18,6 @@ function OrderList(props) {
 
   const th = {
     id: 'ID',
-    quantity: 'Total Produtos',
     value_total: 'Valor Total',
     status_order: 'STATUS',
     name_user: 'Usuário',
