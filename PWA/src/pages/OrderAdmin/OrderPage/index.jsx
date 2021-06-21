@@ -28,16 +28,28 @@ function OrderPage(props) {
         (r) => r.data
       );
       if (resp.success) {
-        const selledDate = new Date(resp.data.selled_date).toLocaleDateString();
-        const shippedDate = new Date(
-          resp.data.shipped_date
-        ).toLocaleDateString();
+        const selledDate = new Date(resp.data.selled_date).toLocaleDateString(
+          'pt-BR',
+          {
+            timeZone: 'UTC',
+          }
+        );
+        const shippedDate = new Date(resp.data.shipped_date).toLocaleDateString(
+          'pt-BR',
+          {
+            timeZone: 'UTC',
+          }
+        );
         const estimatedDate = new Date(
           resp.data.estimated_date
-        ).toLocaleDateString();
+        ).toLocaleDateString('pt-BR', {
+          timeZone: 'UTC',
+        });
         const finishedDate = new Date(
           resp.data.finished_date
-        ).toLocaleDateString();
+        ).toLocaleDateString('pt-BR', {
+          timeZone: 'UTC',
+        });
         setOrder({
           ...resp.data,
           value_shipping: resp.data.value_shipping
