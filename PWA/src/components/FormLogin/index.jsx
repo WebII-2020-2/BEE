@@ -42,9 +42,12 @@ function FormLogin(props) {
               {error && <span className="text-center">{error}</span>}
               <button
                 disabled={loading}
-                type="button"
+                type="submit"
                 className="rounded-pill mt-3 btn-login"
-                onClick={() => authLogin(email, password)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  return authLogin(email, password);
+                }}
               >
                 {loading ? (
                   <Spinner animation="border" variant="warning" />
