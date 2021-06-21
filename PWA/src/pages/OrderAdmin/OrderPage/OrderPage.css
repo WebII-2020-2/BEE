@@ -1,0 +1,73 @@
+.order-page-admin.container {
+  display: flex;
+  max-width: 1200px;
+  align-self: center;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  justify-content: center;
+  min-height: 80vh;
+  margin-top: 1rem;
+  border: 0.2rem solid var(--light-grey);
+  border-left: 0.2rem solid var(--orange);
+  padding: 0.5rem 0;
+}
+
+.order-page-admin.info {
+  flex-basis: 400px;
+  flex-grow: 1;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.order-page-admin.info.label {
+  flex-basis: 150px;
+  flex-grow: 1;
+  margin: 0.1rem 0;
+  line-height: 2rem;
+  padding: 0;
+}
+
+.order-page-admin.info.control {
+  flex-basis: 250px;
+  flex-grow: 1;
+  margin: 0.1rem 0;
+  text-align: right;
+  line-height: 2rem;
+  padding: 0;
+}
+
+.order-page-admin.produtos {
+  flex-basis: 250px;
+  flex-grow: 1;
+  border-left: 2px solid var(--light-grey);
+  padding: 1rem;
+  padding-top: 0;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .order-page-admin.container {
+    border-top: 0.2rem solid var(--orange);
+    border-left: 0.2rem solid var(--light-grey);
+    padding: 0.5rem;
+  }
+
+  .order-page-admin.info {
+    flex-basis: 150px;
+  }
+
+  .order-page-admin.info.label {
+    flex-basis: 50px;
+  }
+
+  .order-page-admin.info.control {
+    flex-basis: 100px;
+  }
+
+  .order-page-admin.produtos {
+    border-left: none;
+    border-top: 2px solid var(--light-grey);
+    flex-basis: 150px;
+  }
+}

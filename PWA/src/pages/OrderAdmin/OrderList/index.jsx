@@ -34,6 +34,10 @@ function OrderList(props) {
           const date = new Date(order.selled_date);
           return {
             ...order,
+            value_total: order.value_total
+              .toFixed(2)
+              .toString()
+              .replace('.', ','),
             status_order: orderStatus.convert(order.status_order),
             selled_date: date.toLocaleDateString(),
           };
