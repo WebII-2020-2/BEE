@@ -46,3 +46,13 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'repor
     Route::get('/list', 'Api\ReportsController@index');
     Route::get('/list/{date}', 'Api\ReportsController@get');
 });
+
+// Promotions
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promotion'], function ($router) {
+    Route::post('/add', 'Api\PromotionController@store');
+    Route::get('/list', 'Api\PromotionController@show');
+    Route::get('/list/{id}', 'Api\PromotionController@get');
+    Route::post('/update/{id}', 'Api\PromotionController@update');
+    Route::post('/delete/{id}', 'Api\PromotionController@delete');
+});
+
