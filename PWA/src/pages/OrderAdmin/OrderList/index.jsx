@@ -18,7 +18,6 @@ function OrderList(props) {
 
   const th = {
     id: 'ID',
-    quantity: 'Total Produtos',
     value_total: 'Valor Total',
     status_order: 'STATUS',
     name_user: 'Usuário',
@@ -31,7 +30,12 @@ function OrderList(props) {
       const resp = await OrderAdminApiService.getAll().then((r) => r.data);
       if (resp.success) {
         const formattedOrders = resp.data.map((order) => {
-          const date = new Date(order.selled_date);
+          const selledDate = new Date(order.selled_date).toLocaleDateString(
+            'pt-BR',
+            {
+              timeZone: 'UTC',
+            }
+          );
           return {
             ...order,
             value_total: order.value_total
@@ -39,7 +43,7 @@ function OrderList(props) {
               .toString()
               .replace('.', ','),
             status_order: orderStatus.convert(order.status_order),
-            selled_date: date.toLocaleDateString(),
+            selled_date: selledDate,
           };
         });
         setOrders(formattedOrders);
@@ -56,10 +60,11 @@ function OrderList(props) {
   const getOrderFilter = (valueSearch) => {
     const filter = valueSearch || undefined;
     if (filter) {
-      const dateFilter = new Date(filter);
-      dateFilter.setDate(dateFilter.getUTCDate());
+      const dateFilter = new Date(filter).toLocaleDateString('pt-BR', {
+        timeZone: 'UTC',
+      });
       const filtered = orders.filter(
-        (order) => order.selled_date === dateFilter.toLocaleDateString()
+        (order) => order.selled_date === dateFilter
       );
       setOrdersFilter(filtered);
     } else {
