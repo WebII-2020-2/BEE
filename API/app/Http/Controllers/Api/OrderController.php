@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -32,7 +33,7 @@ class OrderController extends Controller
                     'value_total' => $order->value_total,
                     'status_order' => $order->status_order,
                     'name_user' => $order->name_user,
-                    'selled_date' => $order->created_at,
+                    'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
                 ));
             }
         }catch(\Exception $exception){
@@ -53,6 +54,7 @@ class OrderController extends Controller
                         ->join('users as u', 'u.id', '=','orders.user_id')
                         ->join('payment_methods as pm', 'pm.id', '=', 'orders.payment_method_id')
                         ->join('send_methods as sm', 'sm.id', '=', 'orders.send_method_id')
+                        ->join('addresses as a', 'a.id', '=', 'orders.address_id')
                         ->select(
                             'orders.id',
                             'orders.quantity',
@@ -66,7 +68,15 @@ class OrderController extends Controller
                             'orders.created_at',
                             'u.name as name_user',
                             'pm.name as payment_method',
-                            'sm.name as send_method'
+                            'sm.name as send_method',
+                            'a.public_place',
+                            'a.district',
+                            'a.number',
+                            'a.complement',
+                            'a.zip_code',
+                            'a.city',
+                            'a.state',
+                            'a.reference_point'
                         )->first();
                         if(!empty($order)){
                             $products = $order->productOrder()
@@ -74,6 +84,7 @@ class OrderController extends Controller
                                             ->select('product_orders.*','p.name', 'p.unitary_value as unitary_value_product')
                                             ->get();
                             $mounted_products_data = [];
+                            $value_total_products = 0;
                             foreach($products as $product){
                                 array_push($mounted_products_data, array(
                                     'name' => $product->name,
@@ -81,21 +92,34 @@ class OrderController extends Controller
                                     'quantity' => $product->quantity,
                                     'unitary_value_selled' => $product->unitary_value
                                 ));
+                                $value_total_products += $product->unitary_value*$product->quantity;
                             }
+
                             $mounted_orders_data = array(
                                 'id' => $order->id,
-                                'quantity' => $order->quantity,
-                                'value_total' => $order->value_total,
                                 'invoice' => $order->invoice,
+                                'selled_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
+                                'value_total_products' => (float) number_format($value_total_products, 2, '.', ''),
+                                'value_shipping' => number_format($order->value_total, 2, '.', '') - number_format($value_total_products, 2, '.',''),
+                                'quantity' => $order->quantity,
                                 'status_order' => $order->status_order,
+                                'send_method' => $order->send_method,
+                                'tracking_code' => $order->tracking_code,
                                 'shipped_date' => $order->shipped_date,
                                 'estimated_date' => $order->estimated_date,
                                 'finished_date' => $order->finished_date,
-                                'tracking_code' => $order->tracking_code,
                                 'name_user' => $order->name_user,
+                                'address' => array(
+                                    'public_place' => $order->public_place,
+                                    'district' => $order->district,
+                                    'number' => $order->number,
+                                    'complement' => $order->complement,
+                                    'zip_code' => $order->zip_code,
+                                    'city' => $order->city,
+                                    'state' => $order->state,
+                                    'reference_point' => $order->reference_point
+                                ),
                                 'payment_method' => $order->payment_method,
-                                'send_method' => $order->send_method,
-                                'selled_date' => $order->created_at,
                                 'products' => $mounted_products_data
                             );
                         }else{
@@ -108,7 +132,6 @@ class OrderController extends Controller
         if(isset($mounted_orders_data) && !isset($error)){
             return response()->json(['success' => true, 'data' => $mounted_orders_data, 'error' => $error ?? null], 200);
         }
-
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
