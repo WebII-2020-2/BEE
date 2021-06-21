@@ -1,10 +1,11 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
+import FormPromotionAdmin from '../../../components/FormPromotionAdmin';
 
 function PromotionsNew() {
   return (
     <AdminContainer link="promocoes">
-      <h1>Cadastro de promoções</h1>
+      <FormPromotionAdmin isNew />
     </AdminContainer>
   );
 }
