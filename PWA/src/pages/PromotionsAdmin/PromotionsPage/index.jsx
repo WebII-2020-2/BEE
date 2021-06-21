@@ -1,10 +1,13 @@
 import React from 'react';
 import AdminContainer from '../../../components/AdminContainer';
+import FormPromotionAdmin from '../../../components/FormPromotionAdmin';
 
-function PromotionsPage() {
+function PromotionsPage(props) {
+  const { match } = props;
+
   return (
     <AdminContainer link="promocoes">
-      <h1>Página das promoções</h1>
+      <FormPromotionAdmin promotionId={match.params.id} isNew={false} />
     </AdminContainer>
   );
 }

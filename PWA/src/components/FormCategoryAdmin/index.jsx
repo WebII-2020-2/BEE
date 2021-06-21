@@ -7,7 +7,7 @@ import './FormCategoryAdmin.css';
 import validationSchema from '../../services/validations/validationCategoryAdmin';
 import ValidationErrorsContainer from '../ValidationErrorsContainer';
 
-function FormCategory(props) {
+function FormCategoryAdmin(props) {
   const { isNew, categoryId } = props;
   const history = useHistory();
 
@@ -32,11 +32,14 @@ function FormCategory(props) {
       }
     } catch (err) {
       console.error(err);
+      history.push('/admin/categorias');
     }
   };
 
   useEffect(() => {
-    getCategoryById();
+    if (!isNew) {
+      getCategoryById();
+    }
   }, []);
 
   const handleEdit = () => {
@@ -149,4 +152,4 @@ function FormCategory(props) {
   );
 }
 
-export default FormCategory;
+export default FormCategoryAdmin;
