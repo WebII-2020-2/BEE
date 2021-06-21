@@ -59,13 +59,15 @@ function ButtonsFormAdmin(props) {
               Excluir
             </Button>
           )}
-          <Button
-            variant="warning"
-            className="btn-form-admin editar"
-            onClick={handleEdit}
-          >
-            Editar
-          </Button>
+          {handleSubmit && (
+            <Button
+              variant="warning"
+              className="btn-form-admin editar"
+              onClick={handleEdit}
+            >
+              Editar
+            </Button>
+          )}
         </div>
       );
     }
