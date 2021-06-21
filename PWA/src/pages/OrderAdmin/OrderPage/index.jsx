@@ -48,6 +48,10 @@ function OrderPage(props) {
             .toFixed(2)
             .toString()
             .replace('.', ','),
+          value_total_products: resp.data.value_total_products
+            .toFixed(2)
+            .toString()
+            .replace('.', ','),
           selled_date: selledDate,
           shipped_date: shippedDate,
           estimated_date: estimatedDate,
@@ -233,6 +237,26 @@ function OrderPage(props) {
             />
 
             <Form.Label className="order-page-admin info label">
+              Total de produtos:
+            </Form.Label>
+            <Form.Control
+              className="order-page-admin info control"
+              value={`R$ ${order.value_total_products}`}
+              readOnly
+              plaintext
+            />
+
+            <Form.Label className="order-page-admin shipping label">
+              Valor de envio:
+            </Form.Label>
+            <Form.Control
+              className="order-page-admin shipping control"
+              value={`R$ ${order.value_shipping}`}
+              readOnly
+              plaintext
+            />
+
+            <Form.Label className="order-page-admin info label">
               Total da venda:
             </Form.Label>
             <Form.Control
@@ -260,8 +284,9 @@ function OrderPage(props) {
               Endereço de Entrega:
             </Form.Label>
             <Form.Control
-              className="order-page-admin shipping control"
-              value="endereço"
+              className="order-page-admin shipping control address"
+              value={`${order.address.public_place}, ${order.address.number}, ${order.address.complement}\n${order.address.district} - ${order.address.city} - ${order.address.state}\n${order.address.zip_code}\n${order.address.reference_point}`}
+              as="textarea"
               readOnly
               plaintext
             />
@@ -272,16 +297,6 @@ function OrderPage(props) {
             <Form.Control
               className="order-page-admin shipping control"
               value={order.send_method}
-              readOnly
-              plaintext
-            />
-
-            <Form.Label className="order-page-admin shipping label">
-              Valor de envio:
-            </Form.Label>
-            <Form.Control
-              className="order-page-admin shipping control"
-              value={`R$ ${order.value_shipping}`}
               readOnly
               plaintext
             />

@@ -54,6 +54,13 @@
   margin: 0;
 }
 
+.order-page-admin.control.address {
+  height: 6rem;
+  line-height: 1.2rem;
+  padding: 0.3rem;
+  resize: none;
+}
+
 @media screen and (max-width: 768px) {
   .order-page-admin.container {
     min-width: 300px;
