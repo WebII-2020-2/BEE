@@ -1,0 +1,55 @@
+.report-page-admin.container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
+  align-self: center;
+  border-radius: 5px;
+  border: 2px solid var(--light-grey);
+  padding: .5rem;
+  margin-top: 1rem;
+}
+
+.report-page-admin.cards {
+  flex-basis: 300px;
+  flex-grow: 1;
+  padding: .5rem;
+  margin: .5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.report-page-admin.card {
+  flex-basis: 200px;
+  flex-grow: 1;
+  margin: .5rem 1rem;
+  padding: .5rem;
+  text-align: center;
+  background-color: transparent;
+}
+
+.report-page-admin.card p {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  text-align: center;
+  color: var(--dark-grey);
+}
+
+.report-page-admin.card span {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: bold;
+}
+
+.report-page-admin.graph {
+  margin: .5rem;
+  padding-top: .5rem;
+  padding-right: .5rem;
+  flex-grow: 2;
+}
+
+.report-page-admin.title {
+  text-align: center;
+  font-size: 1.2rem;
+}
