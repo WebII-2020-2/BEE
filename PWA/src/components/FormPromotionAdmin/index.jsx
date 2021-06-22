@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form } from 'react-bootstrap';
+import { Form, Nav } from 'react-bootstrap';
 import PromotionAdminApiService from '../../services/api/PromotionAdminApiService';
 import ButtonsFormAdmin from '../ButtonsFormAdmin';
 import ValidationErrorsContainer from '../ValidationErrorsContainer';
 import validationSchema from '../../services/validations/validationPromotionAdmin';
 import './FormPromotionAdmin.css';
+import TablePromotionProducts from '../TablePromotionProductsAdmin';
 
 function FormPromotionAdmin(props) {
   const { isNew, promotionId } = props;
@@ -22,17 +23,18 @@ function FormPromotionAdmin(props) {
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
   const [isSaving, setIsSaving] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [tab, setTab] = useState('details');
 
   const getPromotionById = async () => {
     try {
-      const resp = await PromotionAdminApiService.getById(
-        Number(promotionId)
-      ).then((r) => r.data);
-      if (resp.success) {
-        setValues(resp.data);
-      } else {
-        throw new Error(`Unable to get promotions: ${resp.error}`);
-      }
+      const resp = await PromotionAdminApiService.getById(Number(promotionId));
+      // .then((r) => r.data);
+      setValues(...resp);
+      // if (resp.success) {
+      //   setValues(resp.data);
+      // } else {
+      //   throw new Error(`Unable to get promotions: ${resp.error}`);
+      // }
     } catch (err) {
       console.error(err);
       history.push('/admin/promocoes');
@@ -54,6 +56,10 @@ function FormPromotionAdmin(props) {
       ...values,
       [event.target.name]: Number(event.target.value) || event.target.value,
     });
+  };
+
+  const handleChangeTab = (newTab) => {
+    setTab(newTab);
   };
 
   const handleSubmit = async () => {
@@ -116,7 +122,7 @@ function FormPromotionAdmin(props) {
   };
 
   return (
-    <Form>
+    <>
       <ButtonsFormAdmin
         path="/admin/promocoes"
         handleSubmit={handleSubmit}
@@ -132,82 +138,117 @@ function FormPromotionAdmin(props) {
         clear={handleClearErrors}
       />
 
-      <Form.Group className="form-promotion-admin container">
-        <Form.Group className="form-promotion-admin group lg">
-          <Form.Label className="form-promotion-admin label">Nome</Form.Label>
-          <Form.Control
-            className="form-promotion-admin control"
-            readOnly={isReadOnly}
-            type="text"
-            value={values.name}
-            name="name"
-            onChange={handleChange}
-          />
-        </Form.Group>
+      {!isNew && (
+        <Nav
+          variant="tabs"
+          activeKey={tab}
+          className="form-promotion-admin nav"
+        >
+          <Nav.Item>
+            <Nav.Link
+              eventKey="details"
+              onClick={() => handleChangeTab('details')}
+            >
+              Informações gerais
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              eventKey="products"
+              onClick={() => handleChangeTab('products')}
+            >
+              Produtos da promoção
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+      )}
 
-        <Form.Group className="form-promotion-admin group sm">
-          <Form.Label className="form-promotion-admin label">
-            Data de início
-          </Form.Label>
-          <Form.Control
-            className="form-promotion-admin control"
-            readOnly={isReadOnly}
-            type="date"
-            value={values.start_date}
-            name="start_date"
-            onChange={handleChange}
-          />
-        </Form.Group>
+      {tab === 'details' && (
+        <Form className={`form-promotion-admin container ${isNew && 'mt-3'}`}>
+          <Form.Group className="form-promotion-admin group lg">
+            <Form.Label className="form-promotion-admin label">Nome</Form.Label>
+            <Form.Control
+              className="form-promotion-admin control"
+              readOnly={isReadOnly}
+              type="text"
+              value={values.name}
+              name="name"
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group className="form-promotion-admin group sm">
-          <Form.Label className="form-promotion-admin label">
-            Data de fim
-          </Form.Label>
-          <Form.Control
-            className="form-promotion-admin control"
-            readOnly={isReadOnly}
-            type="date"
-            value={values.end_date}
-            name="end_date"
-            onChange={handleChange}
-          />
-        </Form.Group>
+          <Form.Group className="form-promotion-admin group sm">
+            <Form.Label className="form-promotion-admin label">
+              Data de início
+            </Form.Label>
+            <Form.Control
+              className="form-promotion-admin control"
+              readOnly={isReadOnly}
+              type="date"
+              value={values.start_date}
+              name="start_date"
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group className="form-promotion-admin group">
-          <Form.Label className="form-promotion-admin label">
-            Tipo do valor
-          </Form.Label>
-          <Form.Check
-            type="radio"
-            name="type"
-            label="Decimal"
-            value={1}
-            checked={values.type === 1}
-            onChange={handleChange}
-          />
-          <Form.Check
-            type="radio"
-            name="type"
-            label="Porcentagem"
-            value={2}
-            checked={values.type === 2}
-            onChange={handleChange}
-          />
-        </Form.Group>
+          <Form.Group className="form-promotion-admin group sm">
+            <Form.Label className="form-promotion-admin label">
+              Data de fim
+            </Form.Label>
+            <Form.Control
+              className="form-promotion-admin control"
+              readOnly={isReadOnly}
+              type="date"
+              value={values.end_date}
+              name="end_date"
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-        <Form.Group className="form-promotion-admin group sm">
-          <Form.Label className="form-promotion-admin label">Valor</Form.Label>
-          <Form.Control
-            className="form-promotion-admin control"
-            readOnly={isReadOnly}
-            type="number"
-            value={values.value}
-            name="value"
-            onChange={handleChange}
-          />
-        </Form.Group>
-      </Form.Group>
-    </Form>
+          <Form.Group className="form-promotion-admin group">
+            <Form.Label className="form-promotion-admin label">
+              Tipo do valor
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              name="type"
+              label="Decimal"
+              disabled={isReadOnly}
+              value={1}
+              checked={values.type === 1}
+              onChange={handleChange}
+            />
+            <Form.Check
+              type="radio"
+              name="type"
+              label="Porcentagem"
+              disabled={isReadOnly}
+              value={2}
+              checked={values.type === 2}
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="form-promotion-admin group sm">
+            <Form.Label className="form-promotion-admin label">
+              Valor
+            </Form.Label>
+            <Form.Control
+              className="form-promotion-admin control"
+              readOnly={isReadOnly}
+              type="number"
+              value={values.value}
+              name="value"
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Form>
+      )}
+
+      {tab === 'products' && (
+        <TablePromotionProducts promotionId={promotionId} />
+      )}
+    </>
   );
 }
 
