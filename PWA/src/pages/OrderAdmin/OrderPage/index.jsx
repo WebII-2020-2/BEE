@@ -70,7 +70,7 @@ function OrderPage(props) {
           finished_date: finishedDate,
         });
       }
-      throw new Error(`Unable to get orders: ${resp.error}`);
+      throw new Error(`${resp.error.error_message}`);
     } catch (err) {
       console.error(err);
     }
@@ -78,20 +78,17 @@ function OrderPage(props) {
 
   const getOrderProducts = () => {
     if (order.products !== undefined) {
-      const listProducts = order.products.map((p) => {
-        console.warn(p);
-        return {
-          ...p,
-          unitary_value_selled: p.unitary_value_selled
-            .toFixed(2)
-            .toString()
-            .replace('.', ','),
-          total_value: (p.quantity * p.unitary_value_selled)
-            .toFixed(2)
-            .toString()
-            .replace('.', ','),
-        };
-      });
+      const listProducts = order.products.map((p) => ({
+        ...p,
+        unitary_value_selled: p.unitary_value_selled
+          .toFixed(2)
+          .toString()
+          .replace('.', ','),
+        total_value: (p.quantity * p.unitary_value_selled)
+          .toFixed(2)
+          .toString()
+          .replace('.', ','),
+      }));
       setOrderProducts(listProducts);
     }
   };
@@ -134,7 +131,7 @@ function OrderPage(props) {
       if (resp.success) {
         handleEdit();
       } else {
-        throw new Error(`Unable to update order: ${resp.err}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);

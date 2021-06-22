@@ -25,7 +25,7 @@ function ReportsList(props) {
       if (resp.success) {
         setReports(resp.data.months);
       } else {
-        throw new Error(`Unable to get reports: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);

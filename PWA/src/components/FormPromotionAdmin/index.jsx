@@ -31,7 +31,7 @@ function FormPromotionAdmin(props) {
       if (resp.success) {
         setValues(resp.data);
       } else {
-        throw new Error(`Unable to get promotions: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);
@@ -91,12 +91,12 @@ function FormPromotionAdmin(props) {
           if (resp.sucess) {
             handleEdit();
           } else {
-            throw new Error(`Failed to update promotion: ${resp.error}`);
+            throw new Error(`${resp.error.error_message}`);
           }
         }
       }
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     } finally {
       setIsSaving(false);
     }
@@ -107,7 +107,7 @@ function FormPromotionAdmin(props) {
       PromotionAdminApiService.remove(promotionId);
       history.push('/admin/promocoes');
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     }
   };
 

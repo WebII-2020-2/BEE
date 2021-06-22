@@ -123,12 +123,12 @@ function FormProdutoAdmin(props) {
           if (resp.success) {
             handleEdit();
           } else {
-            throw new Error(`Failed to update product: ${resp.error}`);
+            throw new Error(`${resp.error.error_message}`);
           }
         }
       }
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     } finally {
       setIsSaving(false);
     }
@@ -142,10 +142,10 @@ function FormProdutoAdmin(props) {
       if (resp.success) {
         history.push('/admin/produtos');
       } else {
-        throw new Error(`Failed to delete product: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     }
   };
 

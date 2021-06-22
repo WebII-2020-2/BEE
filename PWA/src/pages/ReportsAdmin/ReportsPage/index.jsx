@@ -30,8 +30,6 @@ function ReportsPage(props) {
       const resp = await ReportsAdminApiService.getByDate(match.params.id).then(
         (r) => r.data
       );
-      console.warn(resp.data);
-
       if (resp.success) {
         setReportData([...resp.data]);
       } else {

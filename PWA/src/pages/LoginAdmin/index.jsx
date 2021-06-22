@@ -22,11 +22,11 @@ function LoginAdmin() {
         loginAdmin(resp.data.token.access_token);
         history.push('/admin/home');
       } else {
-        throw new Error(`Unable to login: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (e) {
       console.error(e);
-      setError('Houve um problema com o login, verifique suas credenciais.');
+      setError(`${e}`);
     } finally {
       setLoading(false);
     }
