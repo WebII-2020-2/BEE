@@ -14,7 +14,7 @@ function SidebarAdmin(props) {
 
   const handleClickLogout = () => {
     logout();
-    history.push('login-admin');
+    history.push('/login-admin');
   };
 
   return (
