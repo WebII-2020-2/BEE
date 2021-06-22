@@ -30,13 +30,14 @@
 
 /* Works on Firefox */
 * {
-  scrollbar-width: thin;
+  scrollbar-width: .5rem;
   scrollbar-color: var(--dark-grey) var(--white);
 }
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 1rem;
+  width: .5rem;
+  height: .5rem;
 }
 
 *::-webkit-scrollbar-track {
@@ -45,8 +46,7 @@
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--dark-grey);
-  border-radius: 15px;
-  border: 1px solid var(--white);
+  border-radius: 5px;
 }
 
 .form-control:focus {
