@@ -8,23 +8,6 @@ const getTotalProducts = (data) => {
   return totalproducts;
 };
 
-const getMVPDay = (data) => {
-  const mpvDay = data.reduce(
-    (max, v) => {
-      if (max.value !== v.value) {
-        return max.value > v.value ? max : v;
-      }
-      return max.products > v.products ? max : v;
-    },
-    {
-      products: 0,
-      value: 0,
-      day: 0,
-    }
-  );
-  return mpvDay.day;
-};
-
 const getBlankData = (month) => {
   const oddMonths = [4, 6, 9, 11];
   let days;
@@ -67,10 +50,39 @@ const getGraphData = (data, date) => {
   return graphData;
 };
 
+const getMeanProducts = (data) => {
+  let totalP = 0;
+  let totalD = 0;
+
+  data.forEach((d) => {
+    if (d.products > 0) {
+      totalD += 1;
+      totalP += d.products;
+    }
+  });
+
+  return Math.ceil(totalP / totalD);
+};
+
+const getMeanValue = (data) => {
+  let totalV = 0;
+  let totalD = 0;
+
+  data.forEach((d) => {
+    if (d.value > 0) {
+      totalD += 1;
+      totalV += d.value;
+    }
+  });
+
+  return (totalV / totalD).toFixed(2);
+};
+
 const orderStatistcs = {
-  getMVPDay,
   getTotalProducts,
+  getMeanProducts,
   getTotalValue,
+  getMeanValue,
   getGraphData,
   getBlankData,
 };
