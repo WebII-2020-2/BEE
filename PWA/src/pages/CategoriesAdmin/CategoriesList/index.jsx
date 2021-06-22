@@ -20,7 +20,7 @@ function CategoriesList(props) {
   const th = {
     id: 'ID',
     name: 'Nome',
-    count_products: 'Quantidade de produtos',
+    count_products: 'Quant. produtos cadastrados',
   };
 
   const getCategories = async () => {
