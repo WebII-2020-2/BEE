@@ -1,0 +1,41 @@
+.reports-list-admin.container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
+  align-self: center;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  padding: 0;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.reports-list-admin.card {
+  flex-direction: row;
+  flex-basis: 250px;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0.5rem 1rem;
+  background-color: var(--base);
+  border: 1px solid var(--dark-grey);
+  border-radius: 15px;
+  text-decoration: none;
+  color: var(--dark-grey);
+  transition: all 0.2s linear;
+}
+
+.reports-list-admin.card:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+.reports-list-admin.icon {
+  height: 2rem;
+}
+
+.reports-list-admin.text {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
