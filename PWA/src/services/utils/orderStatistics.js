@@ -1,6 +1,6 @@
 const getTotalValue = (data) => {
   const totalValue = data.reduce((x, v) => x + v.value, 0);
-  return totalValue;
+  return totalValue.toFixed(2);
 };
 
 const getTotalProducts = (data) => {
