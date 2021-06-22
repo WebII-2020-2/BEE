@@ -7,6 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from 'recharts';
 import AdminContainer from '../../../components/AdminContainer';
 import ButtonsFormAdmin from '../../../components/ButtonsFormAdmin';
@@ -64,32 +65,35 @@ function ReportsPage(props) {
             <span>R$ {statistics.totalValue}</span>
           </div>
           <div className="report-page-admin card">
-            <p>Média das vendas p/ dia</p>
+            <p>Valor médio das vendas p/ dia</p>
             <span>R$ {statistics.meanValue}</span>
           </div>
         </div>
 
         <div className="report-page-admin graph">
           <p className="report-page-admin title">Vendas do mês</p>
-          <AreaChart width={500} height={200} data={statistics.graphData}>
-            <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f7ca00" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#f7ca00" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="dia" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip filterNull label="lalala" />
-            <Area
-              type="monotone"
-              dataKey="valor"
-              stroke="#fca311"
-              fillOpacity={1}
-              fill="url(#colorUv)"
-            />
-          </AreaChart>
+
+          <ResponsiveContainer width="100%" height="80%">
+            <AreaChart width={500} height={200} data={statistics.graphData}>
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f7ca00" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#f7ca00" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="dia" />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip filterNull label="lalala" />
+              <Area
+                type="monotone"
+                dataKey="valor"
+                stroke="#fca311"
+                fillOpacity={1}
+                fill="url(#colorUv)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
 
         <div className="report-page-admin cards">
@@ -98,7 +102,7 @@ function ReportsPage(props) {
             <span>{statistics.totalProducts}/un</span>
           </div>
           <div className="report-page-admin card">
-            <p>Média de produtos p/ dia</p>
+            <p>Média de produtos vendidos p/ dia</p>
             <span>{statistics.meanProducts}/un</span>
           </div>
         </div>
@@ -107,25 +111,27 @@ function ReportsPage(props) {
           <p className="report-page-admin title">
             Quantidade de produtos vendidos
           </p>
-          <AreaChart width={500} height={200} data={statistics.graphData}>
-            <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f7ca00" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#f7ca00" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="dia" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="produtos"
-              stroke="#fca311"
-              fillOpacity={1}
-              fill="url(#colorUv)"
-            />
-          </AreaChart>
+          <ResponsiveContainer width="100%" height="80%">
+            <AreaChart width={500} height={200} data={statistics.graphData}>
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f7ca00" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#f7ca00" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="dia" />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="produtos"
+                stroke="#fca311"
+                fillOpacity={1}
+                fill="url(#colorUv)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       </Container>
     </AdminContainer>

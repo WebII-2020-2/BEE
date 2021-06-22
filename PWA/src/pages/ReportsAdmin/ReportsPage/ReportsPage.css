@@ -7,15 +7,15 @@
   align-self: center;
   border-radius: 5px;
   border: 2px solid var(--light-grey);
-  padding: .5rem;
+  padding: 0.5rem;
   margin-top: 1rem;
 }
 
 .report-page-admin.cards {
   flex-basis: 300px;
   flex-grow: 1;
-  padding: .5rem;
-  margin: .5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -23,8 +23,8 @@
 .report-page-admin.card {
   flex-basis: 200px;
   flex-grow: 1;
-  margin: .5rem 1rem;
-  padding: .5rem;
+  margin: 0.5rem 1rem;
+  padding: 0.5rem;
   text-align: center;
   background-color: transparent;
 }
@@ -43,13 +43,23 @@
 }
 
 .report-page-admin.graph {
-  margin: .5rem;
-  padding-top: .5rem;
-  padding-right: .5rem;
+  padding-top: 1rem;
+  padding-right: 1rem;
   flex-grow: 2;
+  flex-basis: 300px;
 }
 
 .report-page-admin.title {
   text-align: center;
   font-size: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .report-page-admin.container {
+    min-width: 300px;
+  }
+
+  .report-page-admin.graph {
+    min-width: 200px;
+  }
 }
