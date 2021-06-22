@@ -30,7 +30,7 @@ function CategoriesList(props) {
       if (resp.success) {
         setCategories(resp.data);
       } else {
-        throw new Error(`Unable to get categories: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);

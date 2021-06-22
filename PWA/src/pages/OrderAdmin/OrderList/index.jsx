@@ -48,7 +48,7 @@ function OrderList(props) {
         });
         setOrders(formattedOrders);
       } else {
-        throw new Error(`Unable to get orders: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);
