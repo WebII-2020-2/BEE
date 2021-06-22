@@ -17,8 +17,9 @@ function OrderList(props) {
   const [totalPages, setTotalPages] = useState(1);
 
   const th = {
-    id: 'ID',
-    value_total: 'Valor Total',
+    invoice: 'Nº Venda',
+    quantity: 'Quant. Produtos',
+    value_total: 'Valor total',
     status_order: 'STATUS',
     name_user: 'Usuário',
     selled_date: 'DATA',
@@ -37,6 +38,7 @@ function OrderList(props) {
             }
           );
           return {
+            invoice: ' ',
             ...order,
             value_total: order.value_total
               .toFixed(2)
