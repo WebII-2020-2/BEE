@@ -6,7 +6,7 @@ import './HomeAdmin.css';
 
 function HomeAdmin() {
   return (
-    <AdminContainer link="Home">
+    <AdminContainer>
       <Image src={logoBlack} className="admin-main-content-logo" />
     </AdminContainer>
   );
