@@ -12,7 +12,6 @@ function Order(props) {
     <Switch>
       <Route path={`${match.path}/page/:number`} component={OrderList} />
       <Route path={`${match.path}/:id`} component={OrderPage} />
-      <Route path={`${match.path}`} exact component={OrderList} />
     </Switch>
   );
 }

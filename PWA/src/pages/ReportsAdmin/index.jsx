@@ -12,7 +12,6 @@ function Reports(props) {
     <Switch>
       <Route path={`${match.path}/page/:number`} component={ReportsList} />
       <Route path={`${match.path}/:id`} component={ReportsPage} />
-      <Route path={`${match.path}`} exact component={ReportsList} />
     </Switch>
   );
 }
