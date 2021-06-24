@@ -1,0 +1,47 @@
+.order-page-admin.info.container,
+.order-page-admin.shipping.container {
+  display: flex;
+  flex-wrap: wrap;
+  border: none;
+  max-width: 750px;
+  padding: 0;
+}
+
+.order-page-admin.label {
+  flex-basis: 300px;
+  flex-grow: 1;
+  line-height: 2rem;
+  padding: 0;
+  margin: 0.5rem;
+}
+
+.order-page-admin.control {
+  flex-basis: 300px;
+  flex-grow: 3;
+  text-align: right;
+  line-height: 2rem;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  margin: 0;
+}
+
+.order-page-admin.control.address {
+  height: 6rem;
+  line-height: 1.2rem;
+  padding: 0.3rem;
+  resize: none;
+}
+
+@media screen and (max-width: 768px) {
+  .order-page-admin.label {
+    flex-basis: 200px;
+    max-width: 85%;
+  }
+
+  .order-page-admin.control {
+    flex-basis: 200px;
+    max-width: 85%;
+    text-align: left;
+    margin: 0 0.5rem;
+  }
+}
