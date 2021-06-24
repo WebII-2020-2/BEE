@@ -66,7 +66,7 @@ function ReportsPage(props) {
 
   return (
     <AdminContainer link="relatorios">
-      <ButtonsFormAdmin path="/admin/relatorios" isReadOnly />
+      <ButtonsFormAdmin path="/admin/relatorios/page/1" isReadOnly />
       <Container className="report-page-admin container">
         <ReportCardAdmin data={valueData} />
         <ReportGraphAdmin

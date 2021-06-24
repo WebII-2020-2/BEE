@@ -69,7 +69,7 @@ function OrderPage(props) {
   return (
     <AdminContainer link="vendas">
       <ButtonsFormAdmin
-        path="/admin/vendas"
+        path="/admin/vendas/page/1"
         handleEdit={handleEdit}
         handleSubmit={handleSubmit}
         isReadOnly={isReadOnly}

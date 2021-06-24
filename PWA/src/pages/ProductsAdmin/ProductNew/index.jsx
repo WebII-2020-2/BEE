@@ -43,7 +43,7 @@ function ProductPage() {
           (r) => r.data
         );
         if (resp.success) {
-          history.push('/admin/produtos');
+          history.push('/admin/produtos/page/1');
         } else {
           throw new Error(`Failed to create product: ${resp.error}`);
         }
@@ -62,7 +62,7 @@ function ProductPage() {
   return (
     <AdminContainer link="produtos">
       <ButtonsFormAdmin
-        path="/admin/produtos"
+        path="/admin/produtos/page/1"
         handleSubmit={handleSubmit}
         isNew
         isSaving={isSaving}

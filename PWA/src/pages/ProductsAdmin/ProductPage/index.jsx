@@ -96,7 +96,7 @@ function ProductPage(props) {
   return (
     <AdminContainer link="produtos">
       <ButtonsFormAdmin
-        path="/admin/produtos"
+        path="/admin/produtos/page/1"
         handleSubmit={handleSubmit}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
