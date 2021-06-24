@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Container } from 'react-bootstrap';
-import { Calendar } from 'react-feather';
+import { useHistory } from 'react-router-dom';
 import AdminContainer from '../../../components/AdminContainer';
 import ButtonsListAdmin from '../../../components/ButtonsListAdmin';
 import LoadingPageAdmin from '../../../components/LoadingPageAdmin';
+import MonthCardAdmin from '../../../components/ReportAdmin/MonthCard';
 import PaginationAdmin from '../../../components/PaginationAdmin';
 import ReportsAdminApiService from '../../../services/api/ReportsAdminApiService';
 import './ReportsList.css';
 
 function ReportsList(props) {
   const { match } = props;
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [reports, setReports] = useState([]);
-  const [reportsFilter, setReportsFilter] = useState([]);
-  const [reportsPerPage, setReportsPerPage] = useState([]);
   const [actualPage, setActualPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [valueSearch, setValueSearch] = useState();
 
   const getReports = async () => {
     setIsLoading(true);
@@ -34,77 +33,58 @@ function ReportsList(props) {
     }
   };
 
-  const getReportsFilter = (valueSearch) => {
+  const reportsFilter = useMemo(() => {
     const filter = valueSearch || undefined;
     if (filter) {
-      const filtered = reports.filter(
-        (report) => report.indexOf(filter) !== -1
-      );
-      setReportsFilter(filtered);
-    } else {
-      setReportsFilter(-1);
+      return reports.filter((report) => report.indexOf(filter) !== -1);
     }
-  };
+    return -1;
+  }, [valueSearch]);
 
-  const getReportsPerPage = () => {
+  const totalPages = useMemo(() => {
+    if (reportsFilter !== -1) {
+      return Math.ceil(reportsFilter.length / 8);
+    }
+    return Math.ceil(reports.length / 8);
+  });
+
+  const reportsPerPage = useMemo(() => {
     const indexMin = (actualPage - 1) * 12;
     const indexMax = indexMin + 12;
     if (reportsFilter !== -1) {
-      const reportsList = reportsFilter.filter(
+      return reportsFilter.filter(
         (x, index) => index >= indexMin && index < indexMax
       );
-      setReportsPerPage(reportsList);
-      setTotalPages(Math.ceil(reportsFilter.length / 12));
-    } else {
-      const reportsList = reports.filter(
-        (x, index) => index >= indexMin && index < indexMax
-      );
-      setReportsPerPage(reportsList);
-      setTotalPages(Math.ceil(reports.length / 12));
     }
-  };
-
-  const handleChangePage = (page) => {
-    setActualPage(page);
-  };
-
-  const MonthCard = ({ value }) => (
-    <Link
-      className="reports-list-admin card"
-      to={`/admin/relatorios/${value.replace('/', '-')}`}
-    >
-      <Calendar className="reports-list-admin icon" size={24} />
-      <span className="reports-list-admin text">{value}</span>
-    </Link>
-  );
+    return reports.filter((x, index) => index >= indexMin && index < indexMax);
+  }, [reportsFilter, reports, actualPage]);
 
   useEffect(() => {
+    const page = Number(match.params.number);
+    if (page) {
+      setActualPage(page);
+    } else {
+      history.push('/admin/vendas/page/1');
+    }
     getReports();
   }, []);
 
-  useEffect(() => {
-    if (match.params.number) {
-      setActualPage(Number(match.params.number));
-    }
-    getReportsPerPage();
-  }, [reports, reportsFilter, actualPage, totalPages]);
-
   return (
     <AdminContainer link="relatorios">
-      <ButtonsListAdmin funcFilter={getReportsFilter} />
+      <ButtonsListAdmin funcFilter={setValueSearch} />
       {isLoading ? (
         <LoadingPageAdmin />
       ) : (
         <Container className="reports-list-admin container">
           {reportsPerPage.map((m) => (
-            <MonthCard value={m} />
+            <MonthCardAdmin value={m} linkPath="/admin/relatorios" />
           ))}
         </Container>
       )}
       <PaginationAdmin
         totalPages={totalPages}
         actualPage={actualPage}
-        changePage={handleChangePage}
+        changePage={setActualPage}
         baseUrl="/admin/relatorios"
       />
     </AdminContainer>

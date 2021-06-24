@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 
 // PAGES
 import ProductsList from './ProductsList';
-import ProductsNew from './ProductsNew';
-import ProductsPage from './ProductsPage';
+import ProductPage from './ProductPage';
+import ProductNew from './ProductNew';
 
 function Products(props) {
   const { match } = props;
@@ -12,9 +12,8 @@ function Products(props) {
   return (
     <Switch>
       <Route path={`${match.path}/page/:number`} component={ProductsList} />
-      <Route path={`${match.path}/novo`} component={ProductsNew} />
-      <Route path={`${match.path}/:id`} component={ProductsPage} />
-      <Route path={`${match.path}`} exact component={ProductsList} />
+      <Route path={`${match.path}/novo`} component={ProductNew} />
+      <Route path={`${match.path}/:id`} component={ProductPage} />
     </Switch>
   );
 }

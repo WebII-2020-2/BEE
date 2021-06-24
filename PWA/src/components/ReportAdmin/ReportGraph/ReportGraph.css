@@ -1,0 +1,17 @@
+.report-admin.graph {
+  padding-top: 1rem;
+  padding-right: 1rem;
+  flex-grow: 2;
+  flex-basis: 300px;
+}
+
+.report-admin.graph-title {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .report-admin.graph {
+    min-width: 200px;
+  }
+}

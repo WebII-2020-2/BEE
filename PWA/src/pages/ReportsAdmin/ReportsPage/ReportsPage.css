@@ -11,55 +11,8 @@
   margin-top: 1rem;
 }
 
-.report-page-admin.cards {
-  flex-basis: 300px;
-  flex-grow: 1;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.report-page-admin.card {
-  flex-basis: 200px;
-  flex-grow: 1;
-  margin: 0.5rem 1rem;
-  padding: 0.5rem;
-  text-align: center;
-  background-color: transparent;
-}
-
-.report-page-admin.card p {
-  font-size: 1.2rem;
-  line-height: 1.2rem;
-  text-align: center;
-  color: var(--dark-grey);
-}
-
-.report-page-admin.card span {
-  font-size: 2rem;
-  line-height: 2rem;
-  font-weight: bold;
-}
-
-.report-page-admin.graph {
-  padding-top: 1rem;
-  padding-right: 1rem;
-  flex-grow: 2;
-  flex-basis: 300px;
-}
-
-.report-page-admin.title {
-  text-align: center;
-  font-size: 1.2rem;
-}
-
 @media screen and (max-width: 768px) {
   .report-page-admin.container {
     min-width: 300px;
-  }
-
-  .report-page-admin.graph {
-    min-width: 200px;
   }
 }

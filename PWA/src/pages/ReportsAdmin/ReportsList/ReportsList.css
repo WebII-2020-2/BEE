@@ -12,34 +12,6 @@
   justify-content: space-evenly;
 }
 
-.reports-list-admin.card {
-  flex-direction: row;
-  flex-basis: 250px;
-  justify-content: space-between;
-  height: 50px;
-  padding: 0.5rem 1rem;
-  background-color: var(--base);
-  border: 1px solid var(--dark-grey);
-  border-radius: 15px;
-  text-decoration: none;
-  color: var(--dark-grey);
-  transition: all 0.2s linear;
-}
-
-.reports-list-admin.card:hover {
-  color: var(--orange);
-  border-color: var(--orange);
-}
-
-.reports-list-admin.icon {
-  height: 2rem;
-}
-
-.reports-list-admin.text {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 @media screen and (max-width: 768px) {
   .reports-list-admin.container {
     min-width: 300px;
