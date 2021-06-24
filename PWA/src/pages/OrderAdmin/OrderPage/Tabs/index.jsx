@@ -1,10 +1,5 @@
-import Details from './Details';
-import Products from './Products';
-import Shipping from './Shipping';
 import './Tabs.css';
 
-export default {
-  Details,
-  Products,
-  Shipping,
-};
+export { default as Details } from './Details';
+export { default as Products } from './Products';
+export { default as Shipping } from './Shipping';
