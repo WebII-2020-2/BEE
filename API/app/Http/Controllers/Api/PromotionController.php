@@ -18,7 +18,7 @@ class PromotionController extends Controller
             'type',
             'value',
             'start_date',
-            'endl_date'
+            'end_date'
         ]);
 
         try{
@@ -89,7 +89,7 @@ class PromotionController extends Controller
             'type',
             'value',
             'start_date',
-            'endl_date'
+            'end_date'
         ]);
 
         $promotion = Promotion::find($id);
@@ -134,7 +134,6 @@ class PromotionController extends Controller
 
             DB::rollBack();
 
-            Log::info($exception->getMessage());
         }
 
         if(!isset($error)){

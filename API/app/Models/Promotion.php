@@ -11,7 +11,7 @@ class Promotion extends Model
         'type',
         'value',
         'start_date',
-        'endl_date'
+        'end_date'
     ];
 
     protected $name = 'promotions';
