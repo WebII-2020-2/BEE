@@ -3,6 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Rotas publicas
+Route::get('/category/list', 'Api\CategoryController@show');
+Route::get('/category/best', 'Api\CategoryController@getBestSelled');
+Route::get('/promotion/list', 'Api\PromotionController@show');
+Route::get('/product/best', 'Api\ProductController@getBestSelled');
+Route::get('/product/search/{name}', 'Api\ProductController@getByName');
+
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('register', 'Api\UserController@register');
@@ -28,7 +35,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'produ
 // Categories
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'category'], function ($router) {
     Route::post('/add', 'Api\CategoryController@store');
-    Route::get('/list', 'Api\CategoryController@show');
     Route::get('/list/{id}', 'Api\CategoryController@get');
     Route::post('/update/{id}', 'Api\CategoryController@update');
     Route::post('/delete/{id}', 'Api\CategoryController@delete');
@@ -50,7 +56,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'repor
 // Promotions
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promotion'], function ($router) {
     Route::post('/add', 'Api\PromotionController@store');
-    Route::get('/list', 'Api\PromotionController@show');
     Route::get('/list/{id}', 'Api\PromotionController@get');
     Route::post('/update/{id}', 'Api\PromotionController@update');
     Route::post('/delete/{id}', 'Api\PromotionController@delete');

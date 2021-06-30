@@ -11,4 +11,8 @@ class CategoryPromotion extends Model
     ];
 
     protected $table = 'category_promotions';
+
+    public function category(){
+        return $this->belongsTo('App\Models\Category');
+    }
 }
