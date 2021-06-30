@@ -2,8 +2,8 @@ import { Button, Dropdown, FormControl, Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 
 import { Trash2 } from 'react-feather';
-import ProductAdminApiService from '../../services/api/ProductAdminApiService';
-import './TablePromotionProductsAdmin.css';
+import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import './TablePromotionProducts.css';
 
 function TablePromotionProductsAdmin() {
   // const { promotionId } = props;
