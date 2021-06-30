@@ -14,10 +14,10 @@ function FormPromotionAdmin(props) {
 
   const [values, setValues] = useState({
     name: '',
-    start_date: '',
-    end_date: '',
     type: 1,
     value: 0,
+    start_date: null,
+    end_date: null,
   });
 
   const [isReadOnly, setIsReadOnly] = useState(!isNew);
@@ -27,14 +27,14 @@ function FormPromotionAdmin(props) {
 
   const getPromotionById = async () => {
     try {
-      const resp = await PromotionAdminApiService.getById(Number(promotionId));
-      // .then((r) => r.data);
-      setValues(...resp);
-      // if (resp.success) {
-      //   setValues(resp.data);
-      // } else {
-      //   throw new Error(`Unable to get promotions: ${resp.error}`);
-      // }
+      const resp = await PromotionAdminApiService.getById(
+        Number(promotionId)
+      ).then((r) => r.data);
+      if (resp.success) {
+        setValues(resp.data);
+      } else {
+        throw new Error(`Unable to get promotions: ${resp.error}`);
+      }
     } catch (err) {
       console.error(err);
       history.push('/admin/promocoes');
@@ -67,7 +67,7 @@ function FormPromotionAdmin(props) {
     const form = {
       ...values,
     };
-
+    delete form.id;
     try {
       const isValid = await validationSchema
         .validate(form, { abortEarly: false })
@@ -237,8 +237,9 @@ function FormPromotionAdmin(props) {
               className="form-promotion-admin control"
               readOnly={isReadOnly}
               type="number"
-              value={values.value}
+              min="0"
               name="value"
+              value={values.value}
               onChange={handleChange}
             />
           </Form.Group>
