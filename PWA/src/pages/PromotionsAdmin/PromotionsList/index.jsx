@@ -27,27 +27,25 @@ function PromotionsList(props) {
   const getPromotions = async () => {
     try {
       setIsLoading(true);
-      // const resp = await PromotionAdminApiService.getAll().then((r) => r.data);
-      // if (resp.success) {
-      //   setPromotions(resp.data);
-      // } else {
-      //   throw new Error(`Unable to get promotions: ${resp.error}`);
-      // }
-      const resp = await PromotionAdminApiService.getAll();
-      setPromotions(
-        resp.map((promotion) => ({
-          ...promotion,
-          start_date: new Date(promotion.start_date).toLocaleDateString(
-            'pt-BR',
-            {
+      const resp = await PromotionAdminApiService.getAll().then((r) => r.data);
+      if (resp.success) {
+        setPromotions(
+          resp.data.map((promotion) => ({
+            ...promotion,
+            start_date: new Date(promotion.start_date).toLocaleDateString(
+              'pt-BR',
+              {
+                timeZone: 'UTC',
+              }
+            ),
+            end_date: new Date(promotion.end_date).toLocaleDateString('pt-BR', {
               timeZone: 'UTC',
-            }
-          ),
-          end_date: new Date(promotion.end_date).toLocaleDateString('pt-BR', {
-            timeZone: 'UTC',
-          }),
-        }))
-      );
+            }),
+          }))
+        );
+      } else {
+        throw new Error(`Unable to get promotions: ${resp.error}`);
+      }
     } catch (err) {
       console.error(err);
     } finally {
