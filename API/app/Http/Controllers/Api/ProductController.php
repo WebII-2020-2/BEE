@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class ProductController extends Controller
 
     public function show(){
         try{
-            $products = Product::join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
+            $products = Product::orderBy('name', 'asc')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
 
             $mounted_products = [];
             foreach($products as $product){
@@ -79,6 +80,63 @@ class ProductController extends Controller
                 'category_id' => $product->category_id,
                 'category' => $product->category
             );
+        }catch(\Exception $exception){
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar o produto.'];
+        }
+
+        if(isset($mounted_product) && !isset($error)){
+            return response()->json(['success' => true, 'data' => $mounted_product, 'error' => $error ?? null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
+    public function getBestSelled(){
+        try{
+            $products = Order
+                            ::join('product_orders as po', 'po.order_id', '=', 'orders.id')
+                            ->join('products as p', 'p.id', '=', 'po.product_id')
+                            ->groupBy('p.id')
+                            ->limit(10)
+                            ->select('p.id', 'p.name', 'p.mime_type', 'p.image', 'p.unitary_value')
+                            ->get();
+
+            $mounted_products = [];
+            foreach($products as $product){
+                array_push($mounted_products, array(
+                    "id" => $product->id,
+                    'name' => $product->name,
+                    'unitary_value' => $product->unitary_value,
+                    'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image)
+                ));
+            }
+        }catch(\Exception $exception){
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar os produtos em destaque.', $exception];
+        }
+
+        if(isset($mounted_products) && !isset($error)){
+            return response()->json(['success' => true, 'data' => $mounted_products, 'error' => $error ?? null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
+    public function getByName($name){
+        try{
+            $product = Product::where('products.name', 'like', '%'.$name.'%')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->first();
+
+            $mounted_product = array(
+                "id" => $product->id,
+                'name' => $product->name,
+                'unity' => $product->unity,
+                'quantity' => $product->quantity,
+                'unitary_value' => $product->unitary_value,
+                'description' => $product->description,
+                'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
+                'category_id' => $product->category_id,
+                'category' => $product->category
+            );
+
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar o produto.'];
         }

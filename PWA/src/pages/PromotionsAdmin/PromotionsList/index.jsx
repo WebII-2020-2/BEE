@@ -44,7 +44,7 @@ function PromotionsList(props) {
           }))
         );
       } else {
-        throw new Error(`Unable to get promotions: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);

@@ -9,7 +9,7 @@ function TableList(props) {
   const history = useHistory();
 
   const handleCLickEdit = (id) => {
-    history.push(`${linkEdit}/${id}`);
+    if (linkEdit) history.push(`${linkEdit}/${id}`);
   };
 
   const th = () =>

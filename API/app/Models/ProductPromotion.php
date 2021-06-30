@@ -11,4 +11,8 @@ class ProductPromotion extends Model
     ];
 
     protected $table = 'product_promotions';
+
+    public function product(){
+        return $this->belongsTo('App\Models\Product');
+    }
 }

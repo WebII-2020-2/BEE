@@ -9,12 +9,11 @@ import './SidebarAdmin.css';
 
 function SidebarAdmin(props) {
   const { disabled, click, link } = props;
-
   const history = useHistory();
 
   const handleClickLogout = () => {
     logout();
-    history.push('login-admin');
+    history.push('/login-admin');
   };
 
   return (
@@ -48,7 +47,7 @@ function SidebarAdmin(props) {
         <Nav.Link
           className={`admin-sidebar-link ${link === 'produtos' && 'selected'}`}
           disabled={link === 'produtos'}
-          href="/admin/produtos"
+          href="/admin/produtos/page/1"
         >
           Produtos
         </Nav.Link>
@@ -57,21 +56,21 @@ function SidebarAdmin(props) {
             link === 'categorias' && 'selected'
           }`}
           disabled={link === 'categorias'}
-          href="/admin/categorias"
+          href="/admin/categorias/page/1"
         >
           Categorias
         </Nav.Link>
         <Nav.Link
           className={`admin-sidebar-link ${link === 'promocoes' && 'selected'}`}
           disabled={link === 'promocoes'}
-          href="/admin/promocoes"
+          href="/admin/promocoes/page/1"
         >
           Promoções
         </Nav.Link>
         <Nav.Link
           className={`admin-sidebar-link ${link === 'vendas' && 'selected'}`}
           disabled={link === 'vendas'}
-          href="/admin/vendas"
+          href="/admin/vendas/page/1"
         >
           Vendas
         </Nav.Link>
@@ -80,7 +79,7 @@ function SidebarAdmin(props) {
             link === 'relatorios' && 'selected'
           }`}
           disabled={link === 'relatorios'}
-          href="/admin/relatorios"
+          href="/admin/relatorios/page/1"
         >
           Relatórios
         </Nav.Link>

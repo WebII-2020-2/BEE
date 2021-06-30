@@ -50,20 +50,24 @@ function ButtonsFormAdmin(props) {
     if (isReadOnly) {
       return (
         <div>
-          <Button
-            variant="danger"
-            className="btn-form-admin"
-            onClick={handleShowModal}
-          >
-            Excluir
-          </Button>
-          <Button
-            variant="warning"
-            className="btn-form-admin editar"
-            onClick={handleEdit}
-          >
-            Editar
-          </Button>
+          {handleDelete && (
+            <Button
+              variant="danger"
+              className="btn-form-admin"
+              onClick={handleShowModal}
+            >
+              Excluir
+            </Button>
+          )}
+          {handleSubmit && (
+            <Button
+              variant="warning"
+              className="btn-form-admin editar"
+              onClick={handleEdit}
+            >
+              Editar
+            </Button>
+          )}
         </div>
       );
     }

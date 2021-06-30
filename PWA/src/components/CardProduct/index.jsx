@@ -1,10 +1,10 @@
 import React from 'react';
 import { Col, Image } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import './CardProductAdmin.css';
+import './CardProduct.css';
 
-function CardProdutoAdmin(props) {
-  const { id, image, price, name } = props;
+function CardProduct(props) {
+  const { id, image, unitary_value: price, name } = props;
   const history = useHistory();
 
   const handleClick = () => {
@@ -18,10 +18,13 @@ function CardProdutoAdmin(props) {
       </div>
       <div className="card-product admin info">
         {name}
-        <span className="card-product admin info price">{`R$ ${price}`}</span>
+        <span className="card-product admin info price">{`R$ ${price
+          .toFixed(2)
+          .toString()
+          .replace('.', ',')}`}</span>
       </div>
     </Col>
   );
 }
 
-export default CardProdutoAdmin;
+export default CardProduct;

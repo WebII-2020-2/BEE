@@ -20,7 +20,7 @@ function CategoriesList(props) {
   const th = {
     id: 'ID',
     name: 'Nome',
-    count_products: 'Quantidade de produtos',
+    count_products: 'Quant. produtos cadastrados',
   };
 
   const getCategories = async () => {
@@ -30,7 +30,7 @@ function CategoriesList(props) {
       if (resp.success) {
         setCategories(resp.data);
       } else {
-        throw new Error(`Unable to get categories: ${resp.error}`);
+        throw new Error(`${resp.error.error_message}`);
       }
     } catch (err) {
       console.error(err);

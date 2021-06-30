@@ -13,29 +13,29 @@ function getById(id) {
 }
 
 /** cria um novo */
-function createNew(form) {
+function create(form) {
   return api.post(`${ENDPOINT_BASE}/create`, {
     ...form,
   });
 }
 
 /** atualiza */
-function updateOne(id, form) {
-  return api.put(`${ENDPOINT_BASE}/updade/${id}`, {
+function update(id, form) {
+  return api.post(`${ENDPOINT_BASE}/update/${id}`, {
     ...form,
   });
 }
 
-function removeOne(id) {
+function remove(id) {
   return api.delete(`${ENDPOINT_BASE}/delete/${id}`);
 }
 
 const ExampleApiService = {
   getAll,
   getById,
-  createNew,
-  updateOne,
-  removeOne,
+  create,
+  update,
+  remove,
 };
 
 export default ExampleApiService;

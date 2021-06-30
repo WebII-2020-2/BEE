@@ -10,20 +10,46 @@
 }
 
 @font-face {
-  font-family: "Roboto";
-  src: url("./assets/fonts/Roboto/Roboto-Regular.ttf");
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto/Roboto-Regular.ttf');
 }
 
 @font-face {
-  font-family: "Poppins";
-  src: url("./assets/fonts/Poppins/Poppins-Regular.ttf");
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins/Poppins-Regular.ttf');
 }
 
 /* Reset do CSS */
 * {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   outline: none;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: .5rem;
+  scrollbar-color: var(--dark-grey) var(--white);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: .5rem;
+  height: .5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--white);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--dark-grey);
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 0.1rem var(--yellow);
 }

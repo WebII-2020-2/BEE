@@ -88,12 +88,12 @@ function FormCategoryAdmin(props) {
           if (resp.success) {
             handleEdit();
           } else {
-            throw new Error(`Failed to update category: ${resp.error}`);
+            throw new Error(`${resp.error.error_message}`);
           }
         }
       }
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     } finally {
       setIsSaving(false);
     }
@@ -104,7 +104,7 @@ function FormCategoryAdmin(props) {
       CategoryAdminApiService.remove(categoryId);
       history.push('/admin/categorias');
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     }
   };
 

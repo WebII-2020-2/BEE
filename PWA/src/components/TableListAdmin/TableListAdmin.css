@@ -1,13 +1,13 @@
-.table-list{
+.table-list {
   border-collapse: separate;
   border-spacing: 0 10px;
 }
 
-.table.table-list tr{
+.table.table-list tr {
   cursor: pointer;
 }
 
-.table.table-list td{
+.table.table-list td {
   border: 1.5px var(--black);
   border-style: solid none;
 }
@@ -24,7 +24,10 @@
   border-top-right-radius: 10px;
 }
 
-.admin-container.table{
+.admin-container.table {
   min-height: 75%;
+  min-width: 300px;
+  max-width: 900px;
   text-align: center;
+  overflow-x: scroll;
 }
