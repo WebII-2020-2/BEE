@@ -31,7 +31,7 @@ function update(form, id) {
   });
 }
 
-const CategoryAdminApiService = {
+const PromotionAdminApiService = {
   getAll,
   getById,
   createNew,
@@ -39,4 +39,4 @@ const CategoryAdminApiService = {
   update,
 };
 
-export default CategoryAdminApiService;
+export default PromotionAdminApiService;
