@@ -22,7 +22,6 @@ function PromotionsList(props) {
     start_date: 'Ínicio',
     end_date: 'Fim',
     value: 'Valor',
-    promotionProducts: 'Produtos',
   };
 
   const getPromotions = async () => {
@@ -30,7 +29,20 @@ function PromotionsList(props) {
       setIsLoading(true);
       const resp = await PromotionAdminApiService.getAll().then((r) => r.data);
       if (resp.success) {
-        setPromotions(resp.data);
+        setPromotions(
+          resp.data.map((promotion) => ({
+            ...promotion,
+            start_date: new Date(promotion.start_date).toLocaleDateString(
+              'pt-BR',
+              {
+                timeZone: 'UTC',
+              }
+            ),
+            end_date: new Date(promotion.end_date).toLocaleDateString('pt-BR', {
+              timeZone: 'UTC',
+            }),
+          }))
+        );
       } else {
         throw new Error(`${resp.error.error_message}`);
       }

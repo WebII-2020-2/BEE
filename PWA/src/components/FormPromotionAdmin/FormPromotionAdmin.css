@@ -1,11 +1,11 @@
 .form-promotion-admin.container{
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   padding-top: 0.5rem;
   border-radius: 5px;
   color: var(--dark-grey);
   background-color: var(--light-grey);
-  margin-top: 1rem;
 }
 
 .form-promotion-admin.group{
@@ -30,10 +30,22 @@
   flex-grow: 2;
 }
 
-/* .form-promotion-admin.group.sm {
+.form-promotion-admin.nav {
+  margin-top: 1rem;
+  max-width: 900px;
+  background-color: var(--white);
   display: flex;
-  flex-wrap: wrap;
-  flex-basis: 300px;
-  flex-grow: 1;
-  text-align: center;
-} */
+  justify-content: center;
+}
+
+
+.form-promotion-admin.nav .nav-item a {
+  color: var(--orange);
+}
+
+.form-promotion-admin.nav .nav-item .active {
+  border: none;
+  background-color: var(--white);
+  color: var(--dark-grey);
+  cursor: default;
+}
