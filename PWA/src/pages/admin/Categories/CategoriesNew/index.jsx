@@ -22,6 +22,7 @@ function CategoriesNew() {
     const form = {
       ...values,
     };
+    console.warn(form);
     try {
       const isValid = await validationSchema
         .validate(form, { abortEarly: false })
@@ -38,7 +39,7 @@ function CategoriesNew() {
           (r) => r.data
         );
         if (resp.success) {
-          history.push('/admin/categorias');
+          history.push('/admin/categorias/page/1');
         } else {
           throw new Error(`Failed to create category: ${resp.error}`);
         }
@@ -57,7 +58,7 @@ function CategoriesNew() {
   return (
     <AdminContainer link="categorias">
       <ButtonsForm
-        path="/admin/produtos/page/1"
+        path="/admin/categorias/page/1"
         handleSubmit={handleSubmit}
         isNew
         isSaving={isSaving}

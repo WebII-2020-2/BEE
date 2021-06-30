@@ -28,7 +28,7 @@ function CategoriesPage(props) {
       }
     } catch (err) {
       console.error(err);
-      history.push('/admin/categorias');
+      history.push('/admin/categorias/page/1');
     }
   };
 
@@ -76,7 +76,7 @@ function CategoriesPage(props) {
         (r) => r.data
       );
       if (resp.success) {
-        history.push('/admin/categorias');
+        history.push('/admin/categorias/page/1');
       } else {
         throw new Error(`${resp.error.error_message}`);
       }
