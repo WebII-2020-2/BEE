@@ -32,6 +32,13 @@ function TablePromotionProductsAdmin() {
     setProductsTable([...productsTable, ...productSelected]);
   };
 
+  const productRemoveTable = (productId) => {
+    const productsNotSelected = productsTable.filter(
+      (p) => p.id !== Number(productId)
+    );
+    setProductsTable([...productsNotSelected]);
+  };
+
   const CustomMenu = React.forwardRef(({ children, className }, ref) => {
     const [value, setValue] = useState('');
 
@@ -56,7 +63,10 @@ function TablePromotionProductsAdmin() {
 
   return (
     <div className="form-promotion-admin container">
-      <Dropdown onSelect={(productId) => productAddTable(productId)}>
+      <Dropdown
+        onSelect={(productId) => productAddTable(productId)}
+        className="my-2"
+      >
         <Dropdown.Toggle variant="secondary">
           Selecione um produto
         </Dropdown.Toggle>
@@ -84,7 +94,11 @@ function TablePromotionProductsAdmin() {
               <td>{productSelected.unitary_value}</td>
               <td>50</td>
               <td>
-                <Button variant="outline-danger" size="sm">
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => productRemoveTable(productSelected.id)}
+                >
                   <Trash2 />
                 </Button>
               </td>
