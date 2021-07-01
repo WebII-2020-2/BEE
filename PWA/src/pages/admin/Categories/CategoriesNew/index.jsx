@@ -22,7 +22,6 @@ function CategoriesNew() {
     const form = {
       ...values,
     };
-    console.warn(form);
     try {
       const isValid = await validationSchema
         .validate(form, { abortEarly: false })
