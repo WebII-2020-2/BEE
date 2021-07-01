@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import AdminContainer from '../../../../components/Admin/Container';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
@@ -11,6 +12,7 @@ import './ReportsPage.css';
 function ReportsPage(props) {
   const { match } = props;
   const [reportData, setReportData] = useState([]);
+  const history = useHistory();
 
   const getReports = async () => {
     try {
@@ -24,6 +26,7 @@ function ReportsPage(props) {
       }
     } catch (err) {
       console.error(err);
+      history.push('/admin/relatorios/page/1');
     }
   };
 

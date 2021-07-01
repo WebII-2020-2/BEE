@@ -34,6 +34,7 @@ function AdminRoutes(props) {
       <PrivateRoute path={`${match.path}/promocoes`} component={Promotions} />
       <PrivateRoute path={`${match.path}/relatorios`} component={Reports} />
       <PrivateRoute path={`${match.path}/vendas`} component={Order} />
+      <Redirect path="*" to="/not-found" />
     </Switch>
   );
 }
