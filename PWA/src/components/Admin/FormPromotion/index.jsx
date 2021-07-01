@@ -4,7 +4,7 @@ import TablePromotionProducts from '../TablePromotionProducts';
 import './FormPromotion.css';
 
 function FormPromotionAdmin(props) {
-  const { readOnly, update, values } = props;
+  const { readOnly, update, values, isNew } = props;
 
   const [tab, setTab] = useState('details');
 
@@ -21,7 +21,7 @@ function FormPromotionAdmin(props) {
 
   return (
     <>
-      {!readOnly && (
+      {!isNew && (
         <Nav
           variant="tabs"
           activeKey={tab}
@@ -47,9 +47,7 @@ function FormPromotionAdmin(props) {
       )}
 
       {tab === 'details' && (
-        <Form
-          className={`form-promotion-admin container ${readOnly && 'mt-3'}`}
-        >
+        <Form className={`form-promotion-admin container ${isNew && 'mt-3'}`}>
           <Form.Group className="form-promotion-admin group lg">
             <Form.Label className="form-promotion-admin label">Nome</Form.Label>
             <Form.Control
