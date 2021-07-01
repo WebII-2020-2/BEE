@@ -20,7 +20,7 @@ function LoginAdmin() {
       }).then((r) => r.data);
       if (resp.success) {
         loginAdmin(resp.data.token.access_token);
-        history.push('/admin/home');
+        history.push('/admin/inicio');
       } else {
         throw new Error(`${resp.error.error_message}`);
       }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 // PAGES
 import ProductsList from './ProductsList';
@@ -14,6 +14,7 @@ function Products(props) {
       <Route path={`${match.path}/page/:number`} component={ProductsList} />
       <Route path={`${match.path}/novo`} component={ProductNew} />
       <Route path={`${match.path}/:id`} component={ProductPage} />
+      <Redirect path="*" to="/not-found" />
     </Switch>
   );
 }
