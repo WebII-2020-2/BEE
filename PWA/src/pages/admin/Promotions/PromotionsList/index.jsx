@@ -28,13 +28,12 @@ function PromotionsList(props) {
       setIsLoading(true);
       const resp = await PromotionAdminApiService.getAll().then((r) => r.data);
       if (resp.success) {
-        setPromotions(
-          resp.data.map((promotion) => ({
-            ...promotion,
-            start_date: formatDate(promotion.start_date),
-            end_date: formatDate(promotion.end_date),
-          }))
-        );
+        const formattedPromotions = resp.data.map((promotion) => ({
+          ...promotion,
+          start_date: formatDate(promotion.start_date),
+          end_date: formatDate(promotion.end_date),
+        }));
+        setPromotions(formattedPromotions);
       } else {
         throw new Error(`${resp.error.error_message}`);
       }
