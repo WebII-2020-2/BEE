@@ -25,7 +25,6 @@ function PromotionsNew() {
     const form = {
       ...values,
     };
-    console.warn(form);
     try {
       const isValid = await validationSchema
         .validate(form, { abortEarly: false })
@@ -70,7 +69,7 @@ function PromotionsNew() {
         errors={[...errors]}
         clear={handleClearErrors}
       />
-      <FormPromotionAdmin values={values} update={setValues} />
+      <FormPromotionAdmin values={values} update={setValues} isNew />
     </AdminContainer>
   );
 }
