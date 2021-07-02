@@ -59,11 +59,11 @@ function ReportsPage(props) {
   const productsData = [
     {
       title: 'Total de produtos do mês',
-      value: `R$ ${statistics.totalProducts}`,
+      value: `${statistics.totalProducts}/un`,
     },
     {
       title: 'Média de produtos vendidos p/ dia',
-      value: `R$ ${statistics.meanProducts}`,
+      value: `${statistics.meanProducts}/un`,
     },
   ];
 
