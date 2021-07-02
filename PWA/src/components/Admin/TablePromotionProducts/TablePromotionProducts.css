@@ -1,3 +1,8 @@
 .dropdown-products-admin.dropdown{
   display: flex;
 }
+
+.table.table-promotion-products td, .table.table-promotion-products th{
+  vertical-align: middle;
+  text-align: center;
+}
