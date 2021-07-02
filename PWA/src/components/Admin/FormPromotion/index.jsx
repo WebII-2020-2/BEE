@@ -15,6 +15,13 @@ function FormPromotionAdmin(props) {
     });
   };
 
+  const handleUpdateProducts = (products) => {
+    update({
+      ...values,
+      products,
+    });
+  };
+
   const handleUpdateTab = (newTab) => {
     setTab(newTab);
   };
@@ -129,7 +136,13 @@ function FormPromotionAdmin(props) {
         </Form>
       )}
 
-      {tab === 'products' && <TablePromotionProducts />}
+      {tab === 'products' && (
+        <TablePromotionProducts
+          readOnly={readOnly}
+          updateProducts={handleUpdateProducts}
+          values={values.products}
+        />
+      )}
     </>
   );
 }
