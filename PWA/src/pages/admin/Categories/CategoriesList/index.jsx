@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import AdminContainer from '../../../../components/Admin/Container';
 import ButtonsListAdmin from '../../../../components/Admin/ButtonsList';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
@@ -8,14 +9,11 @@ import CategoryAdminApiService from '../../../../services/api/CategoryAdminApiSe
 
 function CategoriesList(props) {
   const { match } = props;
+  const history = useHistory();
   const [categories, setCategories] = useState([]);
-  const [categoriesPerPage, setCategoriesPerPage] = useState([]);
-  const [categoriesFilter, setCategoriesFilter] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [valueSearch, setValueSearch] = useState();
   const [actualPage, setActualPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(
-    Math.ceil(categories.length / 5)
-  );
 
   const th = {
     id: 'ID',
@@ -39,57 +37,51 @@ function CategoriesList(props) {
     }
   };
 
-  useEffect(() => {
-    getCategories();
-  }, []);
+  const categoriesFilter = useMemo(() => {
+    const filter = valueSearch || undefined;
+    if (filter) {
+      return categories.filter(
+        (category) => category.name.toLowerCase().indexOf(filter) !== -1
+      );
+    }
+    return -1;
+  }, [valueSearch]);
 
-  const getCategoriesPerPage = () => {
+  const totalPages = useMemo(() => {
+    if (categoriesFilter !== -1) {
+      return Math.ceil(categoriesFilter.length / 5);
+    }
+    return Math.ceil(categories.length / 5);
+  }, [categories, categoriesFilter]);
+
+  const categoriesPerPage = useMemo(() => {
     const indexMin = (actualPage - 1) * 5;
     const indexMax = indexMin + 5;
     if (categoriesFilter !== -1) {
-      const categoryList = categoriesFilter.filter(
+      return categoriesFilter.filter(
         (x, index) => index >= indexMin && index < indexMax
       );
-      setTotalPages(Math.ceil(categoriesFilter.length / 5));
-      setCategoriesPerPage(categoryList);
-    } else {
-      const categoryList = categories.filter(
-        (x, index) => index >= indexMin && index < indexMax
-      );
-      setTotalPages(Math.ceil(categories.length / 5));
-      setCategoriesPerPage(categoryList);
     }
-  };
+    return categories.filter(
+      (x, index) => index >= indexMin && index < indexMax
+    );
+  }, [actualPage, categoriesFilter, categories]);
 
   useEffect(() => {
-    if (match.params.number) {
-      setActualPage(Number(match.params.number));
-    }
-    getCategoriesPerPage();
-  }, [categories, categoriesFilter, actualPage]);
-
-  const handleChangePage = (page) => {
-    setActualPage(page);
-  };
-
-  const getCategoryFilter = (valueSearch) => {
-    const filter = valueSearch || undefined;
-
-    if (filter) {
-      const filtered = categories.filter(
-        (category) => category.name.toLowerCase().indexOf(filter) !== -1
-      );
-      setCategoriesFilter(filtered);
+    const page = Number(match.params.number);
+    if (page) {
+      setActualPage(page);
     } else {
-      setCategoriesFilter(-1);
+      history.push('/admin/categorias/page/1');
     }
-  };
+    getCategories();
+  }, []);
 
   return (
     <AdminContainer link="categorias">
       <ButtonsListAdmin
         link="/admin/categorias/novo"
-        funcFilter={getCategoryFilter}
+        funcFilter={setValueSearch}
       />
       {isLoading ? (
         <LoadingPageAdmin />
@@ -103,7 +95,7 @@ function CategoriesList(props) {
       <PaginationAdmin
         totalPages={totalPages}
         actualPage={actualPage}
-        changePage={handleChangePage}
+        changePage={setActualPage}
         baseUrl="/admin/categorias"
       />
     </AdminContainer>

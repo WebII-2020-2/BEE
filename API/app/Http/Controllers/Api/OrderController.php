@@ -18,7 +18,7 @@ class OrderController extends Controller
                         ->join('send_methods as sm', 'sm.id', '=', 'orders.send_method_id')
                         ->orderBy('orders.created_at', 'desc')
                         ->select(
-                            'orders.id',
+                            'orders.invoice',
                             'orders.quantity',
                             'orders.value_total',
                             'orders.status_order',
@@ -28,7 +28,7 @@ class OrderController extends Controller
             $mounted_orders_data = [];
             foreach($orders as $order){
                 array_push($mounted_orders_data, array(
-                    'id' => $order->id,
+                    'invoice' => $order->invoice,
                     'quantity' => $order->quantity,
                     'value_total' => $order->value_total,
                     'status_order' => $order->status_order,
@@ -47,10 +47,10 @@ class OrderController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function get($id){
+    public function get($invoice){
         try{
 
-            $order = Order::where('orders.id', $id)
+            $order = Order::where('orders.invoice', $invoice)
                         ->join('users as u', 'u.id', '=','orders.user_id')
                         ->join('payment_methods as pm', 'pm.id', '=', 'orders.payment_method_id')
                         ->join('send_methods as sm', 'sm.id', '=', 'orders.send_method_id')
@@ -136,7 +136,7 @@ class OrderController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function update($id, Request $request){
+    public function update($invoice, Request $request){
         $data = $request->all();
 
         if(isset($data['tracking_code'])){
@@ -148,7 +148,7 @@ class OrderController extends Controller
         }
 
         if(isset($data['status_order']) && $data['status_order'] == 6){
-            $address = Order::where('id', $id)->join('addresses as a', 'a.id', '=', 'orders.address_id')->select('a.*')->fisrt();
+            $address = Order::where('invoice', $invoice)->join('addresses as a', 'a.id', '=', 'orders.address_id')->select('a.*')->fisrt();
             $order_data['shipped_date'] = Carbon::today()->format('Y-m-d');
             $order_data['estimated_date'] = Carbon::today()->add($address->deadline, 'day')->format('Y-m-d');
         }
@@ -158,7 +158,7 @@ class OrderController extends Controller
         }
 
         try{
-            $order = Order::where('id', $id)->update($order_data);
+            $order = Order::where('invoice', $invoice)->update($order_data);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a venda.'];
         }

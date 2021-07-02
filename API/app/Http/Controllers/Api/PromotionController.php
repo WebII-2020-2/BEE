@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\ProductPromotion;
 use App\Models\CategoryPromotion;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Exception;
 
 class PromotionController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->only([
             'name',
             'type',
@@ -21,140 +22,139 @@ class PromotionController extends Controller
             'end_date'
         ]);
 
-        try{
+        try {
             $result_promotion = Promotion::create($data);
 
-            foreach($request->input('products', []) as $product){
+            foreach ($request->input('products', []) as $product) {
 
                 $product_promotion = $result_promotion->productPromotion()->create(array(
                     'product_id' => $product
                 ));
-
             }
-
-
-            foreach($request->input('categories',[]) as $categories){
-
-                $categories_promotion = $result_promotion->categoriesPromotion()->create(array(
-                    'categories_id' => $categories 
-                ));
-
-            }
-
-        }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar a promoção.'];
-            
+        } catch (\Exception $exception) {
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar a promoção.', $exception];
         }
 
-        if(isset($result_promotion) && !isset($error)){
+        if (isset($result_promotion) && !isset($error)) {
             return response()->json(['success' => true, 'data' => $result_promotion, 'error' => $error ?? null], 200);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function show(){
-        try{
-            $promotions = Promotion::orderBy('name', 'asc')->with(['productPromotion.product', 'categoryPromotion.category'])->get();
+    public function show()
+    {
+        try {
+            $promotions = Promotion::all();
+            $mounted_promotions = [];
+            foreach ($promotions as $promotion) {
+                $products = $promotion->productPromotion;
 
-        }catch(\Exception $exception){
+                $mounted_products = [];
+                foreach ($products as $product) {
+                    array_push($mounted_products, $product->product_id);
+                }
+
+                array_push($mounted_promotions, array(
+                    'id' => $promotion->id,
+                    'name' => $promotion->name,
+                    'type' => $promotion->type,
+                    'value' => $promotion->value,
+                    'start_date' => $promotion->start_date,
+                    'end_date' => $promotion->end_date,
+                    'products' => $mounted_products
+                ));
+            }
+        } catch (\Exception $exception) {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar as promoções.'];
         }
 
-        if(isset($promotions) && !isset($error)){
-            return response()->json(['success' => true, 'data' => $promotions, 'error' => $error ?? null], 200);
+        if (isset($mounted_promotions) && !isset($error)) {
+            return response()->json(['success' => true, 'data' => $mounted_promotions, 'error' => $error ?? null], 200);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function get($id){
-        try{
-            $promotions = Promotion::orderBy('name', 'asc')->with(['productPromotion.product', 'categoryPromotion.category'])->find($id);
+    public function get($id)
+    {
+        try {
+            $promotion = Promotion::where('id', $id)->first();
 
-        }catch(\Exception $exception){
+            $product_promotions = $promotion->productPromotion;
+
+            $products = [];
+            foreach($product_promotions as $product_promotion){
+                array_push($products, $product_promotion->product_id);
+            }
+
+            $mounted_promotions = array(
+                'id' => $promotion->id,
+                'name' => $promotion->name,
+                'type' => $promotion->type,
+                'value' => $promotion->value,
+                'start_date' => $promotion->start_date,
+                'end_date' => $promotion->end_date,
+                'products' => $products
+            );
+        } catch (\Exception $exception) {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar a promoção.'];
         }
 
-        if(isset($promotions) && !isset($error)){
-            return response()->json(['success' => true, 'data' => $promotions, 'error' => $error ?? null], 200);
+        if (isset($mounted_promotions) && !isset($error)) {
+            return response()->json(['success' => true, 'data' => $mounted_promotions, 'error' => $error ?? null], 200);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function update($id, Request $request){
-        $data = $request->only([
-            'name',
-            'type',
-            'value',
-            'start_date',
-            'end_date'
-        ]);
+    public function update($id, Request $request)
+    {
+        $data = $request->all();
 
-        $promotion = Promotion::find($id);
+        try {
+            $promotion = Promotion::where('id', $id)->first();
 
-        if(!$promotion){
-            return response()->json(['success' => false, 'data' => null, 'error' => 'Promoção nao foi encontrada'], 404);
+            $result_promotion = Promotion::where('id', $id)->update([
+                'name' => $data['name'],
+                'type' => $data['type'],
+                'value' => $data['value'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date']
+            ]);
+
+            $result_product_promotion = $promotion->productPromotion()->whereNotIn('product_id', $data['products'])->delete();
+
+            foreach ($data['products'] as $product) {
+                $product_promotion = ProductPromotion::updateOrCreate(
+                    ['promotion_id' => $id, 'product_id' => $product],
+                    ['promotion_id' => $id, 'product_id' => $product]
+                );
+            }
+        } catch (\Exception $exception) {
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a promoção.', $exception];
         }
 
-        DB::beginTransaction();
-
-        try{
-            if(is_array($request->input('products_deleteds')) && count($request->input('products_deleteds'))){
-                $products_deleteds = ProductPromotion::whereIn('product_id', $request->input('products_deleteds', []))->where('promotion_id', $promotion->id)->delete();
-            }
-
-            if(is_array($request->input('categories_deleteds')) && count($request->input('categories_deleteds'))){
-                $categories_deleteds = CategoryPromotion::whereIn('category_id', $request->input('categories_deleteds', []))->where('promotion_id', $promotion->id)->delete();
-            }
-
-            foreach($request->input('products', []) as $product){
-
-                $product_promotion = $promotion->productPromotion()->create(array(
-                    'product_id' => $product
-                ));
-
-            }
-
-            foreach($request->input('categories',[]) as $categories){
-
-                $categories_promotion = $promotion->categoryPromotion()->create(array(
-                    'category_id' => $categories 
-                ));
-
-            }
-
-            $promotion->update($data);
-
-            DB::commit();
-
-        }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a promoção.'];
-
-            DB::rollBack();
-
-        }
-
-        if(!isset($error)){
+        if (!isset($error) && isset($result_promotion) && $result_promotion) {
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
-        }else{
+        } else {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a promoção.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function delete($id){
-        try{
+    public function delete($id)
+    {
+        try {
             $promotion = Promotion::where('id', $id)->delete();
-        }catch(\Exception $exception){
+        } catch (\Exception $exception) {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a promoção.'];
         }
 
-        if(isset($promotion) && !isset($error) && $promotion){
+        if (isset($promotion) && !isset($error) && $promotion) {
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
-        }else{
+        } else {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a promoção.'];
         }
 

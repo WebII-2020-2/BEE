@@ -25,13 +25,13 @@ function remove(id) {
 }
 
 /** atualiza */
-function update(form, id) {
+function update(id, form) {
   return api.post(`${ENDPOINT_BASE}/update/${id}`, {
     ...form,
   });
 }
 
-const CategoryAdminApiService = {
+const PromotionAdminApiService = {
   getAll,
   getById,
   createNew,
@@ -39,4 +39,4 @@ const CategoryAdminApiService = {
   update,
 };
 
-export default CategoryAdminApiService;
+export default PromotionAdminApiService;

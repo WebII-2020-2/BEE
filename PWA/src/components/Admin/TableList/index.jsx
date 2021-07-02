@@ -22,7 +22,7 @@ function TableList(props) {
 
   const tr = () =>
     itens.map((row) => (
-      <tr key={row.id} onClick={() => handleCLickEdit(row.id)}>
+      <tr key={row.id} onClick={() => handleCLickEdit(Object.values(row)[0])}>
         {filterTd(row)}
       </tr>
     ));

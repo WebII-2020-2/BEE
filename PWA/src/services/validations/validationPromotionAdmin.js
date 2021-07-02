@@ -8,9 +8,20 @@ const validationSchema = yup.object().shape({
     .max(100, 'Nome deve conter menos de 100 caracteres'),
   start_date: yup
     .date()
+    .typeError('Campo obrigatório: Data de início')
     .required('Campo obrigatório: Data de início')
-    .min(new Date(), 'Data de início deve ser a partir de hoje'),
-  end_date: yup.date().required('Campo obrigatório: Data de fim'),
+    .min(
+      new Date(new Date().setDate(new Date().getDate() - 1)),
+      'Data de início deve ser a partir de hoje'
+    ),
+  end_date: yup
+    .date()
+    .typeError('Campo obrigatório: Data de fim')
+    .required('Campo obrigatório: Data de fim')
+    .min(
+      yup.ref('start_date'),
+      'Data de fim deve ser maior que data de início'
+    ),
   value: yup
     .number()
     .required('Campo obrigatório: Valor')

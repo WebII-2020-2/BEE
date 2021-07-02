@@ -19,8 +19,4 @@ class Promotion extends Model
     public function productPromotion(){
         return $this->hasMany('App\Models\ProductPromotion');
     }
-
-    public function categoryPromotion(){
-        return $this->hasMany('App\Models\CategoryPromotion');
-    }
 }
