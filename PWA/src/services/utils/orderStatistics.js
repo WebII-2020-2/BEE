@@ -32,8 +32,6 @@ const getBlankData = (month) => {
 
 const getGraphData = (data, date) => {
   const month = date.substring(0, 2);
-  console.warn(month);
-
   const blankData = getBlankData(Number(month));
 
   data.forEach((item) => {
@@ -45,8 +43,6 @@ const getGraphData = (data, date) => {
   });
 
   const graphData = blankData;
-  console.warn(graphData);
-
   return graphData;
 };
 
@@ -74,6 +70,8 @@ const getMeanValue = (data) => {
       totalV += d.value;
     }
   });
+
+  if (Number.isNaN(totalV / totalD)) return 0;
 
   return (totalV / totalD).toFixed(2);
 };
