@@ -43,8 +43,8 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'categ
 // Orders
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'order'], function ($router) {
     Route::get('/list', 'Api\OrderController@show');
-    Route::get('/list/{id}', 'Api\OrderController@get');
-    Route::post('/update/{id}', 'Api\OrderController@update');
+    Route::get('/list/{invoice}', 'Api\OrderController@get');
+    Route::post('/update/{invoice}', 'Api\OrderController@update');
 });
 
 // Reports
