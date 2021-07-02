@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 // PAGES
 import CategoriesList from './CategoriesList';
@@ -15,6 +15,7 @@ function Categories(props) {
       <Route path={`${match.path}/novo`} component={CategoriesNew} />
       <Route path={`${match.path}/:id`} component={CategoriesPage} />
       <Route path={match.path} exact component={CategoriesList} />
+      <Redirect path="*" to="/not-found" />
     </Switch>
   );
 }

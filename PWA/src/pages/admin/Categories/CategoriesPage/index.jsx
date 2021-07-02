@@ -28,7 +28,7 @@ function CategoriesPage(props) {
       }
     } catch (err) {
       console.error(err);
-      history.push('/admin/categorias');
+      history.push('/admin/categorias/page/1');
     }
   };
 

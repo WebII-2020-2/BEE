@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Container, Nav } from 'react-bootstrap';
 import AdminContainer from '../../../../components/Admin/Container';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
@@ -12,6 +13,7 @@ function OrderPage(props) {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [tab, setTab] = useState('details');
+  const history = useHistory();
 
   const getOrder = async () => {
     try {
@@ -26,6 +28,7 @@ function OrderPage(props) {
       throw new Error(`${resp.error.error_message}`);
     } catch (err) {
       console.error(err);
+      history.push('/admin/vendas/page/1');
     }
   };
 

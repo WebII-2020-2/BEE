@@ -28,7 +28,7 @@ function ProductPage(props) {
       }
     } catch (err) {
       console.error(err);
-      history.push('/admin/produtos');
+      history.push('/admin/produtos/page/1');
     }
   };
 
