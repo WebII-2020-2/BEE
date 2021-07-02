@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import AdminContainer from '../../../../components/Admin/Container';
 import ButtonsList from '../../../../components/Admin/ButtonsList';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
 import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
 import TableListAdmin from '../../../../components/Admin/TableList';
 import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
+import formatDate from '../../../../services/utils/formatDate';
+import formatFloat from '../../../../services/utils/formatFloat';
 
 function PromotionsList(props) {
   const { match } = props;
+  const history = useHistory();
   const [promotions, setPromotions] = useState([]);
-  const [promotionsPerPage, setPromotionsPerPage] = useState([]);
-  const [promotionsFilter, setPromotionsFilter] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [valueSearch, setValueSearch] = useState();
   const [actualPage, setActualPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(
-    Math.ceil(promotions.length / 5)
-  );
 
   const th = {
     name: 'Nome',
+    value: 'Desconto',
     start_date: 'Ínicio',
     end_date: 'Fim',
-    value: 'Valor',
   };
 
   const getPromotions = async () => {
@@ -29,20 +29,16 @@ function PromotionsList(props) {
       setIsLoading(true);
       const resp = await PromotionAdminApiService.getAll().then((r) => r.data);
       if (resp.success) {
-        setPromotions(
-          resp.data.map((promotion) => ({
-            ...promotion,
-            start_date: new Date(promotion.start_date).toLocaleDateString(
-              'pt-BR',
-              {
-                timeZone: 'UTC',
-              }
-            ),
-            end_date: new Date(promotion.end_date).toLocaleDateString('pt-BR', {
-              timeZone: 'UTC',
-            }),
-          }))
-        );
+        const formattedPromotions = resp.data.map((promotion) => ({
+          ...promotion,
+          start_date: formatDate(promotion.start_date),
+          end_date: formatDate(promotion.end_date),
+          value:
+            promotion.type === 1
+              ? `R$ ${formatFloat(promotion.value)}`
+              : `${promotion.value} %`,
+        }));
+        setPromotions(formattedPromotions);
       } else {
         throw new Error(`${resp.error.error_message}`);
       }
@@ -53,58 +49,49 @@ function PromotionsList(props) {
     }
   };
 
-  useEffect(() => {
-    getPromotions();
-  }, []);
+  const promotionsFilter = useMemo(() => {
+    const filter = valueSearch || undefined;
+    if (filter) {
+      return promotions.filter(
+        (promotion) => promotion.name.toLowerCase().indexOf(filter) !== -1
+      );
+    }
+    return -1;
+  }, [valueSearch]);
 
-  const getPromotionsPerPage = () => {
+  const totalPages = useMemo(() => {
+    if (promotionsFilter !== -1) {
+      return Math.ceil(promotionsFilter.length / 5);
+    }
+    return Math.ceil(promotions.length / 5);
+  }, [promotions, promotionsFilter]);
+
+  const promotionsPerPage = useMemo(() => {
     const indexMin = (actualPage - 1) * 5;
     const indexMax = indexMin + 5;
     if (promotionsFilter !== -1) {
-      const promotionList = promotionsFilter.filter(
+      return promotionsFilter.filter(
         (x, index) => index >= indexMin && index < indexMax
       );
-      setTotalPages(Math.ceil(promotionsFilter.length / 5));
-      setPromotionsPerPage(promotionList);
-    } else {
-      const promotionList = promotions.filter(
-        (x, index) => index >= indexMin && index < indexMax
-      );
-      setTotalPages(Math.ceil(promotions.length / 5));
-      setPromotionsPerPage(promotionList);
     }
-  };
+    return promotions.filter(
+      (x, index) => index >= indexMin && index < indexMax
+    );
+  }, [actualPage, promotionsFilter, promotions]);
 
   useEffect(() => {
-    if (match.params.number) {
-      setActualPage(Number(match.params.number));
-    }
-    getPromotionsPerPage();
-  }, [promotions, promotionsFilter, actualPage]);
-
-  const handleChangePage = (page) => {
-    setActualPage(page);
-  };
-
-  const getPromotionFilter = (valueSearch) => {
-    const filter = valueSearch || undefined;
-
-    if (filter) {
-      const filtered = promotions.filter(
-        (promotion) => promotion.name.toLowerCase().indexOf(filter) !== -1
-      );
-      setPromotionsFilter(filtered);
+    const page = Number(match.params.number);
+    if (page) {
+      setActualPage(page);
     } else {
-      setPromotionsFilter(-1);
+      history.push('/admin/promocoes/page/1');
     }
-  };
+    getPromotions();
+  }, []);
 
   return (
     <AdminContainer link="promocoes">
-      <ButtonsList
-        link="/admin/promocoes/novo"
-        funcFilter={getPromotionFilter}
-      />
+      <ButtonsList link="/admin/promocoes/novo" funcFilter={setValueSearch} />
       {isLoading ? (
         <LoadingPageAdmin />
       ) : (
@@ -117,7 +104,7 @@ function PromotionsList(props) {
       <PaginationAdmin
         totalPages={totalPages}
         actualPage={actualPage}
-        changePage={handleChangePage}
+        changePage={setActualPage}
         baseUrl="/admin/promocoes"
       />
     </AdminContainer>
