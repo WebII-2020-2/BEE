@@ -1,0 +1,33 @@
+.admin-main {
+  background-color: var(--white);
+  min-height: 100vh;
+}
+
+.admin-main .row {
+  justify-content: center;
+}
+
+.admin-main-content.col {
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh;
+  margin: 0 2rem;
+  padding: 0;
+  padding-bottom: 1rem;
+  max-width: 900px;
+  min-width: 300px;
+}
+
+.admin-sidebar-toggle,
+.admin-sidebar-toggle.disabled {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-sidebar-toggle {
+    visibility: visible;
+    margin: 1rem 2.5rem;
+    cursor: pointer;
+    color: var(--dark-grey);
+  }
+}

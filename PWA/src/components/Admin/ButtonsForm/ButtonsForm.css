@@ -1,0 +1,23 @@
+.actions-form-admin {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-form-admin {
+  margin-left: 0.5rem;
+  flex-basis: 100px;
+}
+
+.btn-form-admin.voltar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.btn-form-admin.editar,
+.btn-form-admin.editar:hover,
+.btn-form-admin.editar:focus,
+.btn-form-admin.editar:active {
+  color: var(--white) !important;
+}

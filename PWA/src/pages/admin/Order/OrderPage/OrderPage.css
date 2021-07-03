@@ -1,0 +1,38 @@
+.order-page-admin.nav {
+  margin-top: 1rem;
+  max-width: 900px;
+  align-self: center;
+  background-color: var(--white);
+}
+
+.order-page-admin.nav .nav-item a {
+  color: var(--orange);
+}
+
+.order-page-admin.nav .nav-item .active {
+  border: none;
+  background-color: var(--white);
+  color: var(--dark-grey);
+  cursor: default;
+}
+
+.order-page-admin.container {
+  display: flex;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
+  align-self: center;
+  border: 0.1rem solid var(--light-grey);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .order-page-admin.container {
+    min-width: 300px;
+  }
+
+  .order-page-admin.nav .nav-item .active {
+    border: none;
+  }
+}

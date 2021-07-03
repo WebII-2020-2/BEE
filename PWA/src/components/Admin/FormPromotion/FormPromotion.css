@@ -1,0 +1,51 @@
+.form-promotion-admin.container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-radius: 5px;
+  color: var(--dark-grey);
+  background-color: var(--light-grey);
+}
+
+.form-promotion-admin.group{
+  flex-basis:350px;
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.form-promotion-admin.group.lg{
+  flex-basis: 700px;
+}
+
+.form-promotion-admin.label {
+  flex-basis: 100px;
+  flex-grow: 1;
+  font-size: 1.2rem;
+}
+
+.form-promotion-admin.control {
+  flex-basis: 200px;
+  flex-grow: 2;
+}
+
+.form-promotion-admin.nav {
+  margin-top: 1rem;
+  max-width: 900px;
+  background-color: var(--white);
+  display: flex;
+  justify-content: center;
+}
+
+
+.form-promotion-admin.nav .nav-item a {
+  color: var(--orange);
+}
+
+.form-promotion-admin.nav .nav-item .active {
+  border: none;
+  background-color: var(--white);
+  color: var(--dark-grey);
+  cursor: default;
+}

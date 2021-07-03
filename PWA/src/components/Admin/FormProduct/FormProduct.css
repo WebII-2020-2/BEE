@@ -1,0 +1,57 @@
+.form-product-admin.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-radius: 5px;
+  color: var(--dark-grey);
+  background-color: var(--light-grey);
+  margin-top: 1rem;
+}
+
+.form-product-admin.group {
+  flex-basis: 350px;
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.form-product-admin.group.sm {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 250px;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.form-product-admin.label {
+  flex-basis: 100px;
+  flex-grow: 1;
+}
+
+.form-product-admin.control {
+  flex-basis: 200px;
+  flex-grow: 2;
+}
+
+.form-product-admin.group.image {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+textarea.form-product-admin.control {
+  height: 250px;
+}
+
+.form-product-admin.image {
+  max-height: 200px;
+  width: 200px;
+  align-self: center;
+  border-radius: 50%;
+  transform: scale(0.9);
+}
+
+.form-product-admin.label {
+  font-size: 1.2rem;
+}

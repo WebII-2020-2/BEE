@@ -1,0 +1,18 @@
+.report-page-admin.container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
+  align-self: center;
+  border-radius: 5px;
+  border: 2px solid var(--light-grey);
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .report-page-admin.container {
+    min-width: 300px;
+  }
+}

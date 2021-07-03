@@ -1,0 +1,19 @@
+.dropdown-products-admin.dropdown{
+  display: flex;
+}
+
+.table.table-promotion-products td, .table.table-promotion-products th{
+  vertical-align: middle;
+  text-align: center;
+}
+
+.promotion-products-admin{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+  border-radius: 5px;
+  color: var(--dark-grey);
+  background-color: var(--light-grey);
+}

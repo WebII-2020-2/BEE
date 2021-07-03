@@ -1,0 +1,12 @@
+.form-category-admin{
+  background-color: var(--light-grey);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  color: var(--dark-grey);
+  font-family: "Roboto";
+}

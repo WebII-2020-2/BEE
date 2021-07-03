@@ -1,0 +1,105 @@
+.admin-sidebar {
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--dark-grey);
+  font-family: 'Roboto';
+}
+
+.admin-sidebar.wide {
+  padding-left: 0;
+  padding-right: 0;
+  width: auto;
+  min-width: 240px;
+}
+
+.admin-sidebar-logo {
+  width: 10rem;
+  height: auto;
+  align-self: center;
+  margin-bottom: 2rem;
+}
+.admin-sidebar-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  margin: 0.5rem 0;
+}
+.admin-sidebar-user-avatar {
+  max-width: 3rem;
+  max-height: 3rem;
+  border-radius: 50%;
+  margin: 0.5rem 1rem;
+}
+
+.admin-sidebar-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  padding: 0.5rem 0.5rem;
+}
+.admin-sidebar-user-info p {
+  margin-bottom: 0;
+}
+.admin-sidebar-user-info-name {
+  font-weight: bold;
+}
+.admin-sidebar-user svg {
+  margin: 0.5rem;
+  color: var(--white);
+}
+.admin-sidebar-separador {
+  padding: 5% 0;
+  background-color: var(--black);
+  color: var(--white);
+  margin: 5% 0;
+  text-align: center;
+}
+.admin-sidebar-link.nav-link {
+  color: var(--white);
+  padding: 0.5rem 1.5rem;
+  font-size: 1.2rem;
+}
+.admin-sidebar-link.nav-link:hover {
+  color: var(--white);
+  text-decoration: underline !important;
+}
+.admin-sidebar-link.nav-link.selected {
+  border-left: 3px solid var(--orange);
+}
+
+.admin-sidebar-close {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-sidebar {
+    position: fixed !important;
+    width: auto !important;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .admin-sidebar.disabled {
+    display: none;
+  }
+
+  .admin-sidebar-close {
+    visibility: visible;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    padding-bottom: 0;
+  }
+
+  .admin-sidebar-close svg {
+    color: var(--white);
+    cursor: pointer;
+  }
+}

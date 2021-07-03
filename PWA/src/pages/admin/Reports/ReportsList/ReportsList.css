@@ -1,0 +1,19 @@
+.reports-list-admin.container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
+  align-self: center;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  padding: 0;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@media screen and (max-width: 768px) {
+  .reports-list-admin.container {
+    min-width: 300px;
+  }
+}
