@@ -1,35 +1,87 @@
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Button, Dropdown, FormControl, Table } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
-
 import { Trash2 } from 'react-feather';
+import LoadingPage from '../../Shared/LoadingPage';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import formatFloat from '../../../services/utils/formatFloat';
 import './TablePromotionProducts.css';
+import PromotionValidationContext from '../../../context/PromotionValidationContext';
 
-function TablePromotionProductsAdmin() {
-  // const { promotionId } = props;
-  const [products, setProducts] = useState([]);
+function TablePromotionProductsAdmin(props) {
+  const { readOnly, updateProducts, promotion } = props;
+  const [productsDropdown, setProductsDropdown] = useState([]);
   const [productsTable, setProductsTable] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const promotionContext = useContext(PromotionValidationContext);
+
+  const productValueMin = useMemo(() => {
+    const valueMin = productsTable.reduce(
+      (min, product) =>
+        min === 0
+          ? product.unitary_value
+          : Math.min(min, product.unitary_value),
+      0
+    );
+    return valueMin;
+  }, [productsTable]);
+
+  useEffect(() => {
+    promotionContext({
+      productValueMin,
+      error: '',
+    });
+  }, [productValueMin]);
 
   const getProducts = async () => {
+    setIsLoading(true);
     try {
       const resp = await ProductAdminApiService.getAll().then((r) => r.data);
       if (resp.success) {
-        setProducts(resp.data);
+        setProductsDropdown(resp.data);
       } else {
         throw new Error(`Failed to get products: ${resp.error}`);
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const setProducts = () => {
+    const productsPromotion = productsDropdown.filter((p) =>
+      promotion.products.includes(p.id)
+    );
+    setProductsTable(productsPromotion);
   };
 
   useEffect(() => {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    setProducts();
+  }, [productsDropdown]);
+
   const productAddTable = (productId) => {
-    const productSelected = products.filter((p) => p.id === Number(productId));
-    setProductsTable([...productsTable, ...productSelected]);
+    const productSelected = productsDropdown.filter(
+      (p) => p.id === Number(productId)
+    );
+
+    if (
+      promotion.type === 1 &&
+      productSelected[0].unitary_value <= promotion.value
+    ) {
+      promotionContext({
+        productValueMin,
+        error:
+          'Valor do produto não pode ser menor que o valor do desconto da promoção',
+      });
+    } else {
+      setProductsTable([...productsTable, ...productSelected]);
+      updateProducts([...promotion.products, productId]);
+    }
   };
 
   const productRemoveTable = (productId) => {
@@ -37,6 +89,10 @@ function TablePromotionProductsAdmin() {
       (p) => p.id !== Number(productId)
     );
     setProductsTable([...productsNotSelected]);
+
+    const newProducts = promotion.products;
+    newProducts.splice(newProducts.indexOf(Number(productId)), 1);
+    updateProducts(newProducts);
   };
 
   const CustomMenu = React.forwardRef(({ children, className }, ref) => {
@@ -61,8 +117,18 @@ function TablePromotionProductsAdmin() {
     );
   });
 
+  const setDiscount = (productValue) => {
+    let newValue;
+    if (promotion.type === 1) {
+      newValue = productValue - promotion.value;
+    } else {
+      newValue = productValue - (productValue * promotion.value) / 100;
+    }
+    return `R$ ${formatFloat(newValue)}`;
+  };
+
   return (
-    <div className="form-promotion-admin container">
+    <div className="promotion-products-admin">
       <Dropdown
         onSelect={(productId) => productAddTable(productId)}
         className="my-2"
@@ -71,41 +137,52 @@ function TablePromotionProductsAdmin() {
           Selecione um produto
         </Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
-          {products.map((product) => (
-            <Dropdown.Item eventKey={product.id} key={product.id}>
+          {productsDropdown.map((product) => (
+            <Dropdown.Item
+              eventKey={product.id}
+              key={product.id}
+              disabled={
+                readOnly || !!productsTable.find((p) => p.id === product.id)
+              }
+            >
               {product.name}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
-      <Table hover className="mt-2">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Preço com desconto</th>
-            <th>Deletar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {productsTable.map((productSelected) => (
-            <tr key={productSelected.id}>
-              <td>{productSelected.name}</td>
-              <td>{productSelected.unitary_value}</td>
-              <td>50</td>
-              <td>
-                <Button
-                  variant="outline-danger"
-                  size="sm"
-                  onClick={() => productRemoveTable(productSelected.id)}
-                >
-                  <Trash2 />
-                </Button>
-              </td>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <Table hover className="mt-2 table-promotion-products">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Preço com desconto</th>
+              <th>Deletar</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {productsTable.map((product) => (
+              <tr key={product.id}>
+                <td>{product.name}</td>
+                <td>{`R$ ${formatFloat(product.unitary_value)}`}</td>
+                <td>{setDiscount(product.unitary_value)}</td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => productRemoveTable(product.id)}
+                    disabled={readOnly}
+                  >
+                    <Trash2 />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 }

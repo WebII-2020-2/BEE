@@ -18,10 +18,10 @@ class CreatePromotionsTable extends Migration
             $table->string('name', 100);
             $table->integer('type');
             $table->float('value');
-            $table->binary('image');
-            $table->string('mime_type', 100);
+            $table->binary('image')->nullable();
+            $table->string('mime_type', 100)->nullable();
             $table->date('start_date');
-            $table->date('endl_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

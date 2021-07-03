@@ -7,6 +7,7 @@ import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
 import TableListAdmin from '../../../../components/Admin/TableList';
 import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
 import formatDate from '../../../../services/utils/formatDate';
+import formatFloat from '../../../../services/utils/formatFloat';
 
 function PromotionsList(props) {
   const { match } = props;
@@ -18,9 +19,9 @@ function PromotionsList(props) {
 
   const th = {
     name: 'Nome',
+    value: 'Desconto',
     start_date: 'Ínicio',
     end_date: 'Fim',
-    value: 'Valor',
   };
 
   const getPromotions = async () => {
@@ -32,6 +33,10 @@ function PromotionsList(props) {
           ...promotion,
           start_date: formatDate(promotion.start_date),
           end_date: formatDate(promotion.end_date),
+          value:
+            promotion.type === 1
+              ? `R$ ${formatFloat(promotion.value)}`
+              : `${promotion.value} %`,
         }));
         setPromotions(formattedPromotions);
       } else {

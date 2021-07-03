@@ -24,8 +24,9 @@ function OrderPage(props) {
         setOrder({
           ...resp.data,
         });
+      } else {
+        throw new Error(`${resp.error}`);
       }
-      throw new Error(`${resp.error.error_message}`);
     } catch (err) {
       console.error(err);
       history.push('/admin/vendas/page/1');
