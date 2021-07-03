@@ -140,7 +140,7 @@ function FormPromotionAdmin(props) {
         <TablePromotionProducts
           readOnly={readOnly}
           updateProducts={handleUpdateProducts}
-          values={values.products}
+          promotion={values}
         />
       )}
     </>

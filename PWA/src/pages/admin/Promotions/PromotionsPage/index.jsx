@@ -6,6 +6,7 @@ import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import validationSchema from '../../../../services/validations/validationPromotionAdmin';
 import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
+import PromotionValidationContext from '../../../../context/PromotionValidationContext';
 
 function PromotionsPage(props) {
   const { match } = props;
@@ -15,6 +16,12 @@ function PromotionsPage(props) {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [valueProductMin, setValueProductMin] = useState({});
+
+  const handleSetContext = (obj) => {
+    setValueProductMin(obj.productValueMin);
+    if (obj.error) setErrors([...errors, obj.error]);
+  };
 
   const getPromotion = async () => {
     try {
@@ -50,10 +57,15 @@ function PromotionsPage(props) {
           return true;
         })
         .catch((err) => {
-          setErrors([...err.errors]);
+          setErrors([...errors, ...err.errors]);
           return undefined;
         });
-      if (isValid !== undefined) {
+      if (form.type === 1 && form.value >= valueProductMin) {
+        setErrors([
+          ...errors,
+          'Você possui um produto com o valor menor que o desconto, altere o valor ou remova o produto',
+        ]);
+      } else if (isValid !== undefined) {
         const resp = await PromotionAdminApiService.update(
           values.id,
           form
@@ -108,11 +120,13 @@ function PromotionsPage(props) {
         errors={[...errors]}
         clear={handleClearErrors}
       />
-      <FormPromotionAdmin
-        values={values}
-        update={setValues}
-        readOnly={isReadOnly}
-      />
+      <PromotionValidationContext.Provider value={handleSetContext}>
+        <FormPromotionAdmin
+          values={values}
+          update={setValues}
+          readOnly={isReadOnly}
+        />
+      </PromotionValidationContext.Provider>
     </AdminContainer>
   );
 }

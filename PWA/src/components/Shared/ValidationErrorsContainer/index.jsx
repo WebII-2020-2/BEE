@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { Alert, ListGroup } from 'react-bootstrap';
 import './ValidationErrorsContainer.css';
@@ -13,11 +14,11 @@ function ValidationErrorsContainer(props) {
         className="validation-errors container"
       >
         <ListGroup className="validation-errors list">
-          {errors.map((value) => (
+          {errors.map((value, index) => (
             <ListGroup.Item
               variant="warning"
               className="validation-errors list-item"
-              key={value}
+              key={index}
             >
               {value};
             </ListGroup.Item>
