@@ -1,0 +1,39 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: var(--dark-grey);
+}
+
+.footer-list.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-list.list div {
+  background-color: var(--dark-grey);
+  color: var(--white);
+  border: none;
+}
+
+.logo-footer {
+  width: 12rem;
+}
+
+.footer-contacts{
+  color: var(--white);
+  border-bottom: 2px solid var(--white);
+}
+
+.footer-copyright{
+  color: var(--white);
+  background-color: var(--black);
+  width: 100vw;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}

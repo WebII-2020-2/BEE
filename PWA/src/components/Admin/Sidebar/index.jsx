@@ -3,7 +3,7 @@ import { Nav, Col, Image } from 'react-bootstrap';
 import { X, LogOut } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../../services/auth/authAdmin';
-import logoColorful from '../../../assets/img/bee-logo-color.svg';
+import logoColorful from '../../../assets/img/bee-logo-admin.svg';
 import user from '../../../assets/img/user.jpeg';
 import './Sidebar.css';
 
