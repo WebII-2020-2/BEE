@@ -28,8 +28,8 @@
   outline: none;
 }
 
-*:focus-visible {
-  outline: 1px dashed var(--orange) !important;
+*:not(.form-control, .btn):focus-visible {
+  outline: 2px outset var(--orange) !important;
 }
 
 /* Works on Firefox */
@@ -54,6 +54,6 @@
 }
 
 .form-control:focus {
-  border-color: var(--yellow);
-  box-shadow: 0 0 0 0.1rem var(--yellow);
+  border-color: var(--orange);
+  box-shadow: 0 0 0 0.1rem var(--orange);
 }
