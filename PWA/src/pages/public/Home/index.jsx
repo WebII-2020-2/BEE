@@ -1,12 +1,11 @@
 import React from 'react';
-import Footer from '../../../components/Shared/Footer';
+import StoreContainer from '../../../components/Shared/StoreContainer';
 
 function Home() {
   return (
-    <div>
-      <h1>Página inicial</h1>
-      <Footer />
-    </div>
+    <StoreContainer>
+      <h1>Página Inicial</h1>
+    </StoreContainer>
   );
 }
 

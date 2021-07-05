@@ -1,0 +1,93 @@
+.navbar-store.store-container {
+  background-color: var(--dark-grey);
+  max-width: 100%;
+  max-height: 100px;
+  display: flex;
+  padding: 0;
+}
+
+.navbar-store .main-logo {
+  max-width: 25%;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-store .main-logo img {
+  max-height: 75px;
+  margin: 0 0.5rem;
+}
+
+.navbar-store .navbar-toggler {
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+#navbar-store .links {
+  flex-grow: 1;
+  background-color: var(--dark-grey);
+  padding: 1rem;
+}
+
+#navbar-store .nav-link {
+  color: var(--white);
+  font-size: 1.2rem;
+  margin: 0 0.5rem;
+}
+
+#navbar-store .nav-link:hover,
+#navbar-store .nav-link:active,
+#navbar-store .nav-link:focus {
+  color: var(--yellow);
+}
+
+#navbar-store .dropdown-menu {
+  background-color: var(--black);
+}
+
+#navbar-store .dropdown-divider {
+  border-color: var(--grey);
+}
+
+#navbar-store .dropdown-item {
+  color: var(--white);
+}
+
+#navbar-store .dropdown-item:hover,
+#navbar-store .dropdown-item:active,
+#navbar-store .dropdown-item:focus {
+  background-color: var(--dark-grey);
+}
+
+#navbar-store .actions {
+  background-color: var(--dark-grey);
+  padding: 1rem;
+  align-items: center;
+}
+
+#navbar-store .actions .search {
+  display: flex;
+  height: 80%;
+  padding: 0.5rem 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  #navbar-store.show {
+    display: grid;
+  }
+
+  #navbar-store .nav-link {
+    font-size: 1rem;
+  }
+
+  #navbar-store .actions {
+    flex-direction: row;
+    padding-top: 0;
+  }
+
+  #navbar-store .actions .search {
+    flex-grow: 1;
+  }
+
+  #navbar-store .links {
+    padding-bottom: 0;
+  }
+}
