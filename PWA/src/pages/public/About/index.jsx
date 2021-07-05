@@ -1,12 +1,12 @@
 import React from 'react';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 
-function Home() {
+function Sobre() {
   return (
-    <StoreContainer title="Página Inicial">
-      <h1>Página Inicial</h1>
+    <StoreContainer title="Sobre">
+      <h1>Sobre</h1>
     </StoreContainer>
   );
 }
 
-export default Home;
+export default Sobre;

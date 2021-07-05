@@ -1,6 +1,6 @@
 .navbar-store.store-container {
   background-color: var(--dark-grey);
-  max-width: 100%;
+  max-width: calc(100vw - 0.5rem);
   max-height: 100px;
   display: flex;
   padding: 0;

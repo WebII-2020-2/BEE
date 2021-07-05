@@ -4,7 +4,9 @@ import NavBar from '../NavBar';
 import Footer from '../Footer';
 import './StoreContainer.css';
 
-function StoreContainer({ children }) {
+function StoreContainer({ children, title }) {
+  const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+  document.title = `BEW - ${formattedTitle}`;
   return (
     <>
       <NavBar />
