@@ -16,7 +16,7 @@ function NavBar() {
   return (
     <Navbar variant="dark" className="navbar-store store-container" expand="lg">
       <Navbar.Brand href="/" className="main-logo">
-        <Image src={logoNav} />
+        <Image src={logoNav} alt="logotipo do site BEE" />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="navbar-store" className="navbar-store" />
       <Navbar.Collapse id="navbar-store">
@@ -39,16 +39,26 @@ function NavBar() {
         </Nav>
         <Nav className="actions">
           <Form className="search">
-            <FormControl type="search" placeholder="Pesquisar" />
-            <Button type="submit" variant="outline-warning">
-              <Search />
+            <FormControl
+              id="pesquisa-produto-nav"
+              type="search"
+              placeholder="Pesquisar"
+              aria-label="Campo de pesquisa"
+            />
+            <Button
+              type="submit"
+              className="button-search"
+              variant="outline-warning"
+              aria-label="Botao de pesquisa"
+            >
+              <Search aria-label="Ícone de pesquisa" />
             </Button>
           </Form>
           <Nav.Link href="/user/login">
-            Login <User />
+            Login <User aria-label="Ícone de usuário" />
           </Nav.Link>
           <Nav.Link href="/carrinho">
-            Carrinho <ShoppingCart />
+            Carrinho <ShoppingCart aria-label="Ícone de carrinho de compras" />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
