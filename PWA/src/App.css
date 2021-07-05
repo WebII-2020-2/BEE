@@ -28,16 +28,20 @@
   outline: none;
 }
 
+*:focus-visible {
+  outline: 1px dashed var(--orange) !important;
+}
+
 /* Works on Firefox */
 * {
-  scrollbar-width: .5rem;
+  scrollbar-width: thin;
   scrollbar-color: var(--dark-grey) var(--white);
 }
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: .5rem;
-  height: .5rem;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 
 *::-webkit-scrollbar-track {
