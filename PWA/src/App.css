@@ -35,7 +35,7 @@
 /* Works on Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--dark-grey) var(--white);
+  scrollbar-color: var(--grey) var(--white);
 }
 
 /* Works on Chrome, Edge, and Safari */
@@ -49,7 +49,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--dark-grey);
+  background-color: var(--grey);
   border-radius: 5px;
 }
 
