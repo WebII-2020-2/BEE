@@ -76,7 +76,7 @@
 
 @media screen and (max-width: 768px) {
   .navbar-store.store-container {
-    width: 100vw;
+    max-width: 100vw;
   }
 
   #navbar-store.show {
