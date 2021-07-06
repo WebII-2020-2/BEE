@@ -9,6 +9,7 @@ import './Home.css';
 function Home() {
   const carouselItens = [
     {
+      id: 0,
       title: 'Bem vindo à nossa loja online',
       description:
         'Aproveite todos os nossos produtos com um precinho especial',
@@ -16,6 +17,7 @@ function Home() {
       link: '',
     },
     {
+      id: 1,
       title: 'Super descontos de Black Friday',
       description: 'Promoção válida até 23:59 e enquanto durar o estoque',
       image: banner2,
@@ -27,7 +29,7 @@ function Home() {
     <StoreContainer title="Página Inicial">
       <Carousel>
         {carouselItens.map((item) => (
-          <Carousel.Item className="item-carousel">
+          <Carousel.Item className="item-carousel" key={item.id}>
             <Link to={item.link}>
               <div
                 className="image-carousel"
