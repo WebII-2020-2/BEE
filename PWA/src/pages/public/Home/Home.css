@@ -83,13 +83,22 @@
     height: 50%;
   }
 
-  .caption-carousel h3 {
-    font-size: 1.2rem;
-    line-height: 1.2rem;
+  .home-destaque.info {
+    margin: 0.5rem;
+    padding: 0.5rem;
   }
 
-  .caption-carousel p {
-    font-size: 1rem;
-    line-height: 1rem;
+  .home-destaque .info-item svg {
+    height: 2.5rem;
+    width: auto;
+    margin-right: 0.5rem;
+  }
+
+  .home-destaque .info-item p strong {
+    font-size: 1.2rem;
+  }
+
+  .home-destaque .info-item p {
+    font-size: 0.8rem;
   }
 }
