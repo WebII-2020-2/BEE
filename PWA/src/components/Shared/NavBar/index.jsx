@@ -88,11 +88,11 @@ function NavBar() {
               <Search aria-label="Ícone de pesquisa" />
             </Button>
           </Form>
-          <Nav.Link href="/user/login" aria-label="Ir para tela de login">
-            Login <User aria-label="Ícone de usuário" />
-          </Nav.Link>
           <Nav.Link href="/carrinho" aria-label="Ir para carrinho de compras">
             Carrinho <ShoppingCart aria-label="Ícone de carrinho de compras" />
+          </Nav.Link>
+          <Nav.Link href="/user/login" aria-label="Ir para tela de login">
+            Login <User aria-label="Ícone de usuário" />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
