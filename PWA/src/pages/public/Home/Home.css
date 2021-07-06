@@ -34,6 +34,49 @@
   line-height: 1.2rem;
 }
 
+.home-destaque {
+  align-self: center;
+}
+
+.home-destaque.info {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem;
+  max-width: 85%;
+  padding: 1rem;
+}
+
+.home-destaque .info-item {
+  display: flex;
+  flex-basis: 300px;
+  flex-grow: 1;
+  margin: 0.5rem 0;
+  align-items: flex-end;
+  color: var(--dark-grey);
+}
+
+.home-destaque .info-item svg {
+  height: 3.5rem;
+  width: auto;
+  margin-right: 1rem;
+}
+
+.home-destaque .info-item p {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.home-destaque .info-item p strong {
+  font-size: 1.5rem;
+}
+
+.separator {
+  width: 75%;
+  align-self: center;
+  margin: 1rem 0;
+  border-top: 2px solid var(--grey);
+}
+
 @media screen and (max-width: 768px) {
   .image-carousel {
     margin-top: 5%;

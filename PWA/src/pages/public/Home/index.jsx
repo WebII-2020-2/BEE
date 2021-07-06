@@ -1,6 +1,7 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Carousel, Container } from 'react-bootstrap';
+import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import banner1 from '../../../assets/img/home-banner.jpg';
 import banner2 from '../../../assets/img/black-friday-banner.jpg';
@@ -45,6 +46,34 @@ function Home() {
           </Carousel.Item>
         ))}
       </Carousel>
+
+      <Container className="home-destaque info">
+        <div className="info-item">
+          <Truck aria-label="icone de caminhão" />
+          <p>
+            <strong>Frete Grátis</strong>
+            <br />
+            Apenas Norte e Nordeste
+          </p>
+        </div>
+        <div className="info-item">
+          <CreditCard aria-label="icone de cartão" />
+          <p>
+            <strong>Parcele em até 6x</strong>
+            <br />
+            Para compras acima de R$ 99,00
+          </p>
+        </div>
+        <div className="info-item">
+          <Feather aria-label="icone de pena" />
+          <p>
+            <strong>Produtos 100% naturias</strong>
+            <br />
+            Com selo de aprovação da organic best
+          </p>
+        </div>
+      </Container>
+      <hr className="home-destaque separator" />
     </StoreContainer>
   );
 }
