@@ -6,7 +6,7 @@ import './StoreContainer.css';
 
 function StoreContainer({ children, title }) {
   const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
-  document.title = `BEW - ${formattedTitle}`;
+  document.title = `BEE - ${formattedTitle}`;
   return (
     <>
       <NavBar />
