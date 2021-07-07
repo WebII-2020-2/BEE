@@ -7,6 +7,7 @@ import Category from '../pages/public/Category';
 import Promotions from '../pages/public/Promotions';
 import Search from '../pages/public/Search';
 import Cart from '../pages/public/Cart';
+import Product from '../pages/public/Product';
 import NotFound from '../pages/public/NotFound';
 
 function UserRoutes() {
@@ -14,6 +15,7 @@ function UserRoutes() {
     <Switch>
       <Route path="/sobre" component={About} />
       <Route path="/categoria/:id" component={Category} />
+      <Route path="/produto/:id" component={Product} />
       <Route path="/promocoes" component={Promotions} />
       <Route path="/pesquisar/:name" component={Search} />
       <Route path="/carrinho" component={Cart} />
