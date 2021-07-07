@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Container } from 'react-bootstrap';
+import { Carousel, Container, Spinner } from 'react-bootstrap';
 import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import banner1 from '../../../assets/img/home-banner.jpg';
 import banner2 from '../../../assets/img/black-friday-banner.jpg';
 import './Home.css';
+import ProductApiService from '../../../services/api/ProductAdminApiService';
 
 function Home() {
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+
+  const getProducts = async () => {
+    setLoadingProducts(true);
+    try {
+      const resp = await ProductApiService.getBest()
+        .then((r) => r.data)
+        .catch((r) => r.response.data);
+
+      if (resp.success) {
+        setProducts(resp.data);
+      } else {
+        throw resp.error;
+      }
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   const carouselItens = [
     {
       id: 0,
@@ -74,6 +101,17 @@ function Home() {
         </div>
       </Container>
       <hr className="home-destaque separator" />
+      {loadingProducts ? (
+        <Spinner
+          variant="secondary"
+          animation="border"
+          style={{ height: 64, width: 64, alignSelf: 'center', margin: '1rem' }}
+        />
+      ) : (
+        <h1 style={{ alignSelf: 'center', margin: '1rem' }}>
+          Produtos encontrados: {products.length}
+        </h1>
+      )}
     </StoreContainer>
   );
 }
