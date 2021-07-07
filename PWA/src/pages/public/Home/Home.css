@@ -83,6 +83,16 @@
     height: 50%;
   }
 
+  .caption-carousel h3 {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
+
+  .caption-carousel p {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+
   .home-destaque.info {
     margin: 0.5rem;
     padding: 0.5rem;
