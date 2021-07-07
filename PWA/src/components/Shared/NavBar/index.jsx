@@ -23,35 +23,33 @@ function NavBar() {
       <Navbar.Brand
         href="/"
         className="main-logo"
-        aria-label="Link para a página inicial"
+        title="Link para a página inicial"
       >
         <Image src={logoNav} alt="Logotipo do site BEE" />
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="navbar-store" className="navbar-store" />
+      <Navbar.Toggle
+        aria-controls="navbar-store"
+        className="navbar-store"
+        aria-label="Abrir menu de navegação"
+      />
       <Navbar.Collapse id="navbar-store" aria-label="Itens de navegação">
         <Nav className="links">
-          <Nav.Link href="/promocoes" aria-label="Ir para página de Promoções">
+          <Nav.Link href="/promocoes" title="Promoções">
             Promoções
           </Nav.Link>
-          <NavDropdown
-            title="Categorias"
-            aria-label="Navegar entre as categorias"
-          >
-            <NavDropdown.Item
-              href="/categorias/graos"
-              aria-label="Categoria: Grãos"
-            >
+          <NavDropdown title="Categorias">
+            <NavDropdown.Item href="/categorias/graos" title="Categoria: Grãos">
               Grãos
             </NavDropdown.Item>
             <NavDropdown.Item
               href="/categorias/laticinios"
-              aria-label="Categoria: Laticínios"
+              title="Categoria: Laticínios"
             >
               Laticínios
             </NavDropdown.Item>
             <NavDropdown.Item
               href="/categorias/apicolas"
-              aria-label="Categoria: Apícolas"
+              title="Categoria: Apícolas"
             >
               Apícolas
             </NavDropdown.Item>
@@ -59,15 +57,12 @@ function NavBar() {
             <NavDropdown.Item
               href="/categorias"
               className="dropdown-item"
-              aria-label="Todas as Categorias"
+              title="Todos os produtos"
             >
-              Todas as categorias
+              Todos os produtos
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link
-            href="/sobre"
-            aria-label="Ir para página de informações sobre a loja"
-          >
+          <Nav.Link href="/sobre" title="Informações sobre a loja">
             Sobre
           </Nav.Link>
         </Nav>
@@ -83,16 +78,16 @@ function NavBar() {
               type="submit"
               className="button-search"
               variant="outline-warning"
-              aria-label="Botao de pesquisa"
+              title="Pesquisar"
             >
               <Search aria-label="Ícone de pesquisa" />
             </Button>
           </Form>
-          <Nav.Link href="/carrinho" aria-label="Ir para carrinho de compras">
-            Carrinho <ShoppingCart aria-label="Ícone de carrinho de compras" />
+          <Nav.Link href="/carrinho" title="Carrinho de compras">
+            <ShoppingCart aria-label="Ícone de carrinho de compras" />
           </Nav.Link>
-          <Nav.Link href="/user/login" aria-label="Ir para tela de login">
-            Login <User aria-label="Ícone de usuário" />
+          <Nav.Link href="/user/login" title="Login">
+            <User aria-label="Ícone de usuário" />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
