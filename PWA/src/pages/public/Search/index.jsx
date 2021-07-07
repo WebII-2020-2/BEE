@@ -5,7 +5,7 @@ function Search(props) {
   const { match } = props;
   return (
     <StoreContainer title={`Pesquisar produto: ${match.params.name}`}>
-      {match.params.name}
+      <h1>Nome pesquisa: {match.params.name}</h1>
     </StoreContainer>
   );
 }
