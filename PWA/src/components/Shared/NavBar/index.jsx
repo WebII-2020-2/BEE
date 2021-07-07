@@ -80,7 +80,7 @@ function NavBar() {
               categories.map((category) => (
                 <NavDropdown.Item
                   key={category.id}
-                  href={`/categorias/${category.id}`}
+                  href={`/categoria/${category.id}`}
                   title={`Categoria: ${category.name}`}
                 >
                   {category.name}

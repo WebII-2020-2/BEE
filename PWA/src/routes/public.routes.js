@@ -3,7 +3,7 @@ import { Redirect, Switch, Route } from 'react-router-dom';
 
 import Home from '../pages/public/Home';
 import About from '../pages/public/About';
-import Categories from '../pages/public/Categories';
+import Category from '../pages/public/Category';
 import Promotions from '../pages/public/Promotions';
 import Search from '../pages/public/Search';
 import Cart from '../pages/public/Cart';
@@ -13,7 +13,7 @@ function UserRoutes() {
   return (
     <Switch>
       <Route path="/sobre" component={About} />
-      <Route path="/categorias" component={Categories} />
+      <Route path="/categoria/:id" component={Category} />
       <Route path="/promocoes" component={Promotions} />
       <Route path="/pesquisar/:name" component={Search} />
       <Route path="/carrinho" component={Cart} />
