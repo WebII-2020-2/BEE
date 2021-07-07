@@ -30,8 +30,13 @@ function remove(id) {
   return api.post(`${ENDPOINT_BASE}/delete/${id}`);
 }
 
+function getBest() {
+  return api.get(`${ENDPOINT_BASE}/best`);
+}
+
 const ProductAdminApiService = {
   getAll,
+  getBest,
   getById,
   create,
   update,
