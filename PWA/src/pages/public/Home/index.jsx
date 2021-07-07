@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { Carousel, Container, Spinner } from 'react-bootstrap';
 import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
+import CardProduct from '../../../components/Shared/CardProduct';
 import banner1 from '../../../assets/img/home-banner.jpg';
 import banner2 from '../../../assets/img/black-friday-banner.jpg';
-import './Home.css';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
+import './Home.css';
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -108,9 +109,11 @@ function Home() {
           style={{ height: 64, width: 64, alignSelf: 'center', margin: '1rem' }}
         />
       ) : (
-        <h1 style={{ alignSelf: 'center', margin: '1rem' }}>
-          Produtos encontrados: {products.length}
-        </h1>
+        <Container className="home-destaque products">
+          {products.map((product) => (
+            <CardProduct {...product} />
+          ))}
+        </Container>
       )}
     </StoreContainer>
   );
