@@ -81,7 +81,7 @@
 
   #navbar-store.show {
     display: grid;
-    z-index: 2;
+    z-index: 20;
   }
 
   #navbar-store .nav-link {

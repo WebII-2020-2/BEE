@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Button,
   Form,
@@ -7,12 +7,46 @@ import {
   Nav,
   Navbar,
   NavDropdown,
+  Spinner,
 } from 'react-bootstrap';
 import { ShoppingCart, Search, User } from 'react-feather';
+import { useHistory } from 'react-router-dom';
 import logoNav from '../../../assets/img/bee-logo-color.svg';
+import CategoryApiService from '../../../services/api/CategoryAdminApiService';
 import './NavBar.css';
 
 function NavBar() {
+  const [categories, setCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const history = useHistory();
+  const inputRef = useRef(null);
+
+  const getCategories = async () => {
+    setLoadingCategories(true);
+    try {
+      const resp = await CategoryApiService.getAll().then((r) => r.data);
+      if (resp.success) {
+        setCategories(resp.data);
+      } else {
+        throw new Error(resp.error.error_message);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingCategories(false);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (inputRef.current.value)
+      history.push(`/pesquisar/${inputRef.current.value}`);
+  };
+
   return (
     <Navbar
       variant="dark"
@@ -38,41 +72,38 @@ function NavBar() {
             Promoções
           </Nav.Link>
           <NavDropdown title="Categorias">
-            <NavDropdown.Item href="/categorias/graos" title="Categoria: Grãos">
-              Grãos
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              href="/categorias/laticinios"
-              title="Categoria: Laticínios"
-            >
-              Laticínios
-            </NavDropdown.Item>
-            <NavDropdown.Item
-              href="/categorias/apicolas"
-              title="Categoria: Apícolas"
-            >
-              Apícolas
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item
-              href="/categorias"
-              className="dropdown-item"
-              title="Todos os produtos"
-            >
-              Todos os produtos
-            </NavDropdown.Item>
+            {loadingCategories ? (
+              <NavDropdown.Item title="Carregando categorias...">
+                <Spinner animation="border" variant="light" role="status" />
+              </NavDropdown.Item>
+            ) : (
+              categories.map((category) => (
+                <NavDropdown.Item
+                  key={category.id}
+                  href={`/categorias/${category.id}`}
+                  title={`Categoria: ${category.name}`}
+                >
+                  {category.name}
+                </NavDropdown.Item>
+              ))
+            )}
           </NavDropdown>
           <Nav.Link href="/sobre" title="Informações sobre a loja">
             Sobre
           </Nav.Link>
         </Nav>
         <Nav className="actions">
-          <Form className="search" aria-label="Pesquisar produtos">
+          <Form
+            className="search"
+            aria-label="Pesquisar produtos"
+            onSubmit={handleSubmit}
+          >
             <FormControl
               id="pesquisa-produto-nav"
               type="search"
               placeholder="Pesquisar"
               aria-label="Campo de pesquisa"
+              ref={inputRef}
             />
             <Button
               type="submit"
