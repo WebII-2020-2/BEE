@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Route;
 // Rotas publicas
 Route::get('/category/list', 'Api\CategoryController@show');
 Route::get('/category/best', 'Api\CategoryController@getBestSelled');
+Route::get('/category/list/{id}', 'Api\CategoryController@get');
 Route::get('/promotion/list', 'Api\PromotionController@show');
 Route::get('/product/best', 'Api\ProductController@getBestSelled');
 Route::get('/product/search/{name}', 'Api\ProductController@getByName');
+Route::get('/product/list/{id}', 'Api\ProductController@get');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
@@ -27,7 +29,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'card'
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'product'], function ($router) {
     Route::post('/add', 'Api\ProductController@store');
     Route::get('/list', 'Api\ProductController@show');
-    Route::get('/list/{id}', 'Api\ProductController@get');
     Route::post('/update/{id}', 'Api\ProductController@update');
     Route::post('/delete/{id}', 'Api\ProductController@delete');
 });
@@ -35,7 +36,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'produ
 // Categories
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'category'], function ($router) {
     Route::post('/add', 'Api\CategoryController@store');
-    Route::get('/list/{id}', 'Api\CategoryController@get');
     Route::post('/update/{id}', 'Api\CategoryController@update');
     Route::post('/delete/{id}', 'Api\CategoryController@delete');
 });
