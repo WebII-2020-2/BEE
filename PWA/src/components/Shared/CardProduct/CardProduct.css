@@ -10,7 +10,7 @@
   cursor: pointer;
   flex-basis: 200px;
   flex-grow: 0;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem;
 }
 
 .card-product.admin.container:hover {
@@ -20,6 +20,7 @@
 .card-product.admin.image.container {
   height: 150px;
   display: flex;
+  margin: auto;
   justify-content: center;
   align-items: center;
 }

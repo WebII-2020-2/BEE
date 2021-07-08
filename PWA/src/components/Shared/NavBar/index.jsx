@@ -77,15 +77,19 @@ function NavBar() {
                 <Spinner animation="border" variant="light" role="status" />
               </NavDropdown.Item>
             ) : (
-              categories.map((category) => (
-                <NavDropdown.Item
-                  key={category.id}
-                  href={`/categoria/${category.id}`}
-                  title={`Categoria: ${category.name}`}
-                >
-                  {category.name}
-                </NavDropdown.Item>
-              ))
+              categories.map((category) => {
+                if (category.count_products)
+                  return (
+                    <NavDropdown.Item
+                      key={category.id}
+                      href={`/categoria/${category.id}`}
+                      title={`Categoria: ${category.name}`}
+                    >
+                      {category.name}
+                    </NavDropdown.Item>
+                  );
+                return '';
+              })
             )}
           </NavDropdown>
           <Nav.Link href="/sobre" title="Informações sobre a loja">

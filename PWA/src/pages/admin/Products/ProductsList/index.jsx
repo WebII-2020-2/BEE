@@ -79,7 +79,7 @@ function ProductsList(props) {
       ) : (
         <Row className="product-list admin">
           {productsPerPage.map((product) => (
-            <CardProductAdmin {...product} key={product.id} />
+            <CardProductAdmin {...product} admin key={product.id} />
           ))}
         </Row>
       )}

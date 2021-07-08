@@ -8,8 +8,11 @@ function CardProduct(props) {
   const history = useHistory();
 
   const handleClick = () => {
-    if (admin) history.push(`/admin/produtos/${id}`);
-    history.push(`/produto/${id}`);
+    if (admin) {
+      history.push(`/admin/produtos/${id}`);
+    } else {
+      history.push(`/produto/${id}`);
+    }
   };
 
   return (
