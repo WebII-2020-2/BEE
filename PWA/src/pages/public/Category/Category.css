@@ -1,6 +1,9 @@
 .products-container.container {
   max-width: 80%;
   align-self: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .products-container .category-info {
