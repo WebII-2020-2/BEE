@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Container } from 'react-bootstrap';
+import { Carousel, Container, Row } from 'react-bootstrap';
 import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import LoadingPage from '../../../components/Shared/LoadingPage';
@@ -107,9 +107,11 @@ function Home() {
         <LoadingPage />
       ) : (
         <Container className="home-destaque products">
-          {products.map((product) => (
-            <CardProduct {...product} />
-          ))}
+          <Row className="product-list admin">
+            {products.map((product) => (
+              <CardProduct {...product} key={product.id} />
+            ))}
+          </Row>
         </Container>
       )}
     </StoreContainer>

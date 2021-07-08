@@ -4,11 +4,12 @@ import { useHistory } from 'react-router-dom';
 import './CardProduct.css';
 
 function CardProduct(props) {
-  const { id, image, unitary_value: price, name } = props;
+  const { id, image, unitary_value: price, name, admin } = props;
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/admin/produtos/${id}`);
+    if (admin) history.push(`/admin/produtos/${id}`);
+    history.push(`/produto/${id}`);
   };
 
   return (
