@@ -58,12 +58,28 @@ class CategoryController extends Controller
     public function get($id){
         try{
             $category = Category::find($id);
-            $count = Product::where('category_id', $category->id)->count("id");
+            $products = Product::where('category_id', $category->id)->get();
+
+            $mounted_products = [];
+            foreach($products as $product){
+                array_push($mounted_products, array(
+                    "id" => $product->id,
+                    'name' => $product->name,
+                    'unity' => $product->unity,
+                    'quantity' => $product->quantity,
+                    'unitary_value' => $product->unitary_value,
+                    'description' => $product->description,
+                    'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
+                    'category_id' => $product->category_id
+                ));
+            }
+
             $mounted_categoriy = array(
                 'id' => $category->id,
                 'name' => $category->name,
                 'description' => $category->description,
-                'count_products' => $count
+                'count_products' => $products->count('id'),
+                'products' => $mounted_products
             );
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar a categoria.'];
@@ -123,16 +139,23 @@ class CategoryController extends Controller
     }
 
     public function delete($id){
-        try{
-            $category = Category::where('id', $id)->delete();
-        }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
-        }
 
-        if(isset($category) && !isset($error) && $category){
-            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        $product = Product::where('category_id', $id)->first();
+
+        if(is_null($product)){
+            try{
+                $category = Category::where('id', $id)->delete();
+            }catch(\Exception $exception){
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+            }
+
+            if(isset($category) && !isset($error) && $category){
+                return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+            }else{
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+            }
         }else{
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+            $error = ['code' => 2, 'error_message' => 'Essa categoria está relacionada a uma venda.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);

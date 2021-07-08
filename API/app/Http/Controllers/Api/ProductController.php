@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductOrder;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -96,7 +97,7 @@ class ProductController extends Controller
             $products = Order
                             ::join('product_orders as po', 'po.order_id', '=', 'orders.id')
                             ->join('products as p', 'p.id', '=', 'po.product_id')
-                            ->groupBy('p.id')
+                            ->groupBy('p.id', 'p.name', 'p.mime_type', 'p.image', 'p.unitary_value')
                             ->limit(10)
                             ->select('p.id', 'p.name', 'p.mime_type', 'p.image', 'p.unitary_value')
                             ->get();
@@ -195,16 +196,22 @@ class ProductController extends Controller
     public function delete($id, Request $request){
         $data = $request->all();
 
-        try{
-            $product = Product::where('id', $id)->delete();
-        }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o produto.'];
-        }
+        $order = ProductOrder::where('product_id', $id)->first();
 
-        if(isset($product) && !isset($error) && $product){
-            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        if(is_null($order)){
+            try{
+                $product = Product::where('id', $id)->delete();
+            }catch(\Exception $exception){
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o produto.'];
+            }
+
+            if(isset($product) && !isset($error) && $product){
+                return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+            }else{
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o produto.'];
+            }
         }else{
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o produto.'];
+            $error = ['code' => 2, 'error_message' => 'Este produto está relacionado a uma venda.'];
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
