@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Container, Spinner } from 'react-bootstrap';
+import { Carousel, Container, Row } from 'react-bootstrap';
 import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import CardProduct from '../../../components/Shared/CardProduct';
+import LoadingPage from '../../../components/Shared/LoadingPage';
 import banner1 from '../../../assets/img/home-banner.jpg';
 import banner2 from '../../../assets/img/black-friday-banner.jpg';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
@@ -103,16 +104,14 @@ function Home() {
       </Container>
       <hr className="home-destaque separator" />
       {loadingProducts ? (
-        <Spinner
-          variant="secondary"
-          animation="border"
-          style={{ height: 64, width: 64, alignSelf: 'center', margin: '1rem' }}
-        />
+        <LoadingPage />
       ) : (
         <Container className="home-destaque products">
-          {products.map((product) => (
-            <CardProduct {...product} />
-          ))}
+          <Row className="product-list admin">
+            {products.map((product) => (
+              <CardProduct {...product} key={product.id} />
+            ))}
+          </Row>
         </Container>
       )}
     </StoreContainer>
