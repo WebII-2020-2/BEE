@@ -50,6 +50,7 @@ textarea.form-product-admin.control {
   align-self: center;
   border-radius: 50%;
   transform: scale(0.9);
+  object-fit: cover;
 }
 
 .form-product-admin.label {
