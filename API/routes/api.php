@@ -61,3 +61,10 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promo
     Route::post('/delete/{id}', 'Api\PromotionController@delete');
 });
 
+// Banners
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promotion'], function ($router) {
+    Route::post('/add', 'Api\BannerController@store');
+    Route::get('/list/{id}', 'Api\BannerController@get');
+    Route::post('/update/{id}', 'Api\BannerController@update');
+    Route::post('/delete/{id}', 'Api\BannerController@delete');
+});

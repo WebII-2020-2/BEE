@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 use App\Models\ProductPromotion;
-use App\Models\CategoryPromotion;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Exception;
