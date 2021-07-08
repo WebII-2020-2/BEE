@@ -77,6 +77,29 @@
   border-top: 2px solid var(--grey);
 }
 
+.home-destaque.products {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-destaque.products h3 {
+  color: var(--dark-grey);
+  margin: 1rem 0 2rem;
+}
+
+.home-destaque.products h3::first-letter {
+  font-weight: bold;
+}
+
+.home-destaque.products .loader {
+  margin: 1rem 0 2rem;
+  width: 200px;
+  border-radius: 50px;
+}
+
 @media screen and (max-width: 768px) {
   .image-carousel {
     margin-top: 5%;

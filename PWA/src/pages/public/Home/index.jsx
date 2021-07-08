@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Container, Row } from 'react-bootstrap';
+import { Button, Carousel, Container, Row } from 'react-bootstrap';
 import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import LoadingPage from '../../../components/Shared/LoadingPage';
@@ -13,6 +13,7 @@ import './Home.css';
 function Home() {
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [quantityProducts, setQuantityProducts] = useState(4);
 
   const getProducts = async () => {
     setLoadingProducts(true);
@@ -32,6 +33,11 @@ function Home() {
       setLoadingProducts(false);
     }
   };
+
+  const productsList = useMemo(
+    () => products.slice(0, quantityProducts),
+    [products, quantityProducts]
+  );
 
   useEffect(() => {
     getProducts();
@@ -107,11 +113,21 @@ function Home() {
         <LoadingPage />
       ) : (
         <Container className="home-destaque products">
+          <h3>Produtos em destaque</h3>
           <Row className="product-list admin">
-            {products.map((product) => (
+            {productsList.map((product) => (
               <CardProduct {...product} key={product.id} />
             ))}
           </Row>
+          {quantityProducts <= products.length && (
+            <Button
+              className="loader"
+              variant="dark"
+              onClick={() => setQuantityProducts(quantityProducts + 4)}
+            >
+              Carregar mais
+            </Button>
+          )}
         </Container>
       )}
     </StoreContainer>
