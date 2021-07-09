@@ -18,6 +18,11 @@
   background-color: var(--dark-grey);
   color: var(--white);
   border: none;
+  cursor: pointer;
+}
+
+.footer-list.list div:hover {
+  color: var(--yellow);
 }
 
 .logo-footer {
