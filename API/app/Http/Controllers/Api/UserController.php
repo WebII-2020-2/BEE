@@ -33,7 +33,8 @@ class UserController extends Controller{
                 'birth_date' => $data['birth_date'],
                 'password' => Hash::make($data['password']),
                 'mime_type' => $data_image[0],
-                'image' => base64_decode($data_image[1])
+                'image' => base64_decode($data_image[1]),
+                'level_access' => 1
             ]);
             $token = Auth::attempt(['email' => $user->email, 'password' => $data['password']]);
             $user_data = array(
@@ -43,6 +44,7 @@ class UserController extends Controller{
                 'birth_date' => $user->birth_date,
                 'phone' => $user->phone,
                 'image' => 'data:'.$user->mime_type.';base64,'.base64_encode($user->image),
+                'level_access' => $user->level_access
             );
             $data_token = $this->createNewToken($token);
         }catch(\Exception $exception){
@@ -71,6 +73,7 @@ class UserController extends Controller{
             'birth_date' => $user->birth_date,
             'phone' => $user->phone,
             'image' => 'data:'.$user->mime_type.';base64,'.base64_encode($user->image),
+            'level_access' => $user->level_access
         );
         $data_token = $this->createNewToken($token);
 
