@@ -18,22 +18,26 @@ function Login(props) {
   return (
     <Form className="form-logon">
       <Form.Group className="form-logon-group">
-        <Form.Label>E-mail</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          value={values.email}
-          onChange={handleUpdateValues}
-        />
+        <Form.Label>
+          E-mail
+          <Form.Control
+            type="email"
+            name="email"
+            value={values.email}
+            onChange={handleUpdateValues}
+          />
+        </Form.Label>
       </Form.Group>
       <Form.Group className="form-logon-group">
-        <Form.Label>Senha</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleUpdateValues}
-        />
+        <Form.Label>
+          Senha
+          <Form.Control
+            type="password"
+            name="password"
+            value={values.password}
+            onChange={handleUpdateValues}
+          />
+        </Form.Label>
       </Form.Group>
       <Button
         className="btn-logon mb-1"
@@ -45,9 +49,9 @@ function Login(props) {
           return login(values);
         }}
       >
-        {loading ? <Spinner animation="border" /> : 'Login'}
+        {loading ? <Spinner animation="border" /> : 'Entrar'}
       </Button>
-      <a href="/" className="forgot-password">
+      <a href="/" className="forgot-password mt-3">
         Esqueceu a senha?
       </a>
     </Form>
