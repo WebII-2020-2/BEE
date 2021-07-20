@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.form-login {
+.form-login-admin {
   font-family: 'Roboto';
   color: var(--white);
   display: flex;
@@ -19,7 +19,7 @@
   justify-content: center;
 }
 
-.btn-login {
+.btn-login-admin {
   background-color: var(--black);
   color: var(--orange);
   border: 2px var(--orange) solid;
@@ -35,14 +35,13 @@
   border: 2px solid var(--yellow);
 }
 
-.input-group {
+.input-login-admin-group {
   width: 100%;
 }
 
-.input-login {
+.input.input-login-admin {
   background-color: var(--dark-grey);
   color: var(--white);
-  width: 100%;
   border: none;
   padding: 10px ;
   border-radius: 5px;
