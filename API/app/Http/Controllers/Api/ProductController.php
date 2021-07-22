@@ -147,8 +147,10 @@ class ProductController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
-    public function getByName($name)
+    public function getByName(Request $request)
     {
+        $name = $request->only("name")['name'];
+
         try {
             $product = Product::where('products.name', 'like', '%' . $name . '%')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->first();
 
