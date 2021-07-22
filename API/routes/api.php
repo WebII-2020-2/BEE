@@ -4,18 +4,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Rotas publicas
+Route::post('/forgot/password', 'Api\UserController@forgot');
+Route::post('/reset/password', 'Api\UserController@newPassword');
 Route::get('/category/list', 'Api\CategoryController@show');
 Route::get('/category/best', 'Api\CategoryController@getBestSelled');
 Route::get('/category/list/{id}', 'Api\CategoryController@get');
 Route::get('/promotion/list', 'Api\PromotionController@show');
+Route::get('/promotion/get/products/{id}', 'Api\PromotionController@getProducts');
 Route::get('/product/best', 'Api\ProductController@getBestSelled');
-Route::get('/product/search/{name}', 'Api\ProductController@getByName');
+Route::get('/product/search', 'Api\ProductController@getByName');
 Route::get('/product/list/{id}', 'Api\ProductController@get');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('register', 'Api\UserController@register');
     Route::post('login', 'Api\UserController@login');
+    Route::post('get', 'Api\UserController@getUser');
     Route::post('refresh', 'Api\UserController@refresh');
     Route::post('logout', 'Api\UserController@logout');
 });
@@ -23,6 +27,19 @@ Route::group(['middleware' => 'api'], function ($router) {
 // Cards
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'card'], function ($router) {
     Route::post('/add', 'Api\CardController@store');
+    Route::get('/list', 'Api\CardController@show');
+    Route::post('/list/{id}', 'Api\CardController@get');
+    Route::post('/update/{id}', 'Api\CardController@update');
+    Route::post('/delete/{id}', 'Api\CardController@delete');
+});
+
+// Address
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'address'], function ($router) {
+    Route::post('/add', 'Api\AddressController@store');
+    Route::get('/list', 'Api\AddressController@show');
+    Route::post('/list/{id}', 'Api\AddressController@get');
+    Route::post('/update/{id}', 'Api\AddressController@update');
+    Route::post('/delete/{id}', 'Api\AddressController@delete');
 });
 
 // Products
