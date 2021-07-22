@@ -107,6 +107,49 @@ class PromotionController extends Controller
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
+    public function getProducts($id)
+    {
+        try {
+            $promotion = Promotion::where('id', $id)->first();
+
+            $product_promotions = $promotion
+                ->productPromotion()
+                ->join('products as p', 'p.id', '=', 'product_promotions.product_id')
+                ->select('p.id', 'p.name', 'p.image', 'p.mime_type', 'p.unitary_value')
+                ->get();
+
+
+                $products = [];
+                foreach($product_promotions as $product_promotion){
+                if ($product_promotion) {
+                    $product_with_promotion = $promotion->type == 1 ?
+                        ($product_promotion->unitary_value - $promotion->value) :
+                        $product_promotion->unitary_value - ($promotion->value / 100);
+                }
+                array_push($products, array(
+                    'id' => $product_promotion->id,
+                    'name' => $product_promotion->name,
+                    'image' => 'data:' . $product_promotion->mime_type . ';base64,' . base64_encode($product_promotion->image),
+                    'previous_value' => $product_promotion->unitary_value,
+                    'value_promotion' => isset($product_with_promotion) ? (float) number_format($product_with_promotion, 2, '.', '') : null
+                ));
+            }
+
+            $mounted_promotions = array(
+                'name' => $promotion->name,
+                'products' => $products
+            );
+        } catch (\Exception $exception) {
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar a promoção.', $exception];
+        }
+
+        if (isset($mounted_promotions) && !isset($error)) {
+            return response()->json(['success' => true, 'data' => $mounted_promotions, 'error' => $error ?? null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
     public function update($id, Request $request)
     {
         $data = $request->all();
