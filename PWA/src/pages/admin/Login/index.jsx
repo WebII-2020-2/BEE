@@ -21,16 +21,23 @@ function LoginAdmin() {
       const resp = await LogonApiService.login({
         email,
         password,
-      }).then((r) => r.data);
+      })
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
       if (resp.success) {
-        loginAdmin(resp.data.token.access_token);
-        history.push('/admin/inicio');
-      } else {
-        throw new Error(`${resp.error.error_message}`);
+        if (resp.data.user.level_access === 2) {
+          loginAdmin(resp.data.token.access_token);
+          history.push('/admin/inicio');
+        } else {
+          // eslint-disable-next-line no-throw-literal
+          throw { error_message: 'Login não autorizado' };
+        }
       }
-    } catch (e) {
-      console.error(e);
-      setError(`${e}`);
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+      setError(err.error_message);
     } finally {
       setLoading(false);
     }
