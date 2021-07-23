@@ -12,12 +12,21 @@ function Logon() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [tabForgotPassword, setTabForgotPassword] = useState(false);
+  const [successSendEmail, setSuccessSendEmail] = useState('');
 
   const [tab, setTab] = useState('login');
 
   const handleUpdateTab = (newTab) => {
     setError('');
+    setTabForgotPassword(false);
     setTab(newTab);
+  };
+
+  const handleForgotPassword = (value) => {
+    setError('');
+    setSuccessSendEmail('');
+    setTabForgotPassword(value);
   };
 
   const login = async (form) => {
@@ -61,6 +70,26 @@ function Logon() {
     }
   };
 
+  const sendEmailForgotPassword = async (email) => {
+    setError('');
+    try {
+      setLoading(true);
+      const resp = await LogonApiService.forgotPassword({ email })
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
+      if (resp.success) {
+        setSuccessSendEmail('Link para recuperar senha enviado');
+      }
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+      setError(err.error_message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <StoreContainer title="login">
       <div className="container-logon">
@@ -90,9 +119,32 @@ function Logon() {
           {tab === 'login' && (
             <Card.Body>
               <Card.Title className="card-logon-title">
-                <b>A</b>cesse com sua conta
+                {!tabForgotPassword ? (
+                  <>
+                    <b>A</b>cesse com sua conta
+                  </>
+                ) : (
+                  <>
+                    <b>E</b>squeci a senha
+                  </>
+                )}
               </Card.Title>
-              <Login login={login} loading={loading} error={error} />
+              {tabForgotPassword && (
+                <Card.Text className="text-center">
+                  Para redefinir sua senha, informe o e-mail cadastrado na sua
+                  conta e lhe enviaremos um link de recuperação
+                </Card.Text>
+              )}
+
+              <Login
+                login={login}
+                loading={loading}
+                error={error}
+                tabForgotPassword={tabForgotPassword}
+                handleForgotPassword={handleForgotPassword}
+                successSendEmail={successSendEmail}
+                sendEmailForgotPassword={sendEmailForgotPassword}
+              />
             </Card.Body>
           )}
           {tab === 'register' && (
