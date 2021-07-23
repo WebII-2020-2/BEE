@@ -133,7 +133,11 @@ function Login(props) {
               </Form.Control.Feedback>
             </Form.Label>
           </Form.Group>
-          {error && <Alert variant="danger">{error}</Alert>}
+          {error && (
+            <Alert variant="danger" className="text-center">
+              {error}
+            </Alert>
+          )}
           <Button
             className="btn-logon mb-4"
             variant="warning"
