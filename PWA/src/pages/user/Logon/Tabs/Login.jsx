@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 
 function Login(props) {
-  const { loading, login } = props;
+  const { loading, login, error } = props;
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -39,6 +39,7 @@ function Login(props) {
           />
         </Form.Label>
       </Form.Group>
+      {error && <Alert variant="danger">{error}</Alert>}
       <Button
         className="btn-logon mb-1"
         variant="warning"

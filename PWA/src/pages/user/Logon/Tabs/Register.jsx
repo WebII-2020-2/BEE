@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
 import validationSchema from '../../../../services/validations/validationRegister';
 
 function Login(props) {
-  const { loading, register } = props;
+  const { loading, register, error } = props;
 
   const onlyNumber = (value, isCPF) => {
     const keyboard = value[value.length - 1];
@@ -133,6 +133,7 @@ function Login(props) {
               </Form.Control.Feedback>
             </Form.Label>
           </Form.Group>
+          {error && <Alert variant="danger">{error}</Alert>}
           <Button
             className="btn-logon mb-4"
             variant="warning"
