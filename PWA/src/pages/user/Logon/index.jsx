@@ -11,41 +11,51 @@ import { loginUser } from '../../../services/auth/authUser';
 function Logon() {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const [tab, setTab] = useState('login');
 
   const handleUpdateTab = (newTab) => {
+    setError('');
     setTab(newTab);
   };
 
   const login = async (form) => {
+    setError('');
     try {
       setLoading(true);
-      const resp = await LogonApiService.login(form).then((r) => r.data);
+      const resp = await LogonApiService.login(form)
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
       if (resp.success) {
         loginUser(resp.data.token.access_token);
         history.push('/');
-      } else {
-        throw new Error(`${resp.error.error_message}`);
       }
-    } catch (e) {
-      console.error(`${e}`);
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+      setError(err.error_message);
     } finally {
       setLoading(false);
     }
   };
 
   const register = async (form) => {
+    setError('');
     try {
       setLoading(true);
-      const resp = await LogonApiService.register(form).then((r) => r.data);
+      const resp = await LogonApiService.register(form)
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
       if (resp.success) {
         setTab('login');
-      } else {
-        throw new Error(`${resp.error.error_message}`);
       }
-    } catch (e) {
-      console.error(`${e}`);
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+      setError(err.error_message);
     } finally {
       setLoading(false);
     }
@@ -82,7 +92,7 @@ function Logon() {
               <Card.Title className="card-logon-title">
                 <b>A</b>cesse com sua conta
               </Card.Title>
-              <Login login={login} loading={loading} />
+              <Login login={login} loading={loading} error={error} />
             </Card.Body>
           )}
           {tab === 'register' && (
@@ -90,7 +100,7 @@ function Logon() {
               <Card.Title className="card-logon-title">
                 <b>C</b>rie uma nova conta
               </Card.Title>
-              <Register register={register} loading={loading} />
+              <Register register={register} loading={loading} error={error} />
             </Card.Body>
           )}
         </Card>

@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { cpf } from 'cpf-cnpj-validator';
 
 const phoneRegex = new RegExp(/(\(?\d{2}\)?\s?)?(\d{4,5})-?(\d{4})/g);
 
@@ -20,7 +21,8 @@ const validationShema = yup.object().shape({
   cpf: yup
     .string()
     .required('CPF não pode ser vazio')
-    .length(11, 'CPF não é válido'),
+    .length(11, 'CPF deve ter 11 números')
+    .test('CPF válido', 'CPF não é válido', (value) => cpf.isValid(value)),
   phone: yup
     .string()
     .required('Telefone não pode ser vazio')
