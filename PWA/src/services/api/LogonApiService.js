@@ -12,9 +12,23 @@ function register(form) {
   });
 }
 
+function forgotPassword(email) {
+  return api.post('/forgot/password', {
+    ...email,
+  });
+}
+
+function resetPassword(form) {
+  return api.post('/reset/password', {
+    ...form,
+  });
+}
+
 const LogonApiService = {
   login,
   register,
+  forgotPassword,
+  resetPassword,
 };
 
 export default LogonApiService;
