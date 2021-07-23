@@ -57,15 +57,19 @@
   border: none;
 }
 
-.forgot-password{
+.forgot-password.btn{
   color: var(--dark-grey);
   text-decoration: underline;
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 
-.forgot-password:hover {
+.forgot-password.btn:hover {
   color: var(--orange);
+}
+
+.forgot-password.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 2px 2px var(--orange);
 }
 
 .card-logon-title {
