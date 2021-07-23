@@ -31,7 +31,7 @@ class SendMailForgotPassword extends Mailable
     {
         return $this->markdown('Mail.send_mail_forgot_password', [
             'messages' => 'Clique no link abaixo para trocar a sua senha. Se você recebeu isso e não solicitou a troca de senha, ignore esse e-mail.',
-            'link' => 'https://bee-web2.vercel.app/forgot/password/'.$this->token])
+            'link' => 'https://bee-web2.vercel.app/alterar-senha/'.$this->token])
                 ->to($this->email)
                 ->from('HacskBoy@hotmail.com')
                 ->subject('Solicitação de troca de senha.');
