@@ -30,7 +30,7 @@ function ResetPassword(props) {
         setSuccess('Senha alterada com sucesso');
         setTimeout(() => {
           history.push('/user/login');
-        }, 3000);
+        }, 2500);
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
@@ -102,13 +102,19 @@ function ResetPassword(props) {
                     </Alert>
                   )}
                   <Button
-                    className="btn-logon"
+                    className="btn-logon mb-3"
                     variant="warning"
                     type="submit"
                     disabled={loading}
                   >
                     {loading ? <Spinner animation="border" /> : 'Alterar'}
                   </Button>
+                  <a
+                    href="/user/login"
+                    className="text-center text-dark d-flex justify-content-center"
+                  >
+                    Ir para login
+                  </a>
                 </Form>
               )}
             </Formik>
