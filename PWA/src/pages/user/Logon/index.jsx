@@ -72,6 +72,7 @@ function Logon() {
 
   const sendEmailForgotPassword = async (email) => {
     setError('');
+    setSuccessSendEmail('');
     try {
       setLoading(true);
       const resp = await LogonApiService.forgotPassword({ email })
