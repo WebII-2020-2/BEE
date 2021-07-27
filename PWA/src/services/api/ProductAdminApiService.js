@@ -34,10 +34,19 @@ function getBest() {
   return api.get(`${ENDPOINT_BASE}/best`);
 }
 
+function getByName(name) {
+  return api.get(`${ENDPOINT_BASE}/search`, {
+    params: {
+      ...name,
+    },
+  });
+}
+
 const ProductAdminApiService = {
   getAll,
   getBest,
   getById,
+  getByName,
   create,
   update,
   remove,
