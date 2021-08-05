@@ -22,6 +22,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('get', 'Api\UserController@getUser');
     Route::post('refresh', 'Api\UserController@refresh');
     Route::post('logout', 'Api\UserController@logout');
+    Route::post('change/password', 'Api\UserController@changePassword');
+    Route::post('delete', 'Api\UserController@delete');
 });
 
 // Cards
@@ -79,7 +81,7 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promo
 });
 
 // Banners
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promotion'], function ($router) {
+Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'banner'], function ($router) {
     Route::post('/add', 'Api\BannerController@store');
     Route::get('/list/{id}', 'Api\BannerController@get');
     Route::post('/update/{id}', 'Api\BannerController@update');
