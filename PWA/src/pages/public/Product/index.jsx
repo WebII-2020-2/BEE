@@ -3,11 +3,14 @@ import {
   Button,
   Container,
   Form,
-  FormLabel,
   FormControl,
+  FormLabel,
   Image,
 } from 'react-bootstrap';
 import { Minus, Plus, ShoppingCart } from 'react-feather';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { addProduct } from '../../../store/actions/cartActions';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
@@ -16,6 +19,8 @@ import './Product.css';
 
 function Product(props) {
   const { match } = props;
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [productData, setProductData] = useState({});
   const [loadingData, setLoadingData] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -45,7 +50,8 @@ function Product(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.warn(`Adicionado ao carrinho\nQuantidade: ${quantity}`);
+    dispatch(addProduct(match.params.id, quantity));
+    history.push('/carrinho');
   };
 
   return (
