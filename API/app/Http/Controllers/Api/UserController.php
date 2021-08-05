@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgot', 'newPassword', 'logout', 'getUser']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'forgot', 'newPassword', 'logout', 'getUser', 'changePassword']]);
     }
 
     public function register(Request $request)
@@ -173,6 +173,50 @@ class UserController extends Controller
             $user = User::where('email', $password_reset->email)->update(['password' => Hash::make($data['password'])]);
         } catch (\Exception $exception) {
             $error = ['code' => $exception->getCode(), 'error_message' => $exception->getMessage()];
+        }
+
+        if (!isset($error) && isset($user)) {
+            return response()->json(['success' => true, 'data' => null, 'error' => null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $data = $request->all();
+
+        $user_jwt = JWTAuth::toUser(JWTAuth::getToken());
+
+        try {
+            if(Hash::check($data['last_password'], $user_jwt->password)){
+                $user = User::where(['id' => $user_jwt->id])->update(['password' => Hash::make($data['new_password'])]);
+            }else{
+                throw new Exception();
+            }
+        } catch (\Exception $exception) {
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel alterar a senha.'];
+        }
+
+        if (!isset($error) && isset($user)) {
+            return response()->json(['success' => true, 'data' => null, 'error' => null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+    }
+
+    public function delete(){
+        $user_jwt = JWTAuth::toUser(JWTAuth::getToken());
+
+        try {
+            if($user_jwt->level_access != 2){
+                $user = User::where(['id' => $user_jwt->id])->delete();
+                auth('api')->logout();
+            }else{
+                throw new Exception();
+            }
+        } catch (\Exception $exception) {
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o usuário.'];
         }
 
         if (!isset($error) && isset($user)) {
