@@ -152,25 +152,28 @@ class ProductController extends Controller
         $name = $request->only("name")['name'];
 
         try {
-            $product = Product::where('products.name', 'like', '%' . $name . '%')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->first();
+            $products = Product::where('products.name', 'like', '%' . $name . '%')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
 
-            $mounted_product = array(
-                "id" => $product->id,
-                'name' => $product->name,
-                'unity' => $product->unity,
-                'quantity' => $product->quantity,
-                'unitary_value' => $product->unitary_value,
-                'description' => $product->description,
-                'image' => 'data:' . $product->mime_type . ';base64,' . base64_encode($product->image),
-                'category_id' => $product->category_id,
-                'category' => $product->category
-            );
+            $mounted_products = [];
+            foreach($products as $product){
+                array_push($mounted_products, array(
+                    "id" => $product->id,
+                    'name' => $product->name,
+                    'unity' => $product->unity,
+                    'quantity' => $product->quantity,
+                    'unitary_value' => $product->unitary_value,
+                    'description' => $product->description,
+                    'image' => 'data:' . $product->mime_type . ';base64,' . base64_encode($product->image),
+                    'category_id' => $product->category_id,
+                    'category' => $product->category
+                ));
+            }
         } catch (\Exception $exception) {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar o produto.'];
         }
 
-        if (isset($mounted_product) && !isset($error)) {
-            return response()->json(['success' => true, 'data' => $mounted_product, 'error' => $error ?? null], 200);
+        if (isset($mounted_products) && !isset($error)) {
+            return response()->json(['success' => true, 'data' => $mounted_products, 'error' => $error ?? null], 200);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
