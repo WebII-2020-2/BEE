@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Form,
@@ -9,7 +9,8 @@ import {
   NavDropdown,
   Spinner,
 } from 'react-bootstrap';
-import { ShoppingCart, Search, User } from 'react-feather';
+import { useSelector } from 'react-redux';
+import { Search, ShoppingCart, User } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import logoNav from '../../../assets/img/bee-logo-color.svg';
 import CategoryApiService from '../../../services/api/CategoryAdminApiService';
@@ -20,6 +21,7 @@ function NavBar() {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const history = useHistory();
   const inputRef = useRef(null);
+  const quantity = useSelector((state) => state.cart.count);
 
   const getCategories = async () => {
     setLoadingCategories(true);
@@ -68,10 +70,10 @@ function NavBar() {
       />
       <Navbar.Collapse id="navbar-store" aria-label="Itens de navegação">
         <Nav className="links">
-          <Nav.Link href="/promocoes" title="Promoções">
-            Promoções
+          <Nav.Link href="/produtos" title="Produtos">
+            Produtos
           </Nav.Link>
-          <NavDropdown title="Categorias">
+          <NavDropdown title="Categorias" id="category-dropdown">
             {loadingCategories ? (
               <NavDropdown.Item title="Carregando categorias...">
                 <Spinner animation="border" variant="light" role="status" />
@@ -120,6 +122,12 @@ function NavBar() {
           </Form>
           <Nav.Link href="/carrinho" title="Carrinho de compras">
             <ShoppingCart aria-label="Ícone de carrinho de compras" />
+            {quantity > 0 && (
+              <sup className="cart-quantity">
+                {quantity}
+                <span className="sr-only">Quantidade de itens no carrinho</span>
+              </sup>
+            )}
           </Nav.Link>
           <Nav.Link href="/user/login" title="Login">
             <User aria-label="Ícone de usuário" />
