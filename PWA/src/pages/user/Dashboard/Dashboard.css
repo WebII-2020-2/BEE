@@ -1,0 +1,74 @@
+.nav-dashboard.nav{
+  justify-content: center;
+}
+
+.nav-link-dashboard.nav-link{
+  color: var(--black);
+  font-family: 'Poppins';
+  margin: 0 2rem;
+  padding: 0.5rem 1.5rem;
+}
+
+.nav-link-dashboard:hover {
+  color: var(--grey);
+}
+
+.nav-link-dashboard.active{
+  background-color: var(--light-grey);
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+}
+
+.nav-link-dashboard.active:hover{
+  color: var(--black);
+}
+
+.container-dashboard{
+  display: flex;
+  flex-direction: column;
+  margin: 0 15%;
+}
+
+/* Datas (Meus dados) */
+.header-datas-dashboard{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.form-datas-dashboard{
+  border-radius: 5px;
+  box-shadow: 0 2px 8px var(--grey);
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-datas-dashboard.form-group{
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.image-datas-dashboard{
+  max-height: 150px;
+  width: 150px;
+  align-self: center;
+  border-radius: 50%;
+  transform: scale(0.8);
+  object-fit: cover;
+}
+
+.accordion-dashboard{
+  width: 100%;
+  text-align: center;
+}
+
+.accordion-dashboard .card{
+  background-color: var(--white);
+}
+
+.accordion-dashboard .card .btn-link{
+  color: var(--black);
+}

@@ -24,11 +24,28 @@ function resetPassword(form) {
   });
 }
 
+function getUser() {
+  return api.post('/get');
+}
+
+function changePassword(form) {
+  return api.post('/change/password', {
+    ...form,
+  });
+}
+
+function deleteUser() {
+  return api.post('/delete');
+}
+
 const LogonApiService = {
   login,
   register,
   forgotPassword,
   resetPassword,
+  getUser,
+  changePassword,
+  deleteUser,
 };
 
 export default LogonApiService;
