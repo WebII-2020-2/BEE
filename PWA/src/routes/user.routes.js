@@ -22,7 +22,13 @@ function UserRoutes(props) {
 
   return (
     <Switch>
-      <Route path={`${match.path}/login`} component={Logon} />
+      <Route path={`${match.path}/login`}>
+        {isAuthenticated() ? (
+          <Redirect to={`${match.path}/dashboard/dados`} />
+        ) : (
+          <Logon />
+        )}
+      </Route>
       <PrivateRoute
         path={`${match.path}/dashboard/:page`}
         component={Dashboard}
