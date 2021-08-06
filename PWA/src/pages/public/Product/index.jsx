@@ -86,7 +86,7 @@ function Product(props) {
               </Button>
               <FormControl
                 type="number"
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(Number(e.target.value))}
                 value={quantity}
                 min={1}
                 className="quantity-input"
