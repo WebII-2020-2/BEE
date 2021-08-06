@@ -1,4 +1,5 @@
 import nJwt from 'njwt';
+import api from '../api/api';
 
 export const TOKEN_KEY = '@user-Token';
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
@@ -22,3 +23,11 @@ export const loginUser = (token) => {
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
 };
+
+api.interceptors.request.use(async (config) => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
