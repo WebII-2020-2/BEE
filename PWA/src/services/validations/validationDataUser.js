@@ -14,10 +14,6 @@ const validationSchemaData = yup.object().shape({
     .required('E-mail não pode ser vazio')
     .email('E-mail não é válido')
     .max(100, 'E-mail deve ter menos de 100 caracteres'),
-  password: yup
-    .string()
-    .required('Senha não pode ser vazia')
-    .min(4, 'Senha deve ter pelo menos 4 caracteres'),
   cpf: yup
     .string()
     .required('CPF não pode ser vazio')
