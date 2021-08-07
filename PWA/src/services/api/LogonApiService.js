@@ -28,6 +28,12 @@ function getUser() {
   return api.post('/get');
 }
 
+function updateUser(form) {
+  return api.post('/user/update', {
+    ...form,
+  });
+}
+
 function changePassword(form) {
   return api.post('/change/password', {
     ...form,
@@ -44,6 +50,7 @@ const LogonApiService = {
   forgotPassword,
   resetPassword,
   getUser,
+  updateUser,
   changePassword,
   deleteUser,
 };
