@@ -4,6 +4,7 @@ import { CreditCard, MapPin, Package, User } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import './Dashboard.css';
+import Cards from './pages/Cards';
 import Datas from './pages/Datas';
 
 function Dashboard(props) {
@@ -65,7 +66,7 @@ function Dashboard(props) {
       </Nav>
       <hr />
       {page === 'dados' && <Datas />}
-      {page === 'cartoes' && 'Cartoes'}
+      {page === 'cartoes' && <Cards />}
       {page === 'enderecos' && 'Endereços'}
       {page === 'pedidos' && 'Pedidos'}
     </StoreContainer>
