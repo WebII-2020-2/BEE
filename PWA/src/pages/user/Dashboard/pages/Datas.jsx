@@ -55,7 +55,22 @@ function Datas() {
   };
 
   const editUser = async (form) => {
-    console.warn(form);
+    try {
+      setLoading(true);
+      const resp = await LogonApiService.updateUser(form)
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
+      if (resp.success) {
+        setData(form);
+        handleEdit();
+      }
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const editPassword = async (form) => {
@@ -110,7 +125,7 @@ function Datas() {
     <div className="container-dashboard">
       <Formik
         validationSchema={validationShema.validationSchemaData}
-        onSubmit={editUser}
+        onSubmit={(values) => editUser(values)}
         enableReinitialize
         initialValues={data}
       >
@@ -134,6 +149,7 @@ function Datas() {
                 <div>
                   <Button
                     variant="secondary mr-2"
+                    disabled={loading}
                     onClick={() => {
                       handleReset();
                       handleEdit();
@@ -141,8 +157,17 @@ function Datas() {
                   >
                     Cancelar
                   </Button>
-                  <Button variant="success" onClick={handleSubmit}>
-                    Salvar
+                  <Button
+                    type="submit"
+                    variant="success"
+                    disabled={loading}
+                    onClick={handleSubmit}
+                  >
+                    {loading ? (
+                      <Spinner animation="border" variant="light" size="sm" />
+                    ) : (
+                      'Salvar'
+                    )}
                   </Button>
                 </div>
               )}
@@ -392,7 +417,15 @@ function Datas() {
                         type="submit"
                         disabled={loading}
                       >
-                        {loading ? <Spinner animation="border" /> : 'Salvar'}
+                        {loading ? (
+                          <Spinner
+                            animation="border"
+                            variant="light"
+                            size="sm"
+                          />
+                        ) : (
+                          'Salvar'
+                        )}
                       </Button>
                     </Form>
                   )}
