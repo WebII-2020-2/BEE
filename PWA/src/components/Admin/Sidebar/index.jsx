@@ -1,6 +1,6 @@
 import React from 'react';
-import { Nav, Col, Image } from 'react-bootstrap';
-import { X, LogOut } from 'react-feather';
+import { Col, Image, Nav } from 'react-bootstrap';
+import { LogOut, X } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../../services/auth/authAdmin';
 import logoColorful from '../../../assets/img/bee-logo-admin.svg';
@@ -82,6 +82,13 @@ function SidebarAdmin(props) {
           href="/admin/relatorios/page/1"
         >
           Relatórios
+        </Nav.Link>
+        <Nav.Link
+          className={`admin-sidebar-link ${link === 'campanhas' && 'selected'}`}
+          disabled={link === 'campanhas'}
+          href="/admin/campanhas/page/1"
+        >
+          Campanhas
         </Nav.Link>
       </Nav>
     </Col>
