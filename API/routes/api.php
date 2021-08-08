@@ -14,6 +14,7 @@ Route::get('/promotion/get/products/{id}', 'Api\PromotionController@getProducts'
 Route::get('/product/best', 'Api\ProductController@getBestSelled');
 Route::get('/product/search', 'Api\ProductController@getByName');
 Route::get('/product/list/{id}', 'Api\ProductController@get');
+Route::get('/product/list', 'Api\ProductController@show');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
@@ -22,6 +23,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('get', 'Api\UserController@getUser');
     Route::post('refresh', 'Api\UserController@refresh');
     Route::post('logout', 'Api\UserController@logout');
+    Route::post('user/update', 'Api\UserController@update');
     Route::post('change/password', 'Api\UserController@changePassword');
     Route::post('delete', 'Api\UserController@delete');
 });
@@ -47,7 +49,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'addre
 // Products
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'product'], function ($router) {
     Route::post('/add', 'Api\ProductController@store');
-    Route::get('/list', 'Api\ProductController@show');
     Route::post('/update/{id}', 'Api\ProductController@update');
     Route::post('/delete/{id}', 'Api\ProductController@delete');
 });
