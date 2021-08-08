@@ -10,7 +10,7 @@ import banner2 from '../../../assets/img/black-friday-banner.jpg';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
 import './Home.css';
 
-function Home() {
+const Home = () => {
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [quantityProducts, setQuantityProducts] = useState(4);
@@ -132,6 +132,6 @@ function Home() {
       )}
     </StoreContainer>
   );
-}
+};
 
 export default Home;
