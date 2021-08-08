@@ -22,10 +22,12 @@ function CardProduct(props) {
       </div>
       <div className="card-product admin info">
         {name}
-        <span className="card-product admin info price">{`R$ ${price
-          .toFixed(2)
-          .toString()
-          .replace('.', ',')}`}</span>
+        <span className="card-product admin info price">
+          {price.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
+        </span>
       </div>
     </Col>
   );
