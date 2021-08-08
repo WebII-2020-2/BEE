@@ -15,4 +15,8 @@ class banner extends Model
     ];
 
     protected $table = 'banners';
+
+    public function bannerProduct(){
+        return $this->hasMany('App\Models\BannerProduct');
+    }
 }

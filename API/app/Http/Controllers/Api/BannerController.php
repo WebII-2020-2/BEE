@@ -16,7 +16,9 @@ class BannerController extends Controller
         $data = $request->all();
 
         $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-
+        
+        info($data_image);
+        
         try{
             $result_banner = Banner::create([
                 'title' => $data['title'],
@@ -33,6 +35,7 @@ class BannerController extends Controller
                 ));
             }
         }catch(\Exception $exception){
+            info($exception->getLine());
             $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar o Banner.'];
         }
 
