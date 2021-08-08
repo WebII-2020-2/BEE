@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import './Dashboard.css';
 import Cards from './pages/Cards';
-import Datas from './pages/Datas';
+import DataUser from './pages/DataUser';
 
 function Dashboard(props) {
   const { match } = props;
@@ -65,8 +65,8 @@ function Dashboard(props) {
         </Nav.Item>
       </Nav>
       <hr />
-      {page === 'dados' && <Datas />}
-      {page === 'cartoes' && <Cards />}
+      {page === 'dados' && <DataUser />}
+      {page === 'cartoes' && <Cards path={match.path} />}
       {page === 'enderecos' && 'Endereços'}
       {page === 'pedidos' && 'Pedidos'}
     </StoreContainer>
