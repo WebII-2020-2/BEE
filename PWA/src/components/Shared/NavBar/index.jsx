@@ -120,7 +120,11 @@ function NavBar() {
               <Search aria-label="Ícone de pesquisa" />
             </Button>
           </Form>
-          <Nav.Link href="/carrinho" title="Carrinho de compras">
+          <Nav.Link
+            href="/carrinho"
+            title="Carrinho de compras"
+            className="cart-icon"
+          >
             <ShoppingCart aria-label="Ícone de carrinho de compras" />
             {quantity > 0 && (
               <sup className="cart-quantity">

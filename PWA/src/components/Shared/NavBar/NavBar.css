@@ -99,7 +99,7 @@
 
   #navbar-store .actions {
     flex-direction: row;
-    padding-top: 0;
+    padding: 0 1rem;
   }
 
   #navbar-store .actions .search {
