@@ -58,10 +58,10 @@ class BannerController extends Controller
 
                 array_push($mounted_banners, array(
                     'id' => $banner->id,
-                    'title' => $banners->title,
-                    'description' => $banners->description,
+                    'title' => $banner->title,
+                    'description' => $banner->description,
                     'image' => 'data:'.$banner->mime_type.';base64,'.base64_encode($banner->image),
-                    'active' => $banners->active,
+                    'active' => $banner->active,
                     'products' => $mounted_products
                 ));
             }
