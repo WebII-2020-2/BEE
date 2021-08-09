@@ -118,7 +118,8 @@ function Products(props) {
   }, [selectedCategory]);
 
   useEffect(() => {
-    handleUpdate({ ...values, product: productsList });
+    const prodIDs = productsList.map((p) => p.id);
+    handleUpdate({ ...values, products: prodIDs });
   }, [productsList]);
 
   return (
@@ -182,7 +183,7 @@ function Products(props) {
         </thead>
         <tbody>
           {productsList.map((p) => (
-            <tr>
+            <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.name}</td>
               <td>
