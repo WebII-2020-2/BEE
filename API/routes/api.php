@@ -84,7 +84,7 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promo
 });
 
 // Banners
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'banner'], function ($router) {
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'banner'], function ($router) {
     Route::post('/add', 'Api\BannerController@store');
     Route::get('/list', 'Api\BannerController@show');
     Route::get('/list/{id}', 'Api\BannerController@get');
