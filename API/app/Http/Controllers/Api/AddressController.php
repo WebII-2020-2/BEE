@@ -45,6 +45,7 @@ class AddressController extends Controller
             $mounted_addresses = [];
             foreach($addresses as $address){
                 array_push($mounted_addresses, array(
+                    'id' => $address->id,
                     'public_place' => $address->public_place,
                     'district' => $address->district,
                     'number' => $address->number,
@@ -74,6 +75,7 @@ class AddressController extends Controller
             $address = $user_authenticaded->address()->where('id', $id)->first();
 
             $mounted_address = array(
+                'id' => $address->id,
                 'public_place' => $address->public_place,
                 'district' => $address->district,
                 'number' => $address->number,
