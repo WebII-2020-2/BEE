@@ -8,7 +8,15 @@ import onlyNumber from '../../../services/utils/onlyNumber';
 import AddressApiService from '../../../services/api/AddressApiService';
 
 function FormAddress(props) {
-  const { valuesAddress, handleSubmitAddress, isNew, isSaving } = props;
+  const {
+    valuesAddress,
+    handleSubmitAddress,
+    handleDelete,
+    handleEdit,
+    isNew,
+    isSaving,
+    isReadOnly,
+  } = props;
 
   return (
     <Formik
@@ -49,8 +57,11 @@ function FormAddress(props) {
               path="/user/dashboard/enderecos"
               handleSubmit={handleSubmit}
               handleReset={handleReset}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
               isNew={isNew}
               isSaving={isSaving}
+              isReadOnly={isReadOnly}
             />
             <Form className="form-address-dashboard">
               <Form.Row>
@@ -64,6 +75,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="zip_code"
+                      disabled={isReadOnly}
                       value={values.zip_code}
                       onChange={(e) => {
                         if (onlyNumber(e.target.value, false)) handleChange(e);
@@ -87,6 +99,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="city"
+                      disabled={isReadOnly}
                       value={values.city}
                       onChange={handleChange}
                       isInvalid={!!errors.city && touched.city}
@@ -106,6 +119,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="state"
+                      disabled={isReadOnly}
                       value={values.state}
                       onChange={handleChange}
                       isInvalid={!!errors.state && touched.state}
@@ -127,6 +141,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="public_place"
+                      disabled={isReadOnly}
                       value={values.public_place}
                       onChange={handleChange}
                       isInvalid={!!errors.public_place && touched.public_place}
@@ -146,6 +161,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="number"
+                      disabled={isReadOnly}
                       value={values.number}
                       onChange={handleChange}
                       isInvalid={!!errors.number && touched.number}
@@ -167,6 +183,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="district"
+                      disabled={isReadOnly}
                       value={values.district}
                       onChange={handleChange}
                       isInvalid={!!errors.district && touched.district}
@@ -186,6 +203,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="complement"
+                      disabled={isReadOnly}
                       value={values.complement}
                       onChange={handleChange}
                       isInvalid={!!errors.complement && touched.complement}
