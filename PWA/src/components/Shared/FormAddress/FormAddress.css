@@ -1,0 +1,17 @@
+.form-address-dashboard{
+  border-radius: 5px;
+  box-shadow: 0 2px 8px var(--grey);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 3rem;
+}
+
+.form-group-address-dashboard .form-label{
+  width: 100%;
+}
+
+@media screen and (max-width: 680px) {
+  .form-address-dashboard{
+    padding: 2rem;
+  }
+}
