@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import AddressList from './AddressList';
 import AddressNew from './AddressNew';
 import AddressPage from './AddressPage';
+import './Address.css';
 
 function Cards(props) {
   const { path } = props;
