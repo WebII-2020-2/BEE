@@ -15,6 +15,8 @@ Route::get('/product/best', 'Api\ProductController@getBestSelled');
 Route::get('/product/search', 'Api\ProductController@getByName');
 Route::get('/product/list/{id}', 'Api\ProductController@get');
 Route::get('/product/list', 'Api\ProductController@show');
+Route::get('/banner/list/{id}', 'Api\BannerController@get');
+Route::get('/banner/list', 'Api\BannerController@show');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
@@ -84,6 +86,7 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promo
 // Banners
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'banner'], function ($router) {
     Route::post('/add', 'Api\BannerController@store');
+    Route::get('/list', 'Api\BannerController@show');
     Route::get('/list/{id}', 'Api\BannerController@get');
     Route::post('/update/{id}', 'Api\BannerController@update');
     Route::post('/delete/{id}', 'Api\BannerController@delete');
