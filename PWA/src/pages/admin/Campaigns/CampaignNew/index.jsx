@@ -15,7 +15,7 @@ function CampaignsNew() {
     description: '',
     active: true,
     image: '',
-    product: [],
+    products: [],
   });
   const [isSaving, setIsSaving] = useState(false);
   const [errors, setErrors] = useState([]);
