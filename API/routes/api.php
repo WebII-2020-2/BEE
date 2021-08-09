@@ -31,7 +31,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
 // Cards
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'card'], function ($router) {
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($router) {
     Route::post('/add', 'Api\CardController@store');
     Route::get('/list', 'Api\CardController@show');
     Route::post('/list/{id}', 'Api\CardController@get');
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'card'
 });
 
 // Address
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'address'], function ($router) {
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'address'], function ($router) {
     Route::post('/add', 'Api\AddressController@store');
     Route::get('/list', 'Api\AddressController@show');
     Route::post('/list/{id}', 'Api\AddressController@get');
