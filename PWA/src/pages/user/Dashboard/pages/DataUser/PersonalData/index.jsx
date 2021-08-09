@@ -4,6 +4,7 @@ import { Button, Col, Form, Image, Row, Spinner } from 'react-bootstrap';
 import LogonApiService from '../../../../../../services/api/LogonApiService';
 import emptyImage from '../../../../../../assets/img/empty-image.png';
 import validationShema from '../../../../../../services/validations/validationDataUser';
+import onlyNumber from '../../../../../../services/utils/onlyNumber';
 
 function PersonalData() {
   const [data, setData] = useState({
@@ -142,7 +143,9 @@ function PersonalData() {
                   readOnly={isReadOnly}
                   name="cpf"
                   value={values.cpf}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    if (onlyNumber(e.target.value, false)) handleChange(e);
+                  }}
                   isInvalid={!!errors.cpf && touched.cpf}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -184,7 +187,9 @@ function PersonalData() {
                   readOnly={isReadOnly}
                   name="phone"
                   value={values.phone}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    if (onlyNumber(e.target.value, true)) handleChange(e);
+                  }}
                   isInvalid={!!errors.phone && touched.phone}
                 />
                 <Form.Control.Feedback type="invalid">
