@@ -4,8 +4,9 @@ import { CreditCard, MapPin, Package, User } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import './Dashboard.css';
-import Cards from './pages/Cards';
 import DataUser from './pages/DataUser';
+import Cards from './pages/Cards';
+import Address from './pages/Address';
 
 function Dashboard(props) {
   const { match } = props;
@@ -67,7 +68,7 @@ function Dashboard(props) {
       <hr />
       {page === 'dados' && <DataUser />}
       {page === 'cartoes' && <Cards path={match.path} />}
-      {page === 'enderecos' && 'Endereços'}
+      {page === 'enderecos' && <Address path={match.path} />}
       {page === 'pedidos' && 'Pedidos'}
     </StoreContainer>
   );
