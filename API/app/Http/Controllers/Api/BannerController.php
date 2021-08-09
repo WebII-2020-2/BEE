@@ -28,7 +28,7 @@ class BannerController extends Controller
 
             foreach ($request->input('products', []) as $product) {
 
-                $banner_product = $result_banner->BannerProduct()->create(array(
+                $banner_product = $result_banner->bannerProduct()->create(array(
                     'product_id' => $product
                 ));
             }
