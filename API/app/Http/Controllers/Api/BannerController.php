@@ -16,7 +16,7 @@ class BannerController extends Controller
         $data = $request->all();
 
         $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-
+        
         try{
             $result_banner = Banner::create([
                 'title' => $data['title'],
@@ -28,7 +28,7 @@ class BannerController extends Controller
 
             foreach ($request->input('products', []) as $product) {
 
-                $banner_product = $result_banner->BannerProduct()->create(array(
+                $banner_product = $result_banner->bannerProduct()->create(array(
                     'product_id' => $product
                 ));
             }
@@ -58,10 +58,10 @@ class BannerController extends Controller
 
                 array_push($mounted_banners, array(
                     'id' => $banner->id,
-                    'title' => $banners->title,
-                    'description' => $banners->description,
+                    'title' => $banner->title,
+                    'description' => $banner->description,
                     'image' => 'data:'.$banner->mime_type.';base64,'.base64_encode($banner->image),
-                    'active' => $banners->active,
+                    'active' => $banner->active,
                     'products' => $mounted_products
                 ));
             }
@@ -78,7 +78,7 @@ class BannerController extends Controller
 
     public function get($id){
         try{
-            $banner = Banner::where('banner.id', $id)->first();
+            $banner = Banner::where('id', $id)->first();
 
             $banner_products = $banner->bannerProduct;
 
@@ -91,7 +91,7 @@ class BannerController extends Controller
                 "id" => $banner->id,
                 'title' => $banner->title,
                 'description' => $banner->description,
-                'image' => 'data:'.$banner->mime_type.';base64,'.base64_encode($banner->image),
+                'image' => 'data:' . $banner->mime_type . ';base64,' . base64_encode($banner->image),
                 'active' => $banner->active,
                 'products' => $products
             );
@@ -112,16 +112,15 @@ class BannerController extends Controller
         $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
         try {
-            $banner = Banner::where('id', $id)->first();
+            $banner = Banner::find($id);
 
-            $result_banner = banner::where('id', $id)->update([
+            $result_banner = $banner->update([
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'value' => $data['value'],
-                'start_date' => $data['start_date'],
+                'image' => 'data:' . $banner->mime_type . ';base64,' . base64_encode($banner->image),
                 'active' => $data['active']
             ]);
-
+            
             $result_banner_product = $banner->bannerProduct()->whereNotIn('product_id', $data['products'])->delete();
 
             foreach ($data['products'] as $product) {

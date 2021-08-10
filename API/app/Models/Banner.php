@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class banner extends Model
+class Banner extends Model
 {
     protected $fillable = [
-        'id',
         'title',
         'description',
         'image',
@@ -16,4 +15,8 @@ class banner extends Model
     ];
 
     protected $table = 'banners';
+
+    public function bannerProduct(){
+        return $this->hasMany('App\Models\BannerProduct');
+    }
 }

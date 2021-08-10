@@ -11,7 +11,7 @@ class BannerProduct extends Model
         'product_id'
     ];
 
-    protected $table = 'banner_product';
+    protected $table = 'banner_productions';
 
     public function product(){
         return $this->belongsTo('App\Models\Product');
