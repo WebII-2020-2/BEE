@@ -12,7 +12,7 @@ function Cards(props) {
     <Switch>
       <Route path={`${path}/novo`} component={AddressNew} />
       <Route path={`${path}/:id`} component={AddressPage} />
-      <Route path={path} component={AddressList} />
+      <Route path={path} exact component={AddressList} />
       <Redirect path="*" to="/not-found" />
     </Switch>
   );
