@@ -17,6 +17,6 @@ class Banner extends Model
     protected $table = 'banners';
 
     public function bannerProduct(){
-        return $this->hasMany('App\Models\BannerProduct');
+        return $this->hasMany('App\Models\BannerProduct', 'banner_id');
     }
 }
