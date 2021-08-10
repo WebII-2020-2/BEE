@@ -42,7 +42,7 @@ function CampaignsNew() {
           .then((r) => r.data)
           .catch((r) => r.response.data);
         if (resp.success) {
-          history.push('/admin/campaign/page/1');
+          history.push('/admin/campanhas/page/1');
         } else {
           throw resp.error;
         }

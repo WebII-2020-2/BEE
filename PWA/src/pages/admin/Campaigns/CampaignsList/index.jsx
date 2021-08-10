@@ -31,9 +31,13 @@ export default function CampaignList(props) {
         });
 
       if (resp.success) {
-        setCampaigns(resp.data);
-      } else {
-        throw resp.error;
+        setCampaigns(
+          resp.data.map((c) => ({
+            id: c.id,
+            title: c.title,
+            active: c.active === 1 ? 'Ativa' : 'Inativa',
+          }))
+        );
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
