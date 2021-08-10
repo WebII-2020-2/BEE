@@ -34,13 +34,13 @@ function AddressPage(props) {
   const handleSubmit = async (form) => {
     try {
       setIsSaving(true);
-      const resp = await AddressApiService.update(values.id, form)
+      const resp = await AddressApiService.update(match.params.id, form)
         .then((r) => r.data)
         .catch((r) => {
           throw r.response.data.error;
         });
       if (resp.success) {
-        setValues(resp.data);
+        setValues(form);
         handleEdit();
       }
     } catch (err) {
@@ -52,7 +52,7 @@ function AddressPage(props) {
 
   const handleDelete = async () => {
     try {
-      const resp = await AddressApiService.remove(values.id)
+      const resp = await AddressApiService.remove(match.params.id)
         .then((r) => r.data)
         .catch((r) => {
           throw r.response.data.error;
