@@ -1,57 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
-// import AddressApiService from '../../../../../../services/api/AddressApiService';
+import LoadingPage from '../../../../../../components/Shared/LoadingPage';
+import AddressApiService from '../../../../../../services/api/AddressApiService';
 
 function AddressList(props) {
   const { match } = props;
-  const valuesTest = [
-    {
-      id: '1',
-      public_place: 'Rua das bananas1',
-      district: 'Bananal',
-      number: '10',
-      complement: 'Banana',
-      zip_code: '10101012',
-      city: 'Bananal',
-      state: 'Ba',
-      reference_point: 'Bananui1',
-    },
-    {
-      id: '2',
-      public_place: 'Rua das bananas2',
-      district: 'Bananal',
-      number: '10',
-      complement: 'Banana',
-      zip_code: '10101011',
-      city: 'Bananal',
-      state: 'Ba',
-      reference_point: 'Bananui',
-    },
-  ];
-  // const [values, setValues] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [values, setValues] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const getAddress = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const resp = await AddressApiService.getAll()
-  //       .then((r) => r.data)
-  //       .catch((r) => {
-  //         throw r.response.data.error;
-  //       });
-  //     if (resp.success) {
-  //       setValues(resp.data);
-  //     }
-  //   } catch (err) {
-  //     console.error(`ERRO ${err.code}: ${err.error_message}`);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const getAddress = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await AddressApiService.getAll()
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
+      if (resp.success) {
+        setValues(resp.data);
+      }
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   getAddress();
-  // }, []);
+  useEffect(() => {
+    getAddress();
+  }, []);
 
   const cardAddress = (value) => (
     <div className="card-address-dashboard" key={value.id}>
@@ -89,16 +66,20 @@ function AddressList(props) {
     </div>
   );
 
+  if (isLoading) return <LoadingPage />;
+
   return (
-    <div className="container-dashboard">
-      <Button
-        variant="dark"
-        href={`${match.url}/novo`}
-        className="align-self-center"
-      >
-        Cadastrar novo endereço
-      </Button>
-      {valuesTest.map((value) => cardAddress(value))}
+    <div className="container-dashboard mb-4">
+      {values.length < 3 && (
+        <Button
+          variant="dark"
+          href={`${match.url}/novo`}
+          className="align-self-center"
+        >
+          Cadastrar novo endereço
+        </Button>
+      )}
+      {values.map((value) => cardAddress(value))}
     </div>
   );
 }
