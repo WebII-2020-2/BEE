@@ -26,7 +26,7 @@ function remove(id) {
 }
 
 /** atualiza */
-function update(form, id) {
+function update(id, form) {
   return api.post(`${ENDPOINT_BASE}/update/${id}`, {
     ...form,
   });
