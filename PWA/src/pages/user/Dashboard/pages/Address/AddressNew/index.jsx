@@ -26,7 +26,7 @@ function AddressNew() {
           throw r.response.data.error;
         });
       if (resp.success) {
-        history.push('user/dashboard/enderecos');
+        history.push('/user/dashboard/enderecos');
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
