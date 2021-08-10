@@ -56,6 +56,7 @@
 #navbar-store .dropdown-item:active,
 #navbar-store .dropdown-item:focus {
   background-color: var(--dark-grey);
+  color: var(--yellow);
 }
 
 #navbar-store .actions {
@@ -81,6 +82,24 @@
   padding: 0 4px;
   background-color: var(--yellow);
   border-radius: 16px;
+}
+
+#navbar-store .actions .user-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#navbar-store .actions .user-dashboard img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin: 0.5rem;
+}
+
+#navbar-store .actions .user-logout {
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {

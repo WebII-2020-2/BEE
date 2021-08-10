@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ArrowRight } from 'react-feather';
-import { Container, Row, Col, Spinner, Form } from 'react-bootstrap';
+import { Col, Container, Form, Row, Spinner } from 'react-bootstrap';
 import LogonApiService from '../../../services/api/LogonApiService';
-import { loginAdmin } from '../../../services/auth/authAdmin';
+import { loginAdmin } from '../../../services/local-storage/authAdmin';
 import logoAdmin from '../../../assets/img/bee-logo-admin.svg';
 import './Login.css';
 
@@ -26,14 +26,18 @@ function LoginAdmin() {
         .catch((r) => {
           throw r.response.data.error;
         });
-      if (resp.success) {
-        if (resp.data.user.level_access === 2) {
-          loginAdmin(resp.data.token.access_token);
-          history.push('/admin/inicio');
-        } else {
-          // eslint-disable-next-line no-throw-literal
-          throw { error_message: 'Login não autorizado' };
-        }
+      const { user, token } = resp.data;
+      if (user.level_access === 2) {
+        const userData = {
+          token: token.access_token,
+          ...user,
+          name: user.name.split(' ', 1)[0],
+        };
+        loginAdmin(userData);
+        history.push('/admin/inicio');
+      } else {
+        // eslint-disable-next-line no-throw-literal
+        throw { code: 401, error_message: 'Login não autorizado' };
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);

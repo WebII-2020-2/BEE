@@ -1,4 +1,4 @@
-const CART_STORAGE_KEY = '@bee:Cart';
+import { CART_STORAGE_KEY } from './keys';
 
 export const loadCartState = () => {
   const INITIAL_DATA = {
