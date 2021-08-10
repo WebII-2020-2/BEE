@@ -8,7 +8,7 @@ import Order from '../pages/admin/Orders';
 import Products from '../pages/admin/Products';
 import Promotions from '../pages/admin/Promotions';
 import Reports from '../pages/admin/Reports';
-import { isAuthenticated } from '../services/auth/authAdmin';
+import { isAuthenticated } from '../services/local-storage/authAdmin';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
