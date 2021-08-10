@@ -5,12 +5,12 @@ import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import CardProduct from '../../../components/Shared/CardProduct';
-import banner1 from '../../../assets/img/home-banner.jpg';
-import banner2 from '../../../assets/img/black-friday-banner.jpg';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
+import CampaignApiService from '../../../services/api/CampaignApiService';
 import './Home.css';
 
 const Home = () => {
+  const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [quantityProducts, setQuantityProducts] = useState(4);
@@ -20,17 +20,37 @@ const Home = () => {
     try {
       const resp = await ProductApiService.getBest()
         .then((r) => r.data)
-        .catch((r) => r.response.data);
+        .catch((r) => {
+          throw r.response.data.error;
+        });
 
       if (resp.success) {
         setProducts(resp.data);
-      } else {
-        throw resp.error;
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
     } finally {
       setLoadingProducts(false);
+    }
+  };
+
+  const getBanners = async () => {
+    try {
+      const resp = await CampaignApiService.getAll()
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
+      if (resp.success) {
+        setBanners(
+          resp.data.map((ban) => ({
+            ...ban,
+            link: ban.products.length ? `/campanhas/${ban.id}` : undefined,
+          }))
+        );
+      }
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
     }
   };
 
@@ -40,40 +60,32 @@ const Home = () => {
   );
 
   useEffect(() => {
+    getBanners();
     getProducts();
   }, []);
-
-  const carouselItens = [
-    {
-      id: 0,
-      title: 'Bem vindo à nossa loja online',
-      description:
-        'Aproveite todos os nossos produtos com um precinho especial',
-      image: banner1,
-      link: '',
-    },
-    {
-      id: 1,
-      title: 'Super descontos de Black Friday',
-      description: 'Promoção válida até 23:59 e enquanto durar o estoque',
-      image: banner2,
-      link: '/promocoes/1',
-    },
-  ];
 
   return (
     <StoreContainer title="Página Inicial">
       <Carousel>
-        {carouselItens.map((item) => (
+        {banners.map((item) => (
           <Carousel.Item className="item-carousel" key={item.id}>
-            <Link to={item.link}>
+            {item.link ? (
+              <Link to={item.link}>
+                <div
+                  className="image-carousel"
+                  style={{ backgroundImage: `url(${item.image})` }}
+                >
+                  {' '}
+                </div>
+              </Link>
+            ) : (
               <div
                 className="image-carousel"
                 style={{ backgroundImage: `url(${item.image})` }}
               >
                 {' '}
               </div>
-            </Link>
+            )}
             <Carousel.Caption className="caption-carousel">
               <h3>{item.title}</h3>
               <p>{item.description}</p>
