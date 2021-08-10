@@ -1,0 +1,20 @@
+.form-campaign.group.product {
+  margin: 0 2.5%;
+  flex-basis: 300px;
+}
+
+.campaign-products.table {
+  text-align: center;
+  align-self: flex-start;
+  height: auto;
+  overflow-y: scroll;
+}
+
+.campaign-products.table thead {
+  font-weight: bold;
+}
+
+.campaign-products.table td:nth-child(2) {
+  padding-left: 2rem;
+  text-align: justify;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 // PAGES
-import OrderList from './OrderList';
+import OrderList from './OrdersList';
 import OrderPage from './OrderPage';
 
 function Order(props) {

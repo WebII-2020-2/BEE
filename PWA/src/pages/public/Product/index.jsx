@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Button,
   Container,
@@ -10,11 +10,10 @@ import {
 import { Minus, Plus, ShoppingCart } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addProduct } from '../../../store/actions/cartActions';
+import { addProduct } from '../../../store/actions/cart.actions';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
-import formatFloat from '../../../services/utils/formatFloat';
 import './Product.css';
 
 function Product(props) {
@@ -54,6 +53,16 @@ function Product(props) {
     history.push('/carrinho');
   };
 
+  const oldPriceStyle = useMemo(() => {
+    if (productData.value_promotion) {
+      return {
+        opacity: 0.5,
+        textDecoration: 'line-through',
+      };
+    }
+    return {};
+  }, [productData]);
+
   return (
     <StoreContainer title={productData.name || ''}>
       {loadingData ? (
@@ -67,7 +76,23 @@ function Product(props) {
           />
           <div className="product-info">
             <h1>{productData.name}</h1>
-            <h3>R$ {formatFloat(productData.unitary_value)}</h3>
+            <h3>
+              <span style={oldPriceStyle}>
+                {productData.unitary_value.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </span>
+              &nbsp;
+              {productData.value_promotion && (
+                <span>
+                  {productData.value_promotion.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </span>
+              )}
+            </h3>
             <p>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit.
               Quibusdam laboriosam velit nobis inventore, omnis natus cum
@@ -86,7 +111,7 @@ function Product(props) {
               </Button>
               <FormControl
                 type="number"
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(Number(e.target.value))}
                 value={quantity}
                 min={1}
                 className="quantity-input"

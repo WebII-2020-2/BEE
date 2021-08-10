@@ -74,6 +74,15 @@
   margin: 0 0.5rem;
 }
 
+#navbar-store .actions .cart-quantity {
+  left: -7px;
+  color: var(--black);
+  font-weight: bold;
+  padding: 0 4px;
+  background-color: var(--yellow);
+  border-radius: 16px;
+}
+
 @media screen and (max-width: 768px) {
   .navbar-store.store-container {
     max-width: 100vw;
@@ -90,7 +99,7 @@
 
   #navbar-store .actions {
     flex-direction: row;
-    padding-top: 0;
+    padding: 0 1rem;
   }
 
   #navbar-store .actions .search {
