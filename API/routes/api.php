@@ -34,7 +34,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($router) {
     Route::post('/add', 'Api\CardController@store');
     Route::get('/list', 'Api\CardController@show');
-    Route::post('/list/{id}', 'Api\CardController@get');
+    Route::get('/list/{id}', 'Api\CardController@get');
     Route::post('/update/{id}', 'Api\CardController@update');
     Route::post('/delete/{id}', 'Api\CardController@delete');
 });
@@ -43,7 +43,7 @@ Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($ro
 Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'address'], function ($router) {
     Route::post('/add', 'Api\AddressController@store');
     Route::get('/list', 'Api\AddressController@show');
-    Route::post('/list/{id}', 'Api\AddressController@get');
+    Route::get('/list/{id}', 'Api\AddressController@get');
     Route::post('/update/{id}', 'Api\AddressController@update');
     Route::post('/delete/{id}', 'Api\AddressController@delete');
 });
@@ -86,8 +86,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promo
 // Banners
 Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'banner'], function ($router) {
     Route::post('/add', 'Api\BannerController@store');
-    Route::get('/list', 'Api\BannerController@show');
-    Route::get('/list/{id}', 'Api\BannerController@get');
     Route::post('/update/{id}', 'Api\BannerController@update');
     Route::post('/delete/{id}', 'Api\BannerController@delete');
 });
