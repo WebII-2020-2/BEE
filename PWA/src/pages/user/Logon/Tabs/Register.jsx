@@ -2,27 +2,10 @@ import React from 'react';
 import { Alert, Button, Form, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
 import validationSchema from '../../../../services/validations/validationRegister';
+import onlyNumber from '../../../../services/utils/onlyNumber';
 
 function Login(props) {
   const { loading, register, error } = props;
-
-  const onlyNumber = (value, isCPF) => {
-    const keyboard = value[value.length - 1];
-    const codeSymbol = [32, 40, 41, 45];
-    const codeNumber = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
-    if (keyboard) {
-      const charCode = keyboard.charCodeAt();
-      if (isCPF && codeNumber.indexOf(charCode) !== -1) {
-        return true;
-      }
-      if (!isCPF && codeNumber.concat(codeSymbol).indexOf(charCode) !== -1) {
-        return true;
-      }
-    } else {
-      return true;
-    }
-    return false;
-  };
 
   return (
     <Formik
@@ -92,7 +75,7 @@ function Login(props) {
                 name="cpf"
                 value={values.cpf}
                 onChange={(e) => {
-                  if (onlyNumber(e.target.value, true)) handleChange(e);
+                  if (onlyNumber(e.target.value, false)) handleChange(e);
                 }}
                 isInvalid={!!errors.cpf && touched.cpf}
               />
@@ -109,7 +92,7 @@ function Login(props) {
                 name="phone"
                 value={values.phone}
                 onChange={(e) => {
-                  if (onlyNumber(e.target.value, false)) handleChange(e);
+                  if (onlyNumber(e.target.value, true)) handleChange(e);
                 }}
                 isInvalid={!!errors.phone && touched.phone}
               />

@@ -1,6 +1,7 @@
+import axios from 'axios';
 import api from './api';
 
-const ENDPOINT_BASE = '/category';
+const ENDPOINT_BASE = '/address';
 
 /** traz todos */
 function getAll() {
@@ -31,12 +32,17 @@ function update(id, form) {
   });
 }
 
-const CategoryAdminApiService = {
+function getViaCep(cep) {
+  return axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+}
+
+const AddressApiService = {
   getAll,
   getById,
   createNew,
   remove,
   update,
+  getViaCep,
 };
 
-export default CategoryAdminApiService;
+export default AddressApiService;

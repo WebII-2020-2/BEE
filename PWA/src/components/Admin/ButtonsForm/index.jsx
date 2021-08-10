@@ -10,6 +10,7 @@ function ButtonsFormAdmin(props) {
     handleSubmit,
     handleDelete,
     handleEdit,
+    handleReset,
     isNew,
     isReadOnly,
     path,
@@ -76,7 +77,10 @@ function ButtonsFormAdmin(props) {
         <Button
           variant="danger"
           className="btn-form-admin"
-          onClick={handleEdit}
+          onClick={() => {
+            if (handleReset) handleReset();
+            handleEdit();
+          }}
         >
           Cancelar
         </Button>

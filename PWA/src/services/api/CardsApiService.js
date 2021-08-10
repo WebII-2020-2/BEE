@@ -1,6 +1,6 @@
 import api from './api';
 
-const ENDPOINT_BASE = '/category';
+const ENDPOINT_BASE = '/card';
 
 /** traz todos */
 function getAll() {
@@ -25,13 +25,13 @@ function remove(id) {
 }
 
 /** atualiza */
-function update(id, form) {
+function update(form, id) {
   return api.post(`${ENDPOINT_BASE}/update/${id}`, {
     ...form,
   });
 }
 
-const CategoryAdminApiService = {
+const CardsApiService = {
   getAll,
   getById,
   createNew,
@@ -39,4 +39,4 @@ const CategoryAdminApiService = {
   update,
 };
 
-export default CategoryAdminApiService;
+export default CardsApiService;

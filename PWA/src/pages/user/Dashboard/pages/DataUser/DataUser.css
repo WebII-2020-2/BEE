@@ -1,0 +1,47 @@
+.header-datas-dashboard{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.form-datas-dashboard{
+  border-radius: 5px;
+  box-shadow: 0 2px 8px var(--grey);
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-datas-dashboard.form-group{
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.image-datas-dashboard{
+  max-height: 150px;
+  width: 150px;
+  align-self: center;
+  border-radius: 50%;
+  transform: scale(0.8);
+  object-fit: cover;
+}
+
+.accordion-dashboard{
+  width: 100%;
+  text-align: center;
+}
+
+.accordion-dashboard .card{
+  background-color: var(--white);
+}
+
+.accordion-dashboard .card .btn-link{
+  color: var(--black);
+}
+
+@media screen and (max-width: 325px) {
+  .header-datas-dashboard{
+    justify-content: center;
+  }
+}
