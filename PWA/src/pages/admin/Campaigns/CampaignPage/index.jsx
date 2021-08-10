@@ -55,7 +55,7 @@ function CampaignsPage(props) {
           return undefined;
         });
       if (isValid !== undefined) {
-        const resp = await CampaignApiService.createNew(form)
+        const resp = await CampaignApiService.update(values.id, form)
           .then((r) => r.data)
           .catch((r) => {
             throw r.response.data.error;
@@ -79,7 +79,7 @@ function CampaignsPage(props) {
           throw r.response.data.error;
         });
       if (resp.success) {
-        history.push('/admin/produtos');
+        history.push('/admin/campanhas/page/1');
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
