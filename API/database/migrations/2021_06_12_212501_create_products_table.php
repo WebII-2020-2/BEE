@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateProductsTable extends Migration
 {
@@ -26,6 +27,8 @@ class CreateProductsTable extends Migration
             $table->binary('image');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE products CHANGE COLUMN image MEDIUMBLOB NOT NULL;");
     }
 
     /**
