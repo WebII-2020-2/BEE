@@ -27,7 +27,11 @@ const validationSchema = yup.object().shape({
     .required('Rua / Avenida não pode estar vazia')
     .nullable(false)
     .max(100, 'Rua / Avenida deve ter menos de 100 caracteres'),
-  number: yup.string().max(5, 'Número deve ter no máximo 5 números'),
+  number: yup
+    .string()
+    .required('Número não pode ser vazio')
+    .nullable(false)
+    .max(5, 'Número deve ter no máximo 5 números'),
   district: yup
     .string()
     .required('Bairro não pode ser vazio')
