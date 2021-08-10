@@ -6,7 +6,7 @@ import Login from './Tabs/Login';
 import Register from './Tabs/Register';
 import './Logon.css';
 import LogonApiService from '../../../services/api/LogonApiService';
-import { loginUser } from '../../../services/auth/authUser';
+import { loginUser } from '../../../services/local-storage/authUser';
 
 function Logon() {
   const history = useHistory();
@@ -39,7 +39,13 @@ function Logon() {
           throw r.response.data.error;
         });
       if (resp.success) {
-        loginUser(resp.data.token.access_token);
+        const { token, user } = resp.data;
+        const userData = {
+          token: token.access_token,
+          ...user,
+          name: user.name.split(' ', 1)[0],
+        };
+        loginUser(userData);
         history.push('/');
       }
     } catch (err) {

@@ -7,6 +7,7 @@ import emptyImage from '../../../../../../assets/img/empty-image.png';
 import validationShema from '../../../../../../services/validations/validationDataUser';
 import onlyNumber from '../../../../../../services/utils/onlyNumber';
 import LoadingPage from '../../../../../../components/Shared/LoadingPage';
+import { updateUser } from '../../../../../../services/local-storage/authUser';
 
 function PersonalData() {
   const history = useHistory();
@@ -35,6 +36,7 @@ function PersonalData() {
         });
       if (resp.success) {
         setData(resp.data);
+        updateUser();
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
@@ -55,6 +57,7 @@ function PersonalData() {
       if (resp.success) {
         setData(form);
         handleEdit();
+        updateUser();
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
