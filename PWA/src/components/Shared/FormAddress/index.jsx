@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Form } from 'react-bootstrap';
-import ButtonsFormAdmin from '../../Admin/ButtonsForm';
+import ButtonsForm from '../../Admin/ButtonsForm';
 import validationSchema from '../../../services/validations/validationAddress';
 import './FormAddress.css';
 import onlyNumber from '../../../services/utils/onlyNumber';
@@ -17,6 +17,7 @@ function FormAddress(props) {
     isSaving,
     isReadOnly,
   } = props;
+  const [loadingCep, setLoadingCep] = useState(false);
 
   return (
     <Formik
@@ -36,24 +37,30 @@ function FormAddress(props) {
       }) => {
         const getCityState = async (cep) => {
           try {
+            setLoadingCep(true);
             const resp = await AddressApiService.getViaCep(cep).then(
               (r) => r.data
             );
             if (!resp.erro) {
               setFieldValue('city', resp.localidade);
               setFieldValue('state', resp.uf);
+              if (resp.bairro) setFieldValue('district', resp.bairro);
+              if (resp.logradouro)
+                setFieldValue('public_place', resp.logradouro);
             } else {
               setFieldValue('city', '');
               setFieldValue('state', '');
             }
           } catch (err) {
             console.warn(err);
+          } finally {
+            setLoadingCep(false);
           }
         };
 
         return (
           <>
-            <ButtonsFormAdmin
+            <ButtonsForm
               path="/user/dashboard/enderecos"
               handleSubmit={handleSubmit}
               handleReset={handleReset}
@@ -75,7 +82,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="zip_code"
-                      disabled={isReadOnly}
+                      disabled={isReadOnly || loadingCep}
                       value={values.zip_code}
                       onChange={(e) => {
                         if (onlyNumber(e.target.value, false)) handleChange(e);
@@ -99,7 +106,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="city"
-                      disabled={isReadOnly}
+                      disabled={isReadOnly || loadingCep}
                       value={values.city}
                       onChange={handleChange}
                       isInvalid={!!errors.city && touched.city}
@@ -119,7 +126,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="state"
-                      disabled={isReadOnly}
+                      disabled={isReadOnly || loadingCep}
                       value={values.state}
                       onChange={handleChange}
                       isInvalid={!!errors.state && touched.state}
@@ -141,7 +148,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="public_place"
-                      disabled={isReadOnly}
+                      disabled={isReadOnly || loadingCep}
                       value={values.public_place}
                       onChange={handleChange}
                       isInvalid={!!errors.public_place && touched.public_place}
@@ -183,7 +190,7 @@ function FormAddress(props) {
                     <Form.Control
                       type="text"
                       name="district"
-                      disabled={isReadOnly}
+                      disabled={isReadOnly || loadingCep}
                       value={values.district}
                       onChange={handleChange}
                       isInvalid={!!errors.district && touched.district}
