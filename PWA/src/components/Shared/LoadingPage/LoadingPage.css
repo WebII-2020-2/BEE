@@ -3,6 +3,7 @@
   display: grid;
   align-items: center;
   justify-content: center;
+  margin: 15% auto;
 }
 
 .loading-page.admin {
