@@ -126,19 +126,6 @@ function NavBar() {
               <Search aria-label="Ícone de pesquisa" />
             </Button>
           </Form>
-          <Nav.Link
-            href="/carrinho"
-            title="Carrinho de compras"
-            className="cart-icon"
-          >
-            <ShoppingCart aria-label="Ícone de carrinho de compras" />
-            {quantity > 0 && (
-              <sup className="cart-quantity">
-                {quantity}
-                <span className="sr-only">Quantidade de itens no carrinho</span>
-              </sup>
-            )}
-          </Nav.Link>
           {userData ? (
             <NavDropdown title={`Olá ${userData.name} `} id="user-dropdown">
               <NavDropdown.Item
@@ -185,6 +172,19 @@ function NavBar() {
               <User aria-label="Ícone de usuário" />
             </Nav.Link>
           )}
+          <Nav.Link
+            href="/carrinho"
+            title="Carrinho de compras"
+            className="cart-icon"
+          >
+            <ShoppingCart aria-label="Ícone de carrinho de compras" />
+            {quantity > 0 && (
+              <sup className="cart-quantity">
+                {quantity}
+                <span className="sr-only">Quantidade de itens no carrinho</span>
+              </sup>
+            )}
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
