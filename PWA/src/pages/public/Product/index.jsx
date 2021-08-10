@@ -10,7 +10,7 @@ import {
 import { Minus, Plus, ShoppingCart } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addProduct } from '../../../store/actions/cartActions';
+import { addProduct } from '../../../store/actions/cart.actions';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
