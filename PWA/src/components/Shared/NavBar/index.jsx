@@ -10,10 +10,15 @@ import {
   Spinner,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Search, ShoppingCart, User } from 'react-feather';
+import { LogOut, Search, ShoppingCart, User } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import logoNav from '../../../assets/img/bee-logo-color.svg';
 import CategoryApiService from '../../../services/api/CategoryAdminApiService';
+import {
+  getUserData,
+  isAuthenticated,
+  logout,
+} from '../../../services/local-storage/authUser';
 import './NavBar.css';
 
 function NavBar() {
@@ -22,6 +27,7 @@ function NavBar() {
   const history = useHistory();
   const inputRef = useRef(null);
   const quantity = useSelector((state) => state.cart.count);
+  const userData = isAuthenticated() ? getUserData() : undefined;
 
   const getCategories = async () => {
     setLoadingCategories(true);
@@ -120,6 +126,52 @@ function NavBar() {
               <Search aria-label="Ícone de pesquisa" />
             </Button>
           </Form>
+          {userData ? (
+            <NavDropdown title={`Olá ${userData.name} `} id="user-dropdown">
+              <NavDropdown.Item
+                href="/user/dashboard/dados"
+                title="Página do usuário"
+                className="user-dashboard"
+              >
+                <Image src={userData.image} />
+                Meus dados
+              </NavDropdown.Item>
+              {/* <NavDropdown.Item
+                href="/user/dashboard/pedidos"
+                title="Página do usuário"
+                className="user-dashboard"
+              >
+                Pedidos
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="/user/dashboard/enderecos"
+                title="Página do usuário"
+                className="user-dashboard"
+              >
+                Endereços
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="/user/dashboard/cartoes"
+                title="Página do usuário"
+                className="user-dashboard"
+              >
+                Cartões
+              </NavDropdown.Item> */}
+              <hr />
+              <NavDropdown.Item
+                href="/"
+                title="Deslogar"
+                className="user-logout"
+                onClick={logout}
+              >
+                Sair <LogOut size={14} aria-label="Ícone de logout" />
+              </NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <Nav.Link href="/user/login" title="Login">
+              <User aria-label="Ícone de usuário" />
+            </Nav.Link>
+          )}
           <Nav.Link
             href="/carrinho"
             title="Carrinho de compras"
@@ -132,9 +184,6 @@ function NavBar() {
                 <span className="sr-only">Quantidade de itens no carrinho</span>
               </sup>
             )}
-          </Nav.Link>
-          <Nav.Link href="/user/login" title="Login">
-            <User aria-label="Ícone de usuário" />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

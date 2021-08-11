@@ -14,9 +14,7 @@ function Products(props) {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [products, setProducts] = useState([]);
-  const [selectedProducts, setSelectedProducts] = useState(
-    values.products || []
-  );
+  const [selectedProducts, setSelectedProducts] = useState(values.products);
 
   const productsList = useMemo(() => {
     if (selectedProducts.length) {

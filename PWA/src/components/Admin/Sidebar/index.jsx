@@ -2,14 +2,18 @@ import React from 'react';
 import { Col, Image, Nav } from 'react-bootstrap';
 import { LogOut, X } from 'react-feather';
 import { useHistory } from 'react-router-dom';
-import { logout } from '../../../services/auth/authAdmin';
+import {
+  logout,
+  getAdminData,
+} from '../../../services/local-storage/authAdmin';
 import logoColorful from '../../../assets/img/bee-logo-admin.svg';
-import user from '../../../assets/img/user.jpeg';
+import defaultUser from '../../../assets/img/default-user.png';
 import './Sidebar.css';
 
 function SidebarAdmin(props) {
   const { disabled, click, link } = props;
   const history = useHistory();
+  const adminData = getAdminData();
 
   const handleClickLogout = () => {
     logout();
@@ -30,11 +34,16 @@ function SidebarAdmin(props) {
         <Image src={logoColorful} className="admin-sidebar-logo" />
 
         <div className="admin-sidebar-user">
-          <Image src={user} className="admin-sidebar-user-avatar" />
+          <Image
+            src={adminData.image || defaultUser}
+            className="admin-sidebar-user-avatar"
+          />
 
           <span className="admin-sidebar-user-info">
-            <p className="admin-sidebar-user-info-name">Beanie</p>
-            <p className="admin-sidebar-user-info-role">Administrator</p>
+            <p className="admin-sidebar-user-info-name">{adminData.name}</p>
+            <p className="admin-sidebar-user-info-role">
+              {adminData.level_access === 2 ? 'Administrador' : 'Usuário Comum'}
+            </p>
           </span>
 
           <Nav.Link onClick={handleClickLogout}>

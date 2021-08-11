@@ -13,6 +13,7 @@ const Home = () => {
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [loadingBanners, setLoadingBanners] = useState(true);
   const [quantityProducts, setQuantityProducts] = useState(4);
 
   const getProducts = async () => {
@@ -35,6 +36,7 @@ const Home = () => {
   };
 
   const getBanners = async () => {
+    setLoadingBanners(true);
     try {
       const resp = await CampaignApiService.getAll()
         .then((r) => r.data)
@@ -51,6 +53,8 @@ const Home = () => {
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
+    } finally {
+      setLoadingBanners(false);
     }
   };
 
@@ -63,6 +67,13 @@ const Home = () => {
     getBanners();
     getProducts();
   }, []);
+
+  if (loadingProducts || loadingBanners)
+    return (
+      <StoreContainer title="Carregando Página Inicial">
+        <LoadingPage />
+      </StoreContainer>
+    );
 
   return (
     <StoreContainer title="Página Inicial">
@@ -121,27 +132,23 @@ const Home = () => {
         </div>
       </Container>
       <hr className="home-destaque separator" />
-      {loadingProducts ? (
-        <LoadingPage />
-      ) : (
-        <Container className="home-destaque products">
-          <h3>Produtos em destaque</h3>
-          <Row className="product-list admin">
-            {productsList.map((product) => (
-              <CardProduct {...product} key={product.id} />
-            ))}
-          </Row>
-          {quantityProducts <= products.length && (
-            <Button
-              className="loader"
-              variant="dark"
-              onClick={() => setQuantityProducts(quantityProducts + 4)}
-            >
-              Carregar mais
-            </Button>
-          )}
-        </Container>
-      )}
+      <Container className="home-destaque products">
+        <h3>Produtos em destaque</h3>
+        <Row className="product-list admin">
+          {productsList.map((product) => (
+            <CardProduct {...product} key={product.id} />
+          ))}
+        </Row>
+        {quantityProducts <= products.length && (
+          <Button
+            className="loader"
+            variant="dark"
+            onClick={() => setQuantityProducts(quantityProducts + 4)}
+          >
+            Carregar mais
+          </Button>
+        )}
+      </Container>
     </StoreContainer>
   );
 };

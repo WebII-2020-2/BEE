@@ -107,25 +107,24 @@ class BannerController extends Controller
     }
 
     public function update($id, Request $request){
-        $data = $request->all();
-
-        $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $data = $request->only(['title', 'description', 'active', 'image', 'products']);
+        
+        if(isset($data['image'])){
+            $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+            
+            $data['image'] = base64_decode($data_image[1]);
+            $data['mime_type'] = $data_image[0];
+        }
 
         try {
             $banner = Banner::find($id);
 
-            $result_banner = $banner->update([
-                'title' => $data['title'],
-                'description' => $data['description'],
-                'image' => 'data:' . $banner->mime_type . ';base64,' . base64_encode($banner->image),
-                'active' => $data['active']
-            ]);
+            $result_banner = $banner->update($data);
             
-            $result_banner_product = $banner->bannerProduct()->whereNotIn('product_id', $data['products'])->delete();
+            $result_banner_product = $banner->bannerProduct()->whereNotIn('product_id', $data['products'] ?? [])->delete();
 
-            foreach ($data['products'] as $product) {
+            foreach ($data['products'] ?? [] as $product) {
                 $banner_product = BannerProduct::updateOrCreate(
-                    ['banner_id' => $id, 'product_id' => $product],
                     ['banner_id' => $id, 'product_id' => $product]
                 );
             }

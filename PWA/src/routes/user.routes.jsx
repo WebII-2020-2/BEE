@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect, Switch, Route } from 'react-router-dom';
-import { isAuthenticated } from '../services/auth/authUser';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { isAuthenticated } from '../services/local-storage/authUser';
 import Logon from '../pages/user/Logon';
 import Dashboard from '../pages/user/Dashboard';
 
