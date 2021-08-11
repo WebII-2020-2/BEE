@@ -2,24 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import ListProducts from '../../../components/Shared/ListProducts';
 import StoreContainer from '../../../components/Shared/StoreContainer';
+import CampaignAdminApiService from '../../../services/api/CampaignApiService';
 
-import CategoryAdminApiService from '../../../services/api/CategoryAdminApiService';
-import './Category.css';
-
-function CategoryPage(props) {
+function Campaign(props) {
   const { match } = props;
-  const [categoryData, setCategoryData] = useState({});
+  const [campaignData, setCampaignData] = useState({});
   const [loadingData, setLoadingData] = useState(true);
 
-  const getCategoryData = async () => {
+  const getCampaignData = async () => {
     setLoadingData(true);
     try {
-      const resp = await CategoryAdminApiService.getById(match.params.id)
+      const resp = await CampaignAdminApiService.getById(match.params.id)
         .then((r) => r.data)
         .catch((r) => r.response.data);
 
       if (resp.success) {
-        setCategoryData(resp.data);
+        setCampaignData(resp.data);
       } else {
         throw resp.error;
       }
@@ -31,19 +29,19 @@ function CategoryPage(props) {
   };
 
   useEffect(() => {
-    getCategoryData();
+    getCampaignData();
   }, []);
 
   return (
-    <StoreContainer title={categoryData.name || ''}>
+    <StoreContainer title="Promoção Tal">
       <Container className="products-container">
         <div className="category-info">
-          <h1>{categoryData.name}</h1>
-          <p>{categoryData.description}</p>
+          <h1>{campaignData.title}</h1>
+          <p>{campaignData.description}</p>
           <hr />
         </div>
         <ListProducts
-          productsData={categoryData.products}
+          productsData={campaignData.product}
           loadingData={loadingData}
         />
       </Container>
@@ -51,4 +49,4 @@ function CategoryPage(props) {
   );
 }
 
-export default CategoryPage;
+export default Campaign;

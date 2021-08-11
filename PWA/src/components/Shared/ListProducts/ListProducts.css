@@ -1,0 +1,15 @@
+.list-products-actions select{
+  width: auto;
+  max-width: 250px;
+  background-color: transparent;
+  border: 1px solid var(--dark-grey);
+  border-radius: 6px;
+  color: var(--dark-grey);
+}
+
+.list-products-actions {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
