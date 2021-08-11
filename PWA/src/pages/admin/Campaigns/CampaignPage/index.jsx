@@ -6,6 +6,7 @@ import CampaignApiService from '../../../../services/api/CampaignApiService';
 import FormCampaign from '../../../../components/Admin/FormCampaign';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import validationSchema from '../../../../services/validations/validationCampaign';
+import CampaignProductsContext from '../../../../context/CampaignProductsContext';
 
 function CampaignsPage(props) {
   const { match } = props;
@@ -86,6 +87,10 @@ function CampaignsPage(props) {
     }
   };
 
+  const handleSetProducts = (obj) => {
+    setValues({ ...values, ...obj });
+  };
+
   const handleClearErrors = () => {
     setErrors([]);
   };
@@ -108,7 +113,13 @@ function CampaignsPage(props) {
         errors={[...errors]}
         clear={handleClearErrors}
       />
-      <FormCampaign values={values} update={setValues} readOnly={isReadOnly} />
+      <CampaignProductsContext.Provider value={handleSetProducts}>
+        <FormCampaign
+          values={values}
+          update={setValues}
+          readOnly={isReadOnly}
+        />
+      </CampaignProductsContext.Provider>
     </AdminContainer>
   );
 }
