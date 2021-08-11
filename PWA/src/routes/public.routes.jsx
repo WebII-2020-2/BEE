@@ -10,12 +10,14 @@ import Cart from '../pages/public/Cart';
 import Product from '../pages/public/Product';
 import NotFound from '../pages/public/NotFound';
 import ResetPassword from '../pages/public/ResetPassword';
+import Products from '../pages/public/Products';
 
 function PublicRoutes() {
   return (
     <Switch>
       <Route path="/sobre" component={About} />
       <Route path="/categoria/:id" component={Category} />
+      <Route path="/produtos" component={Products} />
       <Route path="/produto/:id" component={Product} />
       <Route path="/campanhas" component={Campaigns} />
       <Route path="/pesquisar/:name" component={Search} />
