@@ -16,7 +16,7 @@ class BannerController extends Controller
         $data = $request->all();
 
         $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-        
+
         try{
             $result_banner = Banner::create([
                 'title' => $data['title'],
@@ -84,7 +84,7 @@ class BannerController extends Controller
 
             $products = [];
             foreach($banner_products as $banner_product){
-                array_push($products, ['id' => $product->product_id, 'name' => $product->product->name]);
+                array_push($products, ['id' => $banner_product->product_id, 'name' => $banner_product->product->name]);
             }
 
             $mounted_banner = array(
@@ -108,10 +108,10 @@ class BannerController extends Controller
 
     public function update($id, Request $request){
         $data = $request->only(['title', 'description', 'active', 'image', 'products']);
-        
+
         if(isset($data['image'])){
             $data_image = preg_split("/^data:(.*);base64,/",$data['image'], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-            
+
             $data['image'] = base64_decode($data_image[1]);
             $data['mime_type'] = $data_image[0];
         }
@@ -120,7 +120,7 @@ class BannerController extends Controller
             $banner = Banner::find($id);
 
             $result_banner = $banner->update($data);
-            
+
             $result_banner_product = $banner->bannerProduct()->whereNotIn('product_id', $data['products'] ?? [])->delete();
 
             foreach ($data['products'] ?? [] as $product) {
