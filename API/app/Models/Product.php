@@ -14,7 +14,9 @@ class Product extends Model
         'description',
         'mime_type',
         'image',
-        'category_id'
+        'category_id',
+        'stripe_product_id',
+        'stripe_sku_id'
     ];
 
     protected $table = 'products';

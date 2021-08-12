@@ -13,7 +13,8 @@ class Card extends Model
         'expiration_date',
         'holder',
         'type',
-        'payment_method_id'
+        'payment_method_id',
+        'card_token'
     ];
 
     protected $table = 'cards';
