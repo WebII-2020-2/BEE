@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE users CHANGE COLUMN image MEDIUMBLOB NOT NULL;");
+        DB::statement("ALTER TABLE users CHANGE COLUMN image image MEDIUMBLOB NOT NULL;");
     }
 
     /**
