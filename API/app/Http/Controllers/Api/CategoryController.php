@@ -42,12 +42,19 @@ class CategoryController extends Controller
             $categories = Category::orderBy('name', 'asc')->get();
             $mounted_categories = [];
             foreach($categories as $category){
-                $count = Product::where('category_id', $category->id)->count("id");
+                $products = Product::where('category_id', $category->id)->get();
+
+                $mounted_products = [];
+                foreach($products as $product){
+                    array_push($mounted_products, $product->id);
+                }
+
                 array_push($mounted_categories, array(
                     'id' => $category->id,
                     'name' => $category->name,
                     'description' => $category->description,
-                    'count_products' => $count
+                    'count_products' => count($mounted_products),
+                    'products' => $mounted_products
                 ));
             }
         }catch(\Exception $exception){
