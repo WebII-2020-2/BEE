@@ -129,33 +129,40 @@ function NavBar() {
           {userData ? (
             <NavDropdown title={`Olá ${userData.name} `} id="user-dropdown">
               <NavDropdown.Item
+                href="/"
+                title="Foto do usuário"
+                className="user-dashboard"
+                disabled
+              >
+                <Image src={userData.image} />
+              </NavDropdown.Item>
+              <NavDropdown.Item
                 href="/user/dashboard/dados"
                 title="Página do usuário"
                 className="user-dashboard"
               >
-                <Image src={userData.image} />
-                Meus dados
+                Minha Conta
               </NavDropdown.Item>
               {/* <NavDropdown.Item
                 href="/user/dashboard/pedidos"
                 title="Página do usuário"
                 className="user-dashboard"
               >
-                Pedidos
+                Meus Pedidos
               </NavDropdown.Item>
               <NavDropdown.Item
                 href="/user/dashboard/enderecos"
                 title="Página do usuário"
                 className="user-dashboard"
               >
-                Endereços
+                Meus Endereços
               </NavDropdown.Item>
               <NavDropdown.Item
                 href="/user/dashboard/cartoes"
                 title="Página do usuário"
                 className="user-dashboard"
               >
-                Cartões
+                Meus Cartões
               </NavDropdown.Item> */}
               <hr />
               <NavDropdown.Item

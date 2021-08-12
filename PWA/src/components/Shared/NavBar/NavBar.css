@@ -56,7 +56,7 @@
 #navbar-store .dropdown-item:active,
 #navbar-store .dropdown-item:focus {
   background-color: var(--dark-grey);
-  color: var(--yellow);
+  border-radius: 16px;
 }
 
 #navbar-store .actions {
@@ -92,10 +92,10 @@
 }
 
 #navbar-store .actions .user-dashboard img {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  margin: 0.5rem;
+  margin: 0.25rem;
 }
 
 #navbar-store .actions .user-logout {

@@ -45,15 +45,15 @@ class BannerController extends Controller
 
     public function show(){
         try{
-            $banners = Banner::all();
+            $banners = Banner::with('bannerProduct.product')->get();
 
             $mounted_banners = [];
             foreach ($banners as $banner) {
-                $products = $banner->bannerProduct;
+                $bannerProducts = $banner->bannerProduct;
 
                 $mounted_products = [];
-                foreach ($products as $product) {
-                    array_push($mounted_products, $product->product_id);
+                foreach ($bannerProducts as $product) {
+                    array_push($mounted_products, ['id' => $product->product_id, 'name' => $product->product->name]);
                 }
 
                 array_push($mounted_banners, array(
@@ -78,13 +78,13 @@ class BannerController extends Controller
 
     public function get($id){
         try{
-            $banner = Banner::where('id', $id)->first();
+            $banner = Banner::with('bannerProduct.product')->where('id', $id)->first();
 
             $banner_products = $banner->bannerProduct;
 
             $products = [];
             foreach($banner_products as $banner_product){
-                array_push($products, $banner_product->product_id);
+                array_push($products, ['id' => $product->product_id, 'name' => $product->product->name]);
             }
 
             $mounted_banner = array(
