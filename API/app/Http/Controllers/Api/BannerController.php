@@ -53,7 +53,7 @@ class BannerController extends Controller
 
                 $mounted_products = [];
                 foreach ($bannerProducts as $product) {
-                    array_push($mounted_products, ['id' => $product->product_id, 'name' => $product->product->name]);
+                    array_push($mounted_products, $product->product);
                 }
 
                 array_push($mounted_banners, array(
@@ -84,7 +84,7 @@ class BannerController extends Controller
 
             $products = [];
             foreach($banner_products as $banner_product){
-                array_push($products, ['id' => $banner_product->product_id, 'name' => $banner_product->product->name]);
+                array_push($products, $banner_product->product);
             }
 
             $mounted_banner = array(
