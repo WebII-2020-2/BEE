@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Log;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -20,6 +21,11 @@ class CategoryController extends Controller
             ]);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'add category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($result_category) && !isset($error)){
@@ -46,6 +52,11 @@ class CategoryController extends Controller
             }
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar as categorias.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'show category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($mounted_categories) && !isset($error)){
@@ -83,6 +94,11 @@ class CategoryController extends Controller
             );
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'get category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($mounted_categoriy) && !isset($error)){
@@ -104,6 +120,11 @@ class CategoryController extends Controller
                             ->get();
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar as categorias em destaque.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'get_best_seller category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($categories) && !isset($error)){
@@ -127,12 +148,22 @@ class CategoryController extends Controller
             $category = Category::where('id', $id)->update($update_values);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'update category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($category) && !isset($error) && $category){
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
         }else{
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'update category - ERROR',
+                'data' => "no save data"
+            ]);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
@@ -147,15 +178,30 @@ class CategoryController extends Controller
                 $category = Category::where('id', $id)->delete();
             }catch(\Exception $exception){
                 $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+                Log::create([
+                    'type' => 'category',
+                    'information' => 'delete category - ERROR',
+                    'data' => substr($exception->getMessage(), 0, 300)
+                ]);
             }
 
             if(isset($category) && !isset($error) && $category){
                 return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
             }else{
                 $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+                Log::create([
+                    'type' => 'category',
+                    'information' => 'delete category - ERROR',
+                    'data' => "no delete data"
+                ]);
             }
         }else{
             $error = ['code' => 2, 'error_message' => 'Essa categoria está relacionada a uma venda.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'delete category - ERROR',
+                'data' => "category is in product"
+            ]);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
