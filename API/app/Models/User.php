@@ -41,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function order(){
-        return $this->hasMany('App\Models\Orders');
+        return $this->hasMany('App\Models\Order');
     }
 
     public function shoppingCart(){
