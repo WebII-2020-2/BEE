@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Product;
 use App\Models\BannerProduct;
+use App\Models\ProductPromotion;
 use Illuminate\Http\Request;
 
 
@@ -53,7 +54,7 @@ class BannerController extends Controller
 
                 $mounted_products = [];
                 foreach ($bannerProducts as $product) {
-                    array_push($mounted_products, $product->product);
+                    array_push($mounted_products, ['id' => $product->product_id]);
                 }
 
                 array_push($mounted_banners, array(
@@ -78,13 +79,30 @@ class BannerController extends Controller
 
     public function get($id){
         try{
-            $banner = Banner::with('bannerProduct.product')->where('id', $id)->first();
+            $banner = Banner::with('bannerProduct.product.productPromotion.promotion')->where('id', $id)->first();
 
             $banner_products = $banner->bannerProduct;
 
             $products = [];
             foreach($banner_products as $banner_product){
-                array_push($products, $banner_product->product);
+                $product_promotion = ProductPromotion::where('product_id', $banner_product->product_id)
+                    ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
+    
+                if ($product_promotion) {
+                    $product_with_promotion = $product_promotion->type == 1 ?
+                        ($banner_product->product->unitary_value - $product_promotion->value) :
+                        $banner_product->product->unitary_value - ($product_promotion->value / 100);
+                }
+
+                $mounted_products = array(
+                    'id' => $banner_product->product->id,
+                    'name' => $banner_product->product->name,
+                    'quantity' => $banner_product->product->quantity,
+                    'unitary_value' => $banner_product->product->unitary_value,
+                    'value_promotion' => $product_with_promotion ?? null,
+                    'image' => 'data:' . $banner_product->product->mime_type . ';base64,' . base64_encode($banner_product->product->image),
+                );
+                array_push($products, $mounted_products);
             }
 
             $mounted_banner = array(
@@ -96,7 +114,7 @@ class BannerController extends Controller
                 'products' => $products
             );
         }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar o banner.'];
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar o banner.', $exception];
         }
 
         if(isset($mounted_banner) && !isset($error)){
