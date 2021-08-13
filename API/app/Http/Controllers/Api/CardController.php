@@ -34,7 +34,7 @@ class CardController extends Controller
                 'security_code' => $data['security_code'],
                 'expiration_date' => $data['expiration_date'],
                 'holder' => $data['holder'],
-                'type' => $data['type'],
+                'type' => 1,
                 'payment_method_id' => 1,
                 'card_token' => $response_request['id']
             ]);
