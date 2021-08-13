@@ -17,6 +17,7 @@ Route::get('/product/list/{id}', 'Api\ProductController@get');
 Route::get('/product/list', 'Api\ProductController@show');
 Route::get('/banner/list/{id}', 'Api\BannerController@get');
 Route::get('/banner/list', 'Api\BannerController@show');
+Route::get('/test', 'Api\OrderController@test');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
@@ -63,10 +64,11 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'categ
 });
 
 // Orders
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'order'], function ($router) {
-    Route::get('/list', 'Api\OrderController@show');
-    Route::get('/list/{invoice}', 'Api\OrderController@get');
-    Route::post('/update/{invoice}', 'Api\OrderController@update');
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'order'], function ($router) {
+    Route::post('/add', 'Api\OrderController@store');
+    Route::get('/list', 'Api\OrderController@show')->middleware('access.level');
+    Route::get('/list/{invoice}', 'Api\OrderController@get')->middleware('access.level');
+    Route::post('/update/{invoice}', 'Api\OrderController@update')->middleware('access.level');
 });
 
 // Reports
