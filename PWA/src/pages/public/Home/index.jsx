@@ -78,31 +78,34 @@ const Home = () => {
   return (
     <StoreContainer title="Página Inicial">
       <Carousel>
-        {banners.map((item) => (
-          <Carousel.Item className="item-carousel" key={item.id}>
-            {item.link ? (
-              <Link to={item.link}>
-                <div
-                  className="image-carousel"
-                  style={{ backgroundImage: `url(${item.image})` }}
-                >
-                  {' '}
-                </div>
-              </Link>
-            ) : (
-              <div
-                className="image-carousel"
-                style={{ backgroundImage: `url(${item.image})` }}
-              >
-                {' '}
-              </div>
-            )}
-            <Carousel.Caption className="caption-carousel">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        ))}
+        {banners.map(
+          (item) =>
+            item.active && (
+              <Carousel.Item className="item-carousel" key={item.id}>
+                {item.link ? (
+                  <Link to={item.link}>
+                    <div
+                      className="image-carousel"
+                      style={{ backgroundImage: `url(${item.image})` }}
+                    >
+                      {' '}
+                    </div>
+                  </Link>
+                ) : (
+                  <div
+                    className="image-carousel"
+                    style={{ backgroundImage: `url(${item.image})` }}
+                  >
+                    {' '}
+                  </div>
+                )}
+                <Carousel.Caption className="caption-carousel">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </Carousel.Caption>
+              </Carousel.Item>
+            )
+        )}
       </Carousel>
 
       <Container className="home-destaque info">
