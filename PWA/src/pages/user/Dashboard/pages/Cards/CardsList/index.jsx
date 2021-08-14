@@ -58,7 +58,7 @@ function CardsList(props) {
           Cadastrar novo cartão
         </Button>
       )}
-      <Table hover className="w-100 table-cards">
+      <Table responsive hover className="table-cards">
         <thead>
           <tr>
             <th>Nº do cartão</th>
