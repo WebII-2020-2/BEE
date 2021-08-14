@@ -100,10 +100,10 @@ class CardController extends Controller
         }
 
         if (isset($result_card) && !isset($error)) {
-            return response()->json(['success' => true, 'data' => $result_card, 'error' => $error ?? null]);
+            return response()->json(['success' => true, 'data' => $result_card, 'error' => $error ?? null], 200);
         }
 
-        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null]);
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     public function get($id)
@@ -133,10 +133,10 @@ class CardController extends Controller
         }
 
         if (isset($result_card) && !isset($error)) {
-            return response()->json(['success' => true, 'data' => $result_card, 'error' => $error ?? null]);
+            return response()->json(['success' => true, 'data' => $result_card, 'error' => $error ?? null], 200);
         }
 
-        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null]);
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     public function update($id, Request $request)
@@ -203,12 +203,12 @@ class CardController extends Controller
         }
 
         if (isset($result) && !isset($error) && $card) {
-            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null]);
+            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
         }else{
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar o cartão.'];
         }
 
-        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null]);
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     public function delete($id){
@@ -226,7 +226,7 @@ class CardController extends Controller
         }
 
         if (isset($result) && !isset($error)) {
-            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null]);
+            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
         }else{
             $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o cartão.'];
             Log::create([
@@ -236,6 +236,6 @@ class CardController extends Controller
             ]);
         }
 
-        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null]);
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 }
