@@ -19,3 +19,15 @@
   padding: 2rem;
   font-family: 'Poppins';
 }
+
+.table.table-cards td:first-child {
+  border-left: 1.5px solid var(--light-grey);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.table-cards td:last-child {
+  border-right: 1.5px solid var(--light-grey);
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
