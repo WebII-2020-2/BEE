@@ -13,7 +13,6 @@ function FormCard(props) {
     valuesCard,
     handleSubmitCard,
     handleDelete,
-    handleEdit,
     isNew,
     isSaving,
     isReadOnly,
@@ -22,7 +21,6 @@ function FormCard(props) {
 
   const handleInputFocus = (inputCard) => {
     setFocus(inputCard);
-    console.warn(focus);
   };
 
   return (
@@ -54,10 +52,9 @@ function FormCard(props) {
           <>
             <ButtonsForm
               path="/user/dashboard/cartoes"
-              handleSubmit={handleSubmit}
+              handleSubmit={isNew && handleSubmit}
               handleReset={handleReset}
               handleDelete={handleDelete}
-              handleEdit={handleEdit}
               isNew={isNew}
               isSaving={isSaving}
               isReadOnly={isReadOnly}
@@ -67,16 +64,19 @@ function FormCard(props) {
                 className="react-card"
                 number={Number(values.number) || ''}
                 cvc={Number(values.security_code) || ''}
-                name={values && values.holder}
+                name={values.holder || ''}
                 expiry={
-                  values.expiration_date &&
-                  `${values.expiration_date.split('-')[1]}${
-                    values.expiration_date.split('-')[0]
-                  }`
+                  (values.expiration_date &&
+                    `${values.expiration_date.split('-')[1]}${
+                      values.expiration_date.split('-')[0]
+                    }`) ||
+                  ''
                 }
                 focused={focus}
                 acceptedCards={['visa', 'mastercard']}
                 placeholders={{ name: 'NOME NO CARTÃO' }}
+                issuer={values.flag && values.flag.toLowerCase()}
+                preview={values.flag}
               />
               <Form className="form-cards-dashboard">
                 <Form.Row>
