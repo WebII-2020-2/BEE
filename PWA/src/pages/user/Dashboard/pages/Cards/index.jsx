@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import CardsList from './CardsList';
 import CardsNew from './CardsNew';
 import CardsPage from './CardsPage';
+import './Cards.css';
 
 function Cards(props) {
   const { path } = props;

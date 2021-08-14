@@ -16,4 +16,8 @@ class ProductPromotion extends Model
     public function product(){
         return $this->belongsTo('App\Models\Product');
     }
+
+    public function promotion(){
+        return $this->belongsTo('App\Models\Promotion');
+    }
 }
