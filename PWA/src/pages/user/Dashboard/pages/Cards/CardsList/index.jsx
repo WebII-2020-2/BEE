@@ -49,13 +49,15 @@ function CardsList(props) {
 
   return (
     <div className="container-dashboard mb-4">
-      <Button
-        variant="dark"
-        href={`${match.url}/novo`}
-        className="align-self-center"
-      >
-        Cadastrar novo cartão
-      </Button>
+      {values.length < 3 && (
+        <Button
+          variant="dark"
+          href={`${match.url}/novo`}
+          className="align-self-center"
+        >
+          Cadastrar novo cartão
+        </Button>
+      )}
       <Table hover className="w-100 table-cards">
         <thead>
           <tr>
