@@ -41,7 +41,7 @@ function Campaign(props) {
           <hr />
         </div>
         <ListProducts
-          productsData={campaignData.product}
+          productsData={campaignData.products}
           loadingData={loadingData}
         />
       </Container>

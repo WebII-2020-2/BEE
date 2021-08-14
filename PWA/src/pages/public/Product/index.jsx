@@ -75,7 +75,9 @@ function Product(props) {
             className="product-image"
           />
           <div className="product-info">
-            <h1>{productData.name}</h1>
+            <h1>
+              {productData.name}&nbsp;{productData.unity}
+            </h1>
             <h3>
               <span style={oldPriceStyle}>
                 {productData.unitary_value.toLocaleString('pt-BR', {
@@ -93,12 +95,7 @@ function Product(props) {
                 </span>
               )}
             </h3>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Quibusdam laboriosam velit nobis inventore, omnis natus cum
-              quisquam atque sunt voluptate iusto nihil unde porro labore illo
-              ab rerum quis error.
-            </p>
+            <p>{productData.description}</p>
             <Form className="form-product" onSubmit={handleSubmit}>
               <FormLabel className="quantity-label">Quantidade: </FormLabel>
               <Button
