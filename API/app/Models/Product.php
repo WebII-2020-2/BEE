@@ -20,4 +20,9 @@ class Product extends Model
     ];
 
     protected $table = 'products';
+
+    
+    public function productPromotion(){
+        return $this->hasMany('App\Models\ProductPromotion', 'product_id');
+    }
 }
