@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { Form, Table } from 'react-bootstrap';
+import CategoryAdminApiService from '../../../../services/api/CategoryAdminApiService';
 import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
 import ProductAdminApiService from '../../../../services/api/ProductAdminApiService';
 
@@ -13,7 +14,11 @@ function Products(props) {
 
   const [promotions, setPromotions] = useState([]);
   const [selectedPromotion, setSelectedPromotion] = useState(0);
-  const [productsIDS, setProductsIDS] = useState(values ? values.products : []);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [productsIDS, setProductsIDS] = useState(
+    values.products ? values.products.map((p) => p.id) : []
+  );
   const [products, setProducts] = useState([]);
 
   const productsList = useMemo(() => {
@@ -53,27 +58,61 @@ function Products(props) {
     }
   };
 
+  const getCategories = async () => {
+    try {
+      const resp = await CategoryAdminApiService.getAll()
+        .then((r) => r.data)
+        .catch((r) => r.response.data);
+      if (resp.success) {
+        setCategories(resp.data);
+      } else {
+        throw resp.error;
+      }
+    } catch (err) {
+      console.error(`Error${err.code}:${err.error_message}`);
+    }
+  };
+
   const handleUpdatePromotion = (event) => {
     const { value } = event.target;
     setSelectedPromotion(Number(value));
   };
 
+  const handleUpdateCategory = (event) => {
+    const { value } = event.target;
+    setSelectedCategory(Number(value));
+  };
+
   useEffect(() => {
     getPromotions();
     getProducts();
+    getCategories();
   }, []);
 
   useEffect(() => {
-    if (JSON.stringify(values.products) !== JSON.stringify(productsIDS))
+    if (JSON.stringify(values.products) !== JSON.stringify(productsList))
       campaignContext({ products: productsIDS });
-  }, [productsIDS]);
+  }, [productsList]);
 
   useEffect(() => {
-    const initialPromotion = promotions.find(
-      (p) => JSON.stringify(p.products) === JSON.stringify(productsIDS)
-    );
-    setSelectedPromotion(initialPromotion ? initialPromotion.id : 0);
+    if (productsIDS.length) {
+      const initialPromotion = promotions.find(
+        (p) => JSON.stringify(p.products) === JSON.stringify(productsIDS)
+      );
+      setSelectedPromotion(initialPromotion ? initialPromotion.id : 0);
+    }
+    setSelectedPromotion(0);
   }, [promotions]);
+
+  useEffect(() => {
+    if (productsIDS.length) {
+      const initialCategory = categories.find(
+        (c) => JSON.stringify(c.products) === JSON.stringify(productsIDS)
+      );
+      setSelectedCategory(initialCategory ? initialCategory.id : 0);
+    }
+    setSelectedCategory(0);
+  }, [categories]);
 
   useEffect(() => {
     if (promotions.length && selectedPromotion) {
@@ -81,6 +120,13 @@ function Products(props) {
       setProductsIDS(promo.products);
     }
   }, [promotions, selectedPromotion]);
+
+  useEffect(() => {
+    if (categories.length && selectedCategory) {
+      const cat = categories.find((c) => c.id === selectedCategory);
+      setProductsIDS(cat.products);
+    }
+  }, [categories, selectedCategory]);
 
   return (
     <>
@@ -103,6 +149,26 @@ function Products(props) {
           {promotions.map((promotion) => (
             <option value={promotion.id} key={promotion.id}>
               {promotion.name}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
+      <Form.Group className="form-campaign group product">
+        <Form.Label className="form-campaign label" htmlFor="campaign-category">
+          Selecione uma categoria
+        </Form.Label>
+        <Form.Control
+          id="campaign-category"
+          className="form-campaign control"
+          disabled={readOnly}
+          as="select"
+          onChange={handleUpdateCategory}
+          value={selectedCategory}
+        >
+          <option value="0">Não selecionado</option>
+          {categories.map((category) => (
+            <option value={category.id} key={category.id}>
+              {category.name}
             </option>
           ))}
         </Form.Control>
