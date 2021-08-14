@@ -28,10 +28,6 @@
   color: var(--dark-grey);
 }
 
-.product-page .product-info h1 {
-  font-weight: bold;
-}
-
 .product-page .product-info h3 {
   font-family: 'Poppins';
 }
