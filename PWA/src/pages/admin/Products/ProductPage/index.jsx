@@ -76,7 +76,7 @@ function ProductPage(props) {
         (r) => r.data
       );
       if (resp.success) {
-        history.push('/admin/produtos');
+        history.push('/admin/produtos/page/1');
       } else {
         throw new Error(`${resp.error.error_message}`);
       }
