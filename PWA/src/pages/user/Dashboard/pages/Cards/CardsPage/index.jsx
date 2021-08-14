@@ -8,8 +8,7 @@ function CardsPage(props) {
   const history = useHistory();
 
   const [values, setValues] = useState({});
-  const [isReadOnly, setIsReadOnly] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
+  const isReadOnly = true;
 
   const getCard = async () => {
     try {
@@ -29,35 +28,6 @@ function CardsPage(props) {
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
       history.push('/user/dashboard/cartoes');
-    }
-  };
-
-  const handleEdit = () => {
-    setIsReadOnly(!isReadOnly);
-  };
-
-  const handleSubmit = async (form) => {
-    try {
-      setIsSaving(true);
-      const resp = await CardsApiService.update(match.params.id, {
-        ...form,
-        expiration_date: `${form.expiration_date.split('-')[1]}/${
-          form.expiration_date.split('-')[0]
-        }`,
-        security_code: Number(form.security_code),
-      })
-        .then((r) => r.data)
-        .catch((r) => {
-          throw r.response.data.error;
-        });
-      if (resp.success) {
-        setValues(form);
-        handleEdit();
-      }
-    } catch (err) {
-      console.error(`ERRO ${err.code}: ${err.error_message}`);
-    } finally {
-      setIsSaving(false);
     }
   };
 
@@ -84,10 +54,7 @@ function CardsPage(props) {
     <div className="container-dashboard">
       <FormCard
         valuesCard={values}
-        handleSubmitCard={handleSubmit}
         handleDelete={handleDelete}
-        handleEdit={handleEdit}
-        isSaving={isSaving}
         isReadOnly={isReadOnly}
       />
     </div>
