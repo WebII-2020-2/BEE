@@ -17,17 +17,15 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('payment_method_id');
-            $table->unsignedBigInteger('send_method_id');
             $table->unsignedBigInteger('address_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade');
-            $table->foreign('send_method_id')->references('id')->on('send_methods')->onDelete('cascade');
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->integer('quantity');
             $table->float('value_total');
             $table->string('invoice', 100)->nullable();
             $table->integer('status_order');
-            $table->date('shipped_date');
+            $table->date('shipped_date')->nullable();
             $table->date('estimated_date');
             $table->date('finished_date')->nullable();
             $table->text('tracking_code')->nullable();

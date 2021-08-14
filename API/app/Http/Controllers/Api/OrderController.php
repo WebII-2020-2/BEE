@@ -3,12 +3,144 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
+use App\Models\Log;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductPromotion;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use JWTAuth;
 
 class OrderController extends Controller
 {
+
+    public function test(){
+        return new OrderMail();
+    }
+    public function store(Request $request){
+        $invoice = uniqid();
+        $data = $request->all();
+        $user_jwt = JWTAuth::toUser();
+
+        try{
+            DB::beginTransaction();
+            $address = $user_jwt->address()->where('id', $data['address_id'])->first();
+            $card = $user_jwt->card()->where('id', $data['card_id'])->first();
+
+            $response_request_card = Http::asForm()->withHeaders([
+                'Authorization' => 'Bearer '.config('app.stripe_token')
+            ])
+            ->post('https://api.stripe.com/v1/tokens', [
+                'card[number]' => $card->number,
+                'card[exp_month]' => explode('/', $card->expiration_date)[0],
+                'card[exp_year]' => explode('/', $card->expiration_date)[1],
+                'card[cvc]' => $card->security_code
+            ])->json();
+
+            $card_token = $response_request_card['id'];
+            $card->update(['card_token' => $card_token]);
+
+            $order = $user_jwt->order()->create([
+                'quantity' => count($data['products']),
+                'value_total' => 0,
+                'invoice' => $invoice,
+                'status_order' => 1,
+                'estimated_date' => $data['send_estimated_date'],
+                'payment_method_id' => 1,
+                'address_id' => $address->id
+            ]);
+
+            $items = [];
+            $total_value = $data['send_value'] ?? 0;
+            foreach($data['products'] as $product){
+                $product_info = Product::find($product['id']);
+
+                if($product_info->quantity == 0){
+                    throw new Exception("Produto indisponível.");
+                }
+
+                $product_promotion = ProductPromotion::where('product_id', $product['id'])
+                    ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')
+                    ->first();
+
+                if ($product_promotion) {
+                    $product_with_promotion = $product_promotion->type == 1 ?
+                        ($product_info->unitary_value - $product_promotion->value) :
+                        $product_info->unitary_value - ($product_promotion->value / 100);
+                }
+
+                $total_product = isset($product_with_promotion) ? $product_with_promotion : $product_info->unitary_value;
+
+                $order->productOrder()->create([
+                    'product_id' => $product['id'],
+                    'quantity' => $product['quantity'],
+                    'unitary_value' => $total_product
+                ]);
+
+                $product_info->decrement('quantity', $product['quantity']);
+
+                $response_request_sku = Http::asForm()->withHeaders([
+                    'Authorization' => 'Bearer '.config('app.stripe_token')
+                ])
+                ->post('https://api.stripe.com/v1/skus/'.$product_info->stripe_sku_id, ['quantity' => $product['quantity']])->json();
+
+                $total_value += $total_product;
+
+                array_push($items, ['type' => 'sku', 'parent' => $product_info->stripe_sku_id]);
+            }
+
+            $response_request_create_order = Http::asForm()->withHeaders([
+                'Authorization' => 'Bearer '.config('app.stripe_token')
+            ])
+            ->post('https://api.stripe.com/v1/orders', [
+                'currency' => 'BRL',
+                'items' => $items,
+                'shipping[name]' => $user_jwt->name,
+                'shipping[address][line1]' => $address->public_place,
+                'shipping[address][city]' => $address->city,
+                'shipping[address][state]' => $address->state,
+                'shipping[address][country]' => 'Brasil',
+                'shipping[address][postal_code]' => $address->zip_code
+            ])->json();
+
+            $response_request_pay_order = Http::asForm()->withHeaders([
+                'Authorization' => 'Bearer '.config('app.stripe_token')
+            ])
+            ->post('https://api.stripe.com/v1/orders/'.$response_request_create_order['id'].'/pay', [
+                'source' => $card_token,
+                'email' => $user_jwt->email
+            ])->json();
+
+            $order->update(['value_total' => $total_value, 'status_order' => ($response_request_pay_order['status'] == 'paid' ? 3 : 4)]);
+
+            Log::create([
+                'type' => 'order',
+                'information' => 'create order and pay - SUCCESS',
+                'data' => json_encode([$data ?? null, $address ?? null, $card ?? null, $order ?? null, $items ?? null, $total_value ?? null, $response_request_create_order ?? null, $response_request_pay_order ?? null])
+            ]);
+            DB::commit();
+        }catch(\Exception $exception){
+            DB::rollBack();
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel listar as vendas.'];
+            Log::create([
+                'type' => 'order',
+                'information' => 'create order and pay - ERROR',
+                'data' => $exception->getMessage()
+            ]);
+        }
+
+        if(isset($order) && !isset($error)){
+            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        }
+
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+
+    }
+
     public function show(){
         try{
 
