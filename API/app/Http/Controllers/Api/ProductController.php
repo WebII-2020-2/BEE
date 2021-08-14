@@ -77,17 +77,19 @@ class ProductController extends Controller
     {
         try {
             $products = Product::orderBy('name', 'asc')->join('categories as c', 'c.id', '=', 'products.category_id')->select('products.*', 'c.name as category')->get();
+            dump($products);
 
             $mounted_products = [];
             foreach ($products as $product) {
                 $product_promotion = ProductPromotion::where('product_id', $product->id)
                     ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
-
+                dump($product_promotion);
                 if ($product_promotion) {
                     $product_with_promotion = $product_promotion->type == 1 ?
                         ($product->unitary_value - $product_promotion->value) :
-                        $product->unitary_value - ($product_promotion->value / 100);
+                        $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
                 }
+                dump($product_with_promotion);
                 array_push($mounted_products, array(
                     "id" => $product->id,
                     'name' => $product->name,
@@ -100,6 +102,7 @@ class ProductController extends Controller
                     'category' => $product->category,
                     'value_promotion' => isset($product_with_promotion) ? (float) number_format($product_with_promotion, 2, '.', '') : null
                 ));
+                dump($product_with_promotion);
             }
         } catch (\Exception $exception) {
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar os produtos.', $exception];
@@ -128,7 +131,7 @@ class ProductController extends Controller
             if ($product_promotion) {
                 $product_with_promotion = $product_promotion->type == 1 ?
                     ($product->unitary_value - $product_promotion->value) :
-                    $product->unitary_value - ($product_promotion->value / 100);
+                    $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
             }
 
             $mounted_product = array(
@@ -179,7 +182,7 @@ class ProductController extends Controller
                 if ($product_promotion) {
                     $product_with_promotion = $product_promotion->type == 1 ?
                         ($product->unitary_value - $product_promotion->value) :
-                        $product->unitary_value - ($product_promotion->value / 100);
+                        $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
                 }
 
 
