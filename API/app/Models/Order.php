@@ -15,8 +15,10 @@ class Order extends Model
         'estimated_date',
         'finished_date',
         'payment_method_id',
+        'card_id',
         'tracking_code',
-        'address_id'
+        'address_id',
+        'stripe_order_id'
     ];
 
     protected $table = 'orders';
