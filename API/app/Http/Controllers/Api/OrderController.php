@@ -357,12 +357,13 @@ class OrderController extends Controller
             if (!empty($order)) {
                 $products = $order->productOrder()
                     ->join('products as p', 'p.id', '=', 'product_orders.product_id')
-                    ->select('product_orders.*', 'p.name', 'p.unitary_value as unitary_value_product', 'p.image', 'p.mime_type')
+                    ->select('product_orders.*', 'p.name', 'p.unitary_value as unitary_value_product', 'p.image', 'p.mime_type', 'p.id as product_id')
                     ->get();
                 $mounted_products_data = [];
                 $value_total_products = 0;
                 foreach ($products as $product) {
                     array_push($mounted_products_data, array(
+                        'id' => $product->product_id,
                         'name' => $product->name,
                         'unitary_value_product' => $product->unitary_value_product,
                         'quantity' => $product->quantity,
