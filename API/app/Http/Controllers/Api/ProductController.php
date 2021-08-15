@@ -127,7 +127,7 @@ class ProductController extends Controller
             $product_promotion = ProductPromotion::where('product_id', $id)
                 ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
 
-            if ($product_promotion) {
+            if (!is_null($product_promotion)) {
                 $product_with_promotion = $product_promotion->type == 1 ?
                     ($product->unitary_value - $product_promotion->value) :
                     $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
@@ -178,7 +178,7 @@ class ProductController extends Controller
                 $product_promotion = ProductPromotion::where('product_id', $product->id)
                 ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
 
-                if ($product_promotion) {
+                if (!is_null($product_promotion)) {
                     $product_with_promotion = $product_promotion->type == 1 ?
                         ($product->unitary_value - $product_promotion->value) :
                         $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));

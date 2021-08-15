@@ -87,11 +87,11 @@ class BannerController extends Controller
             foreach($banner_products as $banner_product){
                 $product_promotion = ProductPromotion::where('product_id', $banner_product->product_id)
                     ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
-    
-                if ($product_promotion) {
+
+                if (!is_null($product_promotion)) {
                     $product_with_promotion = $product_promotion->type == 1 ?
                         ($banner_product->product->unitary_value - $product_promotion->value) :
-                        $banner_product->product->unitary_value - ($product_promotion->value / 100);
+                        $banner_product->product->unitary_value - ($banner_product->product->unitary_value * ($product_promotion->value / 100));
                 }
 
                 $mounted_products = array(
