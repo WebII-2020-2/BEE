@@ -85,6 +85,7 @@ class BannerController extends Controller
 
             $products = [];
             foreach($banner_products as $banner_product){
+                unset($product_with_promotion);
                 $product_promotion = ProductPromotion::where('product_id', $banner_product->product_id)
                     ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
 
