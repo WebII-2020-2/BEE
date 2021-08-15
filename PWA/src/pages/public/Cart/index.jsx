@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import CartProduct from '../../../components/Shared/CartProduct';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
+import './Cart.css';
 
 function Search() {
-  const productsStore = useSelector((state) => state.cart.products);
+  const { products: productsStore } = useSelector((state) => state.cart);
   const [products, setProducts] = useState([]);
 
   const productsCart = useMemo(() => {
-    if (productsStore.length && products.length) {
+    if (productsStore && products.length) {
       return productsStore.map((pStore) => {
         const pStoreData = products.find((p) => p.id === Number(pStore.id));
-        console.warn(pStoreData);
         return {
           ...pStoreData,
           quantity: pStore.quantity,
@@ -22,6 +22,36 @@ function Search() {
     }
     return [];
   }, [productsStore, products]);
+
+  const totalValue = useMemo(() => {
+    if (productsCart.length) {
+      return productsCart.reduce((accumulator, product) => {
+        const {
+          quantity,
+          unitary_value: unValue,
+          value_promotion: promoValue,
+        } = product;
+        if (promoValue) return promoValue * quantity + accumulator;
+        return unValue * quantity + accumulator;
+      }, 0);
+    }
+    return 0;
+  }, [productsCart]);
+
+  const discount = useMemo(() => {
+    if (productsCart.length) {
+      return productsCart.reduce((accumulator, initial) => {
+        if (initial.value_promotion)
+          return (
+            (initial.unitary_value - initial.value_promotion) *
+              initial.quantity +
+            accumulator
+          );
+        return accumulator;
+      }, 0);
+    }
+    return 0;
+  }, [productsCart]);
 
   const getAllProducts = async () => {
     try {
@@ -43,11 +73,42 @@ function Search() {
   return (
     <StoreContainer title="Carrinho de compras">
       <h2 className="cart title">Meu Carrinho de compras</h2>
-      <Container className="cart products">
-        {productsCart.map((p) => (
-          <CartProduct key={p.id} {...p} />
-        ))}
-      </Container>
+      <main className="cart-container">
+        <Container className="cart products">
+          {productsCart.map((p) => (
+            <CartProduct key={p.id} {...p} />
+          ))}
+        </Container>
+        <Container className="cart info">
+          <div className="info values">
+            <h3>Resumo do pedido</h3>
+            <hr />
+            <p>
+              Subtotal{' - '}
+              {(totalValue + discount).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              })}
+              <br />
+              Desconto{' - '}
+              {discount.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              })}
+            </p>
+            <span className="total-value">
+              Total:{' '}
+              {totalValue.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              })}
+            </span>
+          </div>
+          <Button type="button" className="submit-cart" variant="warning">
+            Finalizar Compra
+          </Button>
+        </Container>
+      </main>
     </StoreContainer>
   );
 }
