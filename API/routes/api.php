@@ -17,7 +17,6 @@ Route::get('/product/list/{id}', 'Api\ProductController@get');
 Route::get('/product/list', 'Api\ProductController@show');
 Route::get('/banner/list/{id}', 'Api\BannerController@get');
 Route::get('/banner/list', 'Api\BannerController@show');
-Route::get('/test', 'Api\OrderController@test');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {

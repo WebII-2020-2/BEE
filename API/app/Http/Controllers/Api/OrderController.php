@@ -13,14 +13,17 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 
 class OrderController extends Controller
 {
 
-    public function test()
+    public function sendMailOrder($invoice)
     {
-        return new OrderMail();
+        $order = Order::where('orders.invoice', $invoice)->join('users as u', 'u.id', '=', 'orders.user_id')->select('orders.*', 'u.email')->first();
+        $products = $order->productOrder()->join('products as p', 'p.id', '=', 'product_orders.product_id')->select('p.*', 'product_orders.unitary_value as value_sended', 'product_orders.quantity as quantity_sended')->get();
+        Mail::send(new OrderMail($order, $products, $order->email));
     }
     public function store(Request $request)
     {
@@ -132,6 +135,7 @@ class OrderController extends Controller
                 'information' => 'create order and pay - SUCCESS',
                 'data' => json_encode([$data ?? null, $address ?? null, $card ?? null, $order ?? null, $items ?? null, $total_value ?? null, $response_request_create_order ?? null, $response_request_pay_order ?? null])
             ]);
+            $this->sendMailOrder($order->invoice);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
