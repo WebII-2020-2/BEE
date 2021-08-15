@@ -36,16 +36,23 @@ const cartReducer = (state = INITIAL_DATA, action) => {
     }
 
     case UPDATE_QUANTITY: {
-      const { id, quantity } = action.data;
-      return state.map((product) => {
-        if (product.id === id) {
-          return {
-            id,
-            quantity,
-          };
-        }
-        return product;
-      });
+      const { id, operation } = action;
+      return {
+        products: state.products.map((product) => {
+          console.warn(product);
+          console.warn(id);
+          if (Number(product.id) === id)
+            return {
+              id,
+              quantity:
+                operation === 'PLUS'
+                  ? product.quantity + 1
+                  : product.quantity - 1,
+            };
+          return product;
+        }),
+        count: operation === 'PLUS' ? state.count + 1 : state.count - 1,
+      };
     }
 
     case REMOVE_PRODUCT: {

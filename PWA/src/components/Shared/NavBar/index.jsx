@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Form,
@@ -24,9 +24,9 @@ import './NavBar.css';
 function NavBar() {
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
+  const [inputSearch, setInputSearch] = useState('');
   const history = useHistory();
-  const inputRef = useRef(null);
-  const quantity = useSelector((state) => state.cart.count);
+  const { count } = useSelector((state) => state.cart);
   const userData = isAuthenticated() ? getUserData() : undefined;
 
   const getCategories = async () => {
@@ -51,8 +51,7 @@ function NavBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputRef.current.value)
-      history.push(`/pesquisar/${inputRef.current.value}`);
+    history.push(`/pesquisar/${inputSearch}`);
   };
 
   return (
@@ -115,13 +114,17 @@ function NavBar() {
               type="search"
               placeholder="Pesquisar"
               aria-label="Campo de pesquisa"
-              ref={inputRef}
+              value={inputSearch}
+              onChange={(e) => {
+                setInputSearch(e.target.value);
+              }}
             />
             <Button
               type="submit"
               className="button-search"
               variant="outline-warning"
               title="Pesquisar"
+              disabled={inputSearch === ''}
             >
               <Search aria-label="Ícone de pesquisa" />
             </Button>
@@ -185,9 +188,9 @@ function NavBar() {
             className="cart-icon"
           >
             <ShoppingCart aria-label="Ícone de carrinho de compras" />
-            {quantity > 0 && (
+            {count > 0 && (
               <sup className="cart-quantity">
-                {quantity}
+                {count}
                 <span className="sr-only">Quantidade de itens no carrinho</span>
               </sup>
             )}

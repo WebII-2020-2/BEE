@@ -11,10 +11,10 @@ export const addProduct = (id, quantity) => ({
   quantity,
 });
 
-export const updateQuantity = (id, quantity) => ({
+export const updateQuantity = (id, operation) => ({
   type: UPDATE_QUANTITY,
   id,
-  quantity,
+  operation,
 });
 
 export const removeProduct = (id) => ({

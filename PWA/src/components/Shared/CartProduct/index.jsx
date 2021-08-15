@@ -1,40 +1,94 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
+import { Container, Image, Button } from 'react-bootstrap';
+import { Minus, Plus, Trash } from 'react-feather';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import {
+  removeProduct,
+  updateQuantity,
+} from '../../../store/actions/cart.actions';
+import './CartProduct.css';
 
 function CartProduct(props) {
   const {
+    id,
     name,
     image,
-    category,
+    unity,
     unitary_value: price,
     value_promotion: newPrice,
     quantity,
   } = props;
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const oldPriceStyle = newPrice
+    ? {
+        opacity: 0.5,
+        textDecoration: 'line-through',
+      }
+    : undefined;
+
+  const handleClick = (action) => {
+    switch (action) {
+      case -1:
+        dispatch(updateQuantity(id, 'PLUS'));
+        break;
+      case 1:
+        dispatch(updateQuantity(id, 'MINUS'));
+        break;
+      case 0:
+        dispatch(removeProduct(id));
+        break;
+      default:
+        break;
+    }
+    history.push('/carrinho');
+  };
+
   return (
-    <div className="cart product card" style={{ margin: 5 }}>
-      <Image src={image} width={100} />
+    <Container className="cart product card">
+      <Image src={image} />
       <p>
         {name}
         <br />
-        <span>{category}</span>
+        <span>Unidade: {unity}</span>
       </p>
-      <span>
-        {price.toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        })}
-      </span>
-      {newPrice && (
-        <span>
-          {newPrice.toLocaleString('pt-BR', {
+      <span className="price">
+        <span style={oldPriceStyle}>
+          {price.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           })}
         </span>
-      )}
-      <input type="text" value={quantity} />
-    </div>
+        <br />
+        {newPrice &&
+          newPrice.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
+      </span>
+      <span className="quantity">
+        <Button
+          onClick={() => handleClick(1)}
+          variant="outline-dark"
+          className="quantity-button"
+          disabled={quantity === 1}
+        >
+          <Minus />
+        </Button>
+        <span>{quantity}</span>
+        <Button
+          onClick={() => handleClick(-1)}
+          className="quantity-button"
+          variant="outline-dark"
+        >
+          <Plus />
+        </Button>
+      </span>
+      <Trash className="delete-product" onClick={() => handleClick(0)} />
+    </Container>
   );
 }
 
