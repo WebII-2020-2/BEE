@@ -10,6 +10,7 @@ import CartInfo from '../../../components/Shared/CartInfo';
 import './Purchase.css';
 import UserInfo from './steps/UserInfo';
 import PaymentMethod from './steps/PaymentMethod';
+import Address from './steps/Address';
 
 const STEPS = {
   0: 'Carrinho',
@@ -146,7 +147,12 @@ function Purchase() {
       case 1:
         return <UserInfo />;
       case 2:
-        return <h5>{STEPS[actualStep]}</h5>;
+        return (
+          <Address
+            handleUpdateValues={handleUpdateValues}
+            addressId={values.address_id}
+          />
+        );
       case 3:
         return (
           <PaymentMethod
