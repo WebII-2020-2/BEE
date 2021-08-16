@@ -7,7 +7,7 @@ import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
 import CartInfo from '../../../components/Shared/CartInfo';
 import './Purchase.css';
-import UserInfo from './Steps/UserInfo';
+import UserInfo from './steps/UserInfo';
 
 const STEPS = {
   0: 'Carrinho',
