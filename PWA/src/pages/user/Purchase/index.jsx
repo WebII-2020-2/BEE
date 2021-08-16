@@ -7,6 +7,7 @@ import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
 import CartInfo from '../../../components/Shared/CartInfo';
 import './Purchase.css';
+import UserInfo from './Steps/UserInfo';
 
 const STEPS = {
   0: 'Carrinho',
@@ -120,7 +121,7 @@ function Purchase() {
   const renderStep = () => {
     switch (actualStep) {
       case 1:
-        return <h5>{STEPS[actualStep]}</h5>;
+        return <UserInfo />;
       case 2:
         return <h5>{STEPS[actualStep]}</h5>;
       case 3:
