@@ -29,7 +29,6 @@ function CardsNew() {
           throw r.response.data.error;
         });
       if (resp.success) {
-        console.warn('ENTROU');
         history.push('/user/dashboard/cartoes');
       } else {
         console.error(`ERRO ${resp.error.code}: ${resp.error.error_message}`);
