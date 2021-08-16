@@ -8,6 +8,7 @@ import ProductAdminApiService from '../../../services/api/ProductAdminApiService
 import CartInfo from '../../../components/Shared/CartInfo';
 import './Purchase.css';
 import UserInfo from './steps/UserInfo';
+import PaymentMethod from './steps/PaymentMethod';
 
 const STEPS = {
   0: 'Carrinho',
@@ -125,7 +126,12 @@ function Purchase() {
       case 2:
         return <h5>{STEPS[actualStep]}</h5>;
       case 3:
-        return <h5>{STEPS[actualStep]}</h5>;
+        return (
+          <PaymentMethod
+            handleUpdateValues={handleUpdateValues}
+            cardId={values.card_id}
+          />
+        );
       case 4:
         return <h5>{STEPS[actualStep]}</h5>;
       default:
