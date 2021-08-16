@@ -5,7 +5,7 @@ import FormProductAdmin from '../../../../components/Admin/FormProduct';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import validationSchema from '../../../../services/validations/validationProductAdmin';
-import ProductAdminApiService from '../../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../../services/api/ProductApiService';
 
 function ProductPage(props) {
   const { match } = props;
@@ -18,7 +18,7 @@ function ProductPage(props) {
 
   const getProduct = async () => {
     try {
-      const resp = await ProductAdminApiService.getById(
+      const resp = await ProductApiService.getById(
         Number(match.params.id)
       ).then((r) => r.data);
       if (resp.success) {
@@ -54,7 +54,7 @@ function ProductPage(props) {
           return undefined;
         });
       if (isValid !== undefined) {
-        const resp = await ProductAdminApiService.update(values.id, form).then(
+        const resp = await ProductApiService.update(values.id, form).then(
           (r) => r.data
         );
         if (resp.success) {
@@ -72,7 +72,7 @@ function ProductPage(props) {
 
   const handleDelete = async () => {
     try {
-      const resp = await ProductAdminApiService.remove(values.id).then(
+      const resp = await ProductApiService.remove(values.id).then(
         (r) => r.data
       );
       if (resp.success) {

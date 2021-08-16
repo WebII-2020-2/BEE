@@ -5,7 +5,7 @@ import FormCategoryAdmin from '../../../../components/Admin/FormCategory';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import validationSchema from '../../../../services/validations/validationCategoryAdmin';
-import CategoryAdminApiService from '../../../../services/api/CategoryAdminApiService';
+import CategoryApiService from '../../../../services/api/CategoryApiService';
 
 function CategoriesPage(props) {
   const { match } = props;
@@ -18,7 +18,7 @@ function CategoriesPage(props) {
 
   const getCategory = async () => {
     try {
-      const resp = await CategoryAdminApiService.getById(
+      const resp = await CategoryApiService.getById(
         Number(match.params.id)
       ).then((r) => r.data);
       if (resp.success) {
@@ -54,7 +54,7 @@ function CategoriesPage(props) {
           return undefined;
         });
       if (isValid !== undefined) {
-        const resp = await CategoryAdminApiService.update(values.id, form).then(
+        const resp = await CategoryApiService.update(values.id, form).then(
           (r) => r.data
         );
         if (resp.success) {
@@ -72,7 +72,7 @@ function CategoriesPage(props) {
 
   const handleDelete = async () => {
     try {
-      const resp = await CategoryAdminApiService.remove(values.id).then(
+      const resp = await CategoryApiService.remove(values.id).then(
         (r) => r.data
       );
       if (resp.success) {

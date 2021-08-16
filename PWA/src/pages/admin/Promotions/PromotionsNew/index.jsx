@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import AdminContainer from '../../../../components/Admin/Container';
 import FormPromotionAdmin from '../../../../components/Admin/FormPromotion';
 import validationSchema from '../../../../services/validations/validationPromotionAdmin';
-import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
+import PromotionApiService from '../../../../services/api/PromotionApiService';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 
@@ -37,7 +37,7 @@ function PromotionsNew() {
           return undefined;
         });
       if (isValid !== undefined) {
-        const resp = await PromotionAdminApiService.createNew(form).then(
+        const resp = await PromotionApiService.createNew(form).then(
           (r) => r.data
         );
         if (resp.success) {

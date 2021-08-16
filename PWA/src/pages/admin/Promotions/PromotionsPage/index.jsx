@@ -5,7 +5,7 @@ import FormPromotionAdmin from '../../../../components/Admin/FormPromotion';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import validationSchema from '../../../../services/validations/validationPromotionAdmin';
-import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
+import PromotionApiService from '../../../../services/api/PromotionApiService';
 import PromotionValidationContext from '../../../../context/PromotionValidationContext';
 
 function PromotionsPage(props) {
@@ -25,7 +25,7 @@ function PromotionsPage(props) {
 
   const getPromotion = async () => {
     try {
-      const resp = await PromotionAdminApiService.getById(
+      const resp = await PromotionApiService.getById(
         Number(match.params.id)
       ).then((r) => r.data);
       if (resp.success) {
@@ -66,10 +66,9 @@ function PromotionsPage(props) {
           'Você possui um produto com o valor menor que o desconto, altere o valor ou remova o produto',
         ]);
       } else if (isValid !== undefined) {
-        const resp = await PromotionAdminApiService.update(
-          values.id,
-          form
-        ).then((r) => r.data);
+        const resp = await PromotionApiService.update(values.id, form).then(
+          (r) => r.data
+        );
         if (resp.success) {
           handleEdit();
         } else {
@@ -85,7 +84,7 @@ function PromotionsPage(props) {
 
   const handleDelete = async () => {
     try {
-      const resp = await PromotionAdminApiService.remove(values.id).then(
+      const resp = await PromotionApiService.remove(values.id).then(
         (r) => r.data
       );
       if (resp.success) {

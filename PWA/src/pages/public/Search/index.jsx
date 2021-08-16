@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import StoreContainer from '../../../components/Shared/StoreContainer';
-import ProductApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
 import ListProducts from '../../../components/Shared/ListProducts';
 
 function Search(props) {

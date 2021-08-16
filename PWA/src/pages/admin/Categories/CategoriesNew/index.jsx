@@ -5,7 +5,7 @@ import FormCategoryAdmin from '../../../../components/Admin/FormCategory';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import validationSchema from '../../../../services/validations/validationCategoryAdmin';
-import CategoryAdminApiService from '../../../../services/api/CategoryAdminApiService';
+import CategoryApiService from '../../../../services/api/CategoryApiService';
 
 function CategoriesNew() {
   const history = useHistory();
@@ -34,7 +34,7 @@ function CategoriesNew() {
           return undefined;
         });
       if (isValid !== undefined) {
-        const resp = await CategoryAdminApiService.createNew(form).then(
+        const resp = await CategoryApiService.createNew(form).then(
           (r) => r.data
         );
         if (resp.success) {
