@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { Button, Container } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
-import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
+import OrderApiService from '../../../services/api/OrderApiService';
 import CartInfo from '../../../components/Shared/CartInfo';
 import './Purchase.css';
 
@@ -23,6 +24,7 @@ function Purchase() {
   const [products, setProducts] = useState([]);
   const [actualStep, setActualStep] = useState(1);
   const [values, setValues] = useState({ products: productsStore || [] });
+  const [isLoading, setIsLoading] = useState(false);
 
   const productsCart = useMemo(() => {
     if (productsStore && products.length) {
@@ -68,8 +70,9 @@ function Purchase() {
   }, [productsCart]);
 
   const getAllProducts = async () => {
+    setIsLoading(true);
     try {
-      const resp = await ProductAdminApiService.getAll()
+      const resp = await ProductApiService.getAll()
         .then((r) => r.data)
         .catch((r) => {
           throw r.response.data.error;
@@ -79,12 +82,30 @@ function Purchase() {
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (actualStep === 4) {
-      history.push('/user/dashboard/pedidos');
+      setIsLoading(true);
+      try {
+        const resp = await OrderApiService.createNew(values)
+          .then((r) => r.data)
+          .catch((r) => {
+            throw r.response.data.error;
+          });
+        if (resp.success) {
+          history.push('/user/dashboard/pedidos');
+        } else {
+          throw resp.error;
+        }
+      } catch (err) {
+        console.warn(`ERRO ${err.code}: ${err.error_message}`);
+      } finally {
+        setIsLoading(false);
+      }
     }
     setActualStep(actualStep + 1);
   };
@@ -149,10 +170,20 @@ function Purchase() {
         <Container className="purchase info">
           <CartInfo values={{ totalValue, discount, products: productsCart }} />
           <div className="purchase actions">
-            <Button type="button" variant="dark" onClick={handlePreviousStep}>
+            <Button
+              type="button"
+              variant="dark"
+              disabled={isLoading}
+              onClick={handlePreviousStep}
+            >
               <ArrowLeft /> {STEPS[actualStep - 1]}
             </Button>
-            <Button type="button" variant="warning" onClick={handleNextStep}>
+            <Button
+              type="button"
+              variant="warning"
+              disabled={isLoading}
+              onClick={handleNextStep}
+            >
               {STEPS[actualStep + 1]} <ArrowRight />
             </Button>
           </div>
