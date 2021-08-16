@@ -78,6 +78,7 @@ function AddressPage(props) {
         handleEdit={handleEdit}
         isSaving={isSaving}
         isReadOnly={isReadOnly}
+        path="/user/dashboard/enderecos"
       />
     </div>
   );

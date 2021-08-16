@@ -70,7 +70,7 @@ function Dashboard(props) {
       {page === 'dados' && <DataUser />}
       {page === 'cartoes' && <Cards path={match.path} />}
       {page === 'enderecos' && <Address path={match.path} />}
-      {page === 'pedidos' && <Orders />}
+      {page === 'pedidos' && <Orders path={match.path} />}
     </StoreContainer>
   );
 }

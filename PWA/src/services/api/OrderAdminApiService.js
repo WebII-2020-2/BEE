@@ -19,10 +19,27 @@ function update(id, form) {
   });
 }
 
+function getAllUser() {
+  return api.get(`${ENDPOINT_BASE}/user/list`);
+}
+
+function getByIdUser(id) {
+  return api.get(`${ENDPOINT_BASE}/user/list/${id}`);
+}
+
+function createNew(form) {
+  return api.post(`${ENDPOINT_BASE}/add`, {
+    ...form,
+  });
+}
+
 const ExampleApiService = {
   getAll,
   getById,
   update,
+  getAllUser,
+  getByIdUser,
+  createNew,
 };
 
 export default ExampleApiService;

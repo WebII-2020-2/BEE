@@ -42,10 +42,10 @@ function AddressList(props) {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col sm={6}>
           <b>Bairro</b> <br /> {value.district}
         </Col>
-        <Col>
+        <Col sm={6}>
           <b>Cidade / Estado</b> <br /> {`${value.city} / ${value.state}`}
         </Col>
       </Row>
@@ -57,7 +57,7 @@ function AddressList(props) {
         </Row>
       )}
       <Row>
-        <Col className="edit-address-dashboard">
+        <Col className="edit-address-dashboard m-0">
           <Button variant="warning" href={`${match.url}/${value.id}`}>
             Editar
           </Button>

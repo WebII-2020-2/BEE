@@ -15,6 +15,7 @@ function ButtonsFormAdmin(props) {
     isReadOnly,
     path,
     isSaving,
+    handleTab,
   } = props;
 
   const [showModal, setShowModal] = useState(false);
@@ -101,9 +102,18 @@ function ButtonsFormAdmin(props) {
   }
   return (
     <div className="actions-form-admin">
-      <Link to={path} className="btn btn-secondary btn-form-admin voltar">
-        <ArrowLeft /> Voltar
-      </Link>
+      {handleTab ? (
+        <Button
+          className="btn-secondary btn-form-admin voltar"
+          onClick={handleTab}
+        >
+          <ArrowLeft /> Voltar
+        </Button>
+      ) : (
+        <Link to={path} className="btn btn-secondary btn-form-admin voltar">
+          <ArrowLeft /> Voltar
+        </Link>
+      )}
       {getModal()}
       {isNew ? buttonsNew() : buttonsView()}
     </div>
