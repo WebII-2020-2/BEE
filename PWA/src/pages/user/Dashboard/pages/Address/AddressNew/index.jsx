@@ -43,6 +43,7 @@ function AddressNew() {
         isSaving={isSaving}
         handleSubmitAddress={handleSubmit}
         isNew
+        path="/user/dashboard/enderecos"
       />
     </div>
   );
