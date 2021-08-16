@@ -23,7 +23,7 @@ function Purchase() {
   const { products: productsStore } = useSelector((state) => state.cart);
   const [products, setProducts] = useState([]);
   const [actualStep, setActualStep] = useState(1);
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({ products: productsStore || [] });
 
   const productsCart = useMemo(() => {
     if (productsStore && products.length) {
@@ -148,7 +148,7 @@ function Purchase() {
           {renderStep()}
         </Container>
         <Container className="purchase info">
-          <CartInfo values={{ totalValue, discount, products }} />
+          <CartInfo values={{ totalValue, discount, products: productsCart }} />
           <div className="purchase actions">
             <Button type="button" variant="dark" onClick={handlePreviousStep}>
               <ArrowLeft /> {STEPS[actualStep - 1]}
