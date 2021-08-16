@@ -1,0 +1,33 @@
+.info.values {
+  display: flex;
+  padding-top: 1rem;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--light-grey);
+  border-radius: 6px;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.info.values h3 {
+  font-size: 1.5rem;
+}
+
+.info.values hr {
+  width: calc(100% - 4rem);
+  margin-left: 2rem;
+}
+
+.info.values p {
+  margin: 1rem 2rem;
+  text-align: right;
+  opacity: 0.8;
+}
+
+.info.values .total-value {
+  width: 100%;
+  padding: 1rem 1rem;
+  background-color: var(--light-grey);
+  border-radius: 6px;
+  font-size: 1.5rem;
+}
