@@ -21,12 +21,20 @@ const STEPS = {
   5: 'Finalizar',
 };
 
+const shipping = {
+  send_value: 9.9,
+  send_estimated_date: new Date().setDate(new Date().getDate() + 10),
+};
+
 function Purchase() {
   const history = useHistory();
   const { products: productsStore } = useSelector((state) => state.cart);
   const [products, setProducts] = useState([]);
   const [actualStep, setActualStep] = useState(1);
-  const [values, setValues] = useState({ products: productsStore || [] });
+  const [values, setValues] = useState({
+    products: productsStore || [],
+    ...shipping,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const productsCart = useMemo(() => {
@@ -52,7 +60,7 @@ function Purchase() {
         } = product;
         if (promoValue) return promoValue * quantity + accumulator;
         return unValue * quantity + accumulator;
-      }, 0);
+      }, values.send_value);
     }
     return 0;
   }, [productsCart]);
@@ -121,25 +129,15 @@ function Purchase() {
     setActualStep(actualStep - 1);
   };
 
-  //   {
-  // 	"address_id": 1,
-  // 	"card_id": 1,
-  // 	"send_value": 15.5,
-  // 	"send_estimated_date": "2021-08-15",
-  // 	"products": [
-  // 		{
-  // 			"id": 1,
-  // 			"quantity": 3
-  // 		},
-  // 		{
-  // 			"id": 2,
-  // 			"quantity": 10
-  // 		}
-  // 	]
-  // }
-
   const handleUpdateValues = (value) => {
     setValues({ ...values, ...value });
+  };
+
+  const disableNextStep = () => {
+    if (isLoading) return true;
+    if (actualStep === 2 && !values.address_id) return true;
+    if (actualStep === 3 && !values.card_id) return true;
+    return false;
   };
 
   const renderStep = () => {
@@ -182,7 +180,14 @@ function Purchase() {
           {renderStep()}
         </Container>
         <Container className="purchase info">
-          <CartInfo values={{ totalValue, discount, products: productsCart }} />
+          <CartInfo
+            values={{
+              totalValue,
+              discount,
+              products: productsCart,
+              frete: values.send_value,
+            }}
+          />
           <div className="purchase actions">
             <Button
               type="button"
@@ -195,7 +200,7 @@ function Purchase() {
             <Button
               type="button"
               variant="warning"
-              disabled={isLoading}
+              disabled={disableNextStep()}
               onClick={handleNextStep}
             >
               {STEPS[actualStep + 1]} <ArrowRight />
