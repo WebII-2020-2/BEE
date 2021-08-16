@@ -5,7 +5,7 @@ import ButtonsList from '../../../../components/Admin/ButtonsList';
 import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
 import TableListAdmin from '../../../../components/Admin/TableList';
-import OrderAdminApiService from '../../../../services/api/OrderAdminApiService';
+import OrderAdminApiService from '../../../../services/api/OrderApiService';
 import orderStatus from '../../../../services/utils/orderStatus';
 import formatFloat from '../../../../services/utils/formatFloat';
 import formatDate from '../../../../services/utils/formatDate';

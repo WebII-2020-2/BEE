@@ -5,7 +5,7 @@ import { CreditCard, Feather, Truck } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import CardProduct from '../../../components/Shared/CardProduct';
-import ProductApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
 import CampaignApiService from '../../../services/api/CampaignApiService';
 import './Home.css';
 
