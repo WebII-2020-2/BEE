@@ -15,7 +15,7 @@ function ButtonsFormAdmin(props) {
     isReadOnly,
     path,
     isSaving,
-    handleTab,
+    handleStep,
   } = props;
 
   const [showModal, setShowModal] = useState(false);
@@ -102,10 +102,10 @@ function ButtonsFormAdmin(props) {
   }
   return (
     <div className="actions-form-admin">
-      {handleTab ? (
+      {handleStep ? (
         <Button
           className="btn-secondary btn-form-admin voltar"
-          onClick={handleTab}
+          onClick={handleStep}
         >
           <ArrowLeft /> Voltar
         </Button>
