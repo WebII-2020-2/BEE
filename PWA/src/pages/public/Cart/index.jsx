@@ -4,7 +4,7 @@ import { Button, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import CartProduct from '../../../components/Shared/CartProduct';
-import ProductApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
 import CartInfo from '../../../components/Shared/CartInfo';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import './Cart.css';
@@ -93,6 +93,7 @@ function Search() {
             type="button"
             className="submit-cart"
             variant="warning"
+            disabled={!productsCart.length}
             onClick={() => {
               history.push('/user/comprar');
             }}
