@@ -20,12 +20,20 @@ const STEPS = {
   5: 'Finalizar',
 };
 
+const shipping = {
+  send_value: 9.9,
+  send_estimated_date: new Date().setDate(new Date().getDate() + 10),
+};
+
 function Purchase() {
   const history = useHistory();
   const { products: productsStore } = useSelector((state) => state.cart);
   const [products, setProducts] = useState([]);
   const [actualStep, setActualStep] = useState(1);
-  const [values, setValues] = useState({ products: productsStore || [] });
+  const [values, setValues] = useState({
+    products: productsStore || [],
+    ...shipping,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const productsCart = useMemo(() => {
@@ -51,7 +59,7 @@ function Purchase() {
         } = product;
         if (promoValue) return promoValue * quantity + accumulator;
         return unValue * quantity + accumulator;
-      }, 0);
+      }, values.send_value);
     }
     return 0;
   }, [productsCart]);
@@ -176,7 +184,14 @@ function Purchase() {
           {renderStep()}
         </Container>
         <Container className="purchase info">
-          <CartInfo values={{ totalValue, discount, products: productsCart }} />
+          <CartInfo
+            values={{
+              totalValue,
+              discount,
+              products: productsCart,
+              frete: values.send_value,
+            }}
+          />
           <div className="purchase actions">
             <Button
               type="button"
