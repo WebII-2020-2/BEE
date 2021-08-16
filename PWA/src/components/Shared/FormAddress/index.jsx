@@ -16,6 +16,7 @@ function FormAddress(props) {
     isNew,
     isSaving,
     isReadOnly,
+    path,
   } = props;
   const [loadingCep, setLoadingCep] = useState(false);
 
@@ -61,7 +62,7 @@ function FormAddress(props) {
         return (
           <>
             <ButtonsForm
-              path="/user/dashboard/enderecos"
+              path={path}
               handleSubmit={handleSubmit}
               handleReset={handleReset}
               handleDelete={handleDelete}
