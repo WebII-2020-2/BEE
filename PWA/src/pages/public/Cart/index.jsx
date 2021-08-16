@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import CartProduct from '../../../components/Shared/CartProduct';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
-import './Cart.css';
 import CartInfo from '../../../components/Shared/CartInfo';
+import LoadingPage from '../../../components/Shared/LoadingPage';
+import './Cart.css';
 
 function Search() {
   const { products: productsStore } = useSelector((state) => state.cart);
@@ -80,9 +81,11 @@ function Search() {
       <h2 className="cart title">Meu Carrinho de compras</h2>
       <main className="cart-container">
         <Container className="cart products">
-          {productsCart.map((p) => (
-            <CartProduct key={p.id} {...p} />
-          ))}
+          {productsCart.length ? (
+            productsCart.map((p) => <CartProduct key={p.id} {...p} />)
+          ) : (
+            <LoadingPage />
+          )}
         </Container>
         <Container className="cart info">
           <CartInfo values={{ discount, totalValue }} />
