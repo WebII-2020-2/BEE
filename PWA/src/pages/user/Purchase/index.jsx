@@ -107,8 +107,9 @@ function Purchase() {
       } finally {
         setIsLoading(false);
       }
+    } else {
+      setActualStep(actualStep + 1);
     }
-    setActualStep(actualStep + 1);
   };
 
   const handlePreviousStep = () => {
