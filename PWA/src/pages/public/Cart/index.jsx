@@ -1,14 +1,17 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import CartProduct from '../../../components/Shared/CartProduct';
 import ProductApiService from '../../../services/api/ProductAdminApiService';
 import './Cart.css';
+import CartInfo from '../../../components/Shared/CartInfo';
 
 function Search() {
   const { products: productsStore } = useSelector((state) => state.cart);
   const [products, setProducts] = useState([]);
+  const history = useHistory();
 
   const productsCart = useMemo(() => {
     if (productsStore && products.length) {
@@ -60,7 +63,9 @@ function Search() {
         .catch((r) => {
           throw r.response.data.error;
         });
-      setProducts(resp.data);
+      if (resp.success) {
+        setProducts(resp.data);
+      }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
     }
@@ -80,32 +85,16 @@ function Search() {
           ))}
         </Container>
         <Container className="cart info">
-          <div className="info values">
-            <h3>Resumo do pedido</h3>
-            <hr />
-            <p>
-              Subtotal{' - '}
-              {(totalValue + discount).toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
-              <br />
-              Desconto{' - '}
-              {discount.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
-            </p>
-            <span className="total-value">
-              Total:{' '}
-              {totalValue.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })}
-            </span>
-          </div>
-          <Button type="button" className="submit-cart" variant="warning">
-            Finalizar Compra
+          <CartInfo values={{ discount, totalValue }} />
+          <Button
+            type="button"
+            className="submit-cart"
+            variant="warning"
+            onClick={() => {
+              history.push('/user/comprar');
+            }}
+          >
+            Comprar
           </Button>
         </Container>
       </main>
