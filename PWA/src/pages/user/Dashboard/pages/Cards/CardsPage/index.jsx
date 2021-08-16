@@ -56,6 +56,7 @@ function CardsPage(props) {
         valuesCard={values}
         handleDelete={handleDelete}
         isReadOnly={isReadOnly}
+        path="/user/dashboard/cartoes"
       />
     </div>
   );

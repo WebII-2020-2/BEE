@@ -49,6 +49,7 @@ function CardsNew() {
         isSaving={isSaving}
         handleSubmitCard={handleSubmit}
         isNew
+        path="/user/dashboard/cartoes"
       />
     </div>
   );
