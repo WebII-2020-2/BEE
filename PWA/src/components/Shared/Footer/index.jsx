@@ -9,12 +9,12 @@ function Footer() {
     <footer className="footer">
       <img src={logo} alt="Logo do BEE" className="logo-footer my-4" />
       <Nav className="footer-nav">
-        <Nav.Link href="/promocoes" title="Produtos">
+        <Nav.Link href="/produtos" title="Produtos">
           <b>P</b>rodutos
         </Nav.Link>
-        <Nav.Link href="/categorias" title="Ir para página de Categorias">
+        {/* <Nav.Link href="/categorias" title="Ir para página de Categorias">
           <b>C</b>ategorias
-        </Nav.Link>
+        </Nav.Link> */}
         <Nav.Link
           href="/sobre"
           title="Ir para página de informações sobre a loja"
