@@ -2,19 +2,16 @@ import React from 'react';
 import './CartInfo.css';
 
 function CartInfo({ values }) {
-  const { totalValue, discount, products } = values;
+  const { totalValue, discount, products, frete } = values;
   return (
     <div className="info values">
       <h3>Resumo do pedido</h3>
       {products && (
-        <ul
-          className="products-list"
-          style={{ listStyle: 'none', padding: '1rem 2rem 0' }}
-        >
+        <ul className="products-list">
           {products.map((p) => (
-            <li style={{ textAlign: 'left', opacity: 0.8, fontSize: '1.2rem' }}>
+            <li>
               {`${p.quantity}x - ${p.name} (${p.unity})`}
-              <span style={{ float: 'right' }}>
+              <span>
                 {(p.unitary_value * p.quantity).toLocaleString('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
@@ -23,6 +20,17 @@ function CartInfo({ values }) {
             </li>
           ))}
         </ul>
+      )}
+      {frete && (
+        <p className="frete">
+          Envio em até 10 dias
+          <span>
+            {frete.toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
+          </span>
+        </p>
       )}
       <hr />
       <p>
