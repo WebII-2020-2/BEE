@@ -6,12 +6,12 @@
   padding-bottom: 1rem;
 }
 
-.card-address-dashboard .col{
+.card-address-dashboard .col, .card-address-dashboard .col > b{
   margin-bottom: 1rem;
   font-family: 'Poppins';
 }
 
-.edit-address-dashboard.col{
+.edit-address-dashboard {
   margin: 0;
   display: flex;
   justify-content: flex-end;
