@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Log;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductPromotion;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -80,12 +81,23 @@ class CategoryController extends Controller
 
             $mounted_products = [];
             foreach($products as $product){
+                unset($product_with_promotion);
+                $product_promotion = ProductPromotion::where('product_id', $product->id)
+                ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
+
+                if (!is_null($product_promotion)) {
+                    $product_with_promotion = $product_promotion->type == 1 ?
+                        ($product->unitary_value - $product_promotion->value) :
+                        $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
+                }
+
                 array_push($mounted_products, array(
                     "id" => $product->id,
                     'name' => $product->name,
                     'unity' => $product->unity,
                     'quantity' => $product->quantity,
                     'unitary_value' => $product->unitary_value,
+                    'value_promotion' => isset($product_with_promotion) ? (float) number_format($product_with_promotion, 2, '.', '') : null,
                     'description' => $product->description,
                     'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
                     'category_id' => $product->category_id
