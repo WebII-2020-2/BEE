@@ -31,3 +31,21 @@
   flex-grow: 1;
   margin: 1rem 0.5rem;
 }
+
+/* PAYMENT METHOD */
+.card-credit-card{
+  border-radius: 5px;
+  box-shadow: 0 2px 8px var(--grey);
+  margin: 1rem 0;
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
+.card-credit-card:hover{
+  background-color: rgb(221, 221, 221);
+}
+
+.card-selected{
+  box-shadow: 0 2px 8px var(--yellow);
+  border: 2px solid var(--orange);
+}
