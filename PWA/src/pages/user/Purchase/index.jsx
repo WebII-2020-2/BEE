@@ -108,7 +108,7 @@ function Purchase() {
         setValues({
           ...values,
           send_value: Number(resp.data.PAC.valor.replace(',', '.')),
-          send_estimated_time: resp.data.PAC.prazo[0],
+          send_estimated_date: resp.data.PAC.prazo[0],
         });
       } else {
         throw resp.error;
@@ -217,7 +217,7 @@ function Purchase() {
               discount,
               products: productsCart,
               frete: values.send_value,
-              dataEnvio: values.send_estimated_time,
+              dataEnvio: values.send_estimated_date,
             }}
           />
           <div className="purchase actions">
