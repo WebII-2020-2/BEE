@@ -216,18 +216,24 @@ class CardController extends Controller
     public function delete($id){
         $user_authenticaded = JWTAuth::toUser();
 
-        try{
-            $order = Order::where('card_id', $id)->first();
-            if(!is_null($order)){
-                throw new Exception();
+        $order = Order::where('card_id', $id)->first();
+        if(is_null($order)){
+            try{
+                $result = $user_authenticaded->card()->where('id', $id)->delete();
+            }catch(\Exception $exception){
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o cartão.'];
+                Log::create([
+                    'type' => 'card',
+                    'information' => 'delete - ERROR',
+                    'data' => $exception->getMessage()
+                ]);
             }
-            $result = $user_authenticaded->card()->where('id', $id)->delete();
-        }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o cartão.'];
+        }else{
+            $error = ['code' => 2, 'error_message' => 'Este cartão está relacionado a uma venda.'];
             Log::create([
                 'type' => 'card',
                 'information' => 'delete - ERROR',
-                'data' => $exception->getMessage()
+                'data' => $order
             ]);
         }
 
@@ -238,7 +244,7 @@ class CardController extends Controller
             Log::create([
                 'type' => 'card',
                 'information' => 'delete - ERROR',
-                'data' => "not save data"
+                'data' => "not delete data"
             ]);
         }
 
