@@ -15,33 +15,6 @@ function OrdersList(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [actualPage, setActualPage] = useState(1);
 
-  // const valuesTest = [
-  //   {
-  //     invoice: '611859a17464b',
-  //     quantity: 1,
-  //     value_total: 26.25,
-  //     status_order: 3,
-  //     selled_date: '2021-08-15',
-  //     card: ['***********24242', 'Visa'],
-  //   },
-  //   {
-  //     invoice: '551259a17464b',
-  //     quantity: 4,
-  //     value_total: 45.25,
-  //     status_order: 5,
-  //     selled_date: '2021-08-15',
-  //     card: ['***********24242', 'MasterCard'],
-  //   },
-  //   {
-  //     invoice: '551259a12512',
-  //     quantity: 6,
-  //     value_total: 45.25,
-  //     status_order: 2,
-  //     selled_date: '2020-09-22',
-  //     card: ['***********24242', 'MasterCard'],
-  //   },
-  // ];
-
   const setColorStatus = (status) => {
     if ([1, 2, 8].includes(status)) return 'status-yellow';
     if ([4, 9].includes(status)) return 'status-red';

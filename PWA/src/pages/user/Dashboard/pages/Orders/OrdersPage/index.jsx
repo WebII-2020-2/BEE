@@ -41,52 +41,6 @@ function OrdersPage(props) {
     products: [],
   });
 
-  // const valuesTest = {
-  //   id: 12,
-  //   invoice: '611859a17464b',
-  //   selled_date: '2021-08-15',
-  //   value_total_products: 32.25,
-  //   value_shipping: 15.5,
-  //   value_total: 47.75,
-  //   quantity: 1,
-  //   status_order: 3,
-  //   send_method: null,
-  //   tracking_code: null,
-  //   shipped_date: null,
-  //   estimated_date: null,
-  //   finished_date: null,
-  //   address: {
-  //     public_place: 'Rua das bananas',
-  //     district: 'Bananal',
-  //     number: '424',
-  //     complement: 'Banana',
-  //     zip_code: '10101000',
-  //     city: 'Bananal',
-  //     state: 'Ba',
-  //     reference_point: 'Bananui',
-  //   },
-  //   payment_method: 'Cartão de crédito',
-  //   card: ['***********24242', 'Visa'],
-  //   products: [
-  //     {
-  //       id: 12,
-  //       name: 'Avocado',
-  //       unitary_value_product: 10.75,
-  //       quantity: 3,
-  //       unitary_value_selled: 8.75,
-  //       image: imageTest,
-  //     },
-  //     {
-  //       id: 13,
-  //       name: 'Morango',
-  //       unitary_value_product: 10.75,
-  //       quantity: 5,
-  //       unitary_value_selled: 10.75,
-  //       image: imageTest,
-  //     },
-  //   ],
-  // };
-
   const getOrder = async () => {
     try {
       const resp = await OrderApiService.getByIdUser(match.params.invoice)
@@ -96,12 +50,12 @@ function OrdersPage(props) {
         });
       if (resp.success) {
         setValues(resp.data);
+        console.warn(resp.data);
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
       history.push('/user/dashboard/pedidos');
     }
-    // setValues(valuesTest);
   };
 
   useEffect(() => {
@@ -124,6 +78,12 @@ function OrdersPage(props) {
       </Col>
       <Col className="d-flex justify-content-center">{`${value.quantity}x`}</Col>
       <Col>
+        {value.unitary_value_selled.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        })}
+      </Col>
+      {/* <Col>
         {value.unitary_value_product === value.unitary_value_selled ? (
           value.unitary_value_product.toLocaleString('pt-BR', {
             style: 'currency',
@@ -143,7 +103,7 @@ function OrdersPage(props) {
             })}
           </span>
         )}
-      </Col>
+      </Col> */}
     </Row>
   );
 
