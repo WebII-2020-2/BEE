@@ -53,6 +53,7 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'produ
     Route::post('/add', 'Api\ProductController@store');
     Route::post('/update/{id}', 'Api\ProductController@update');
     Route::post('/delete/{id}', 'Api\ProductController@delete');
+    Route::get('/shipping', 'Api\ProductController@calShipping');
 });
 
 // Categories

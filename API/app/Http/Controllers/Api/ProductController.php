@@ -380,4 +380,62 @@ class ProductController extends Controller
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
+
+    public function calShipping(Request $request){
+        $cep_origem = '46430000';
+        $cep_destino = $request->input('cep_destino');
+        $peso = '1';
+        $altura = '30';
+        $largura = '30';
+        $comprimento = '30';
+        $valor_declarado='0';
+
+        $cod_servico_SEDEX = 40010; 
+        $cod_servico_PAC = 41106;
+
+        $correios_PAC = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?nCdEmpresa=&sDsSenha=&sCepOrigem=".$cep_origem."&sCepDestino=".$cep_destino."&nVlPeso=".$peso."&nCdFormato=1&nVlComprimento=".$comprimento."&nVlAltura=".$altura."&nVlLargura=".$largura."&sCdMaoPropria=n&nVlValorDeclarado=".$valor_declarado."&sCdAvisoRecebimento=n&nCdServico=".$cod_servico_PAC."&nVlDiametro=0&StrRetorno=xml";
+        $correios_SEDEX = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?nCdEmpresa=&sDsSenha=&sCepOrigem=".$cep_origem."&sCepDestino=".$cep_destino."&nVlPeso=".$peso."&nCdFormato=1&nVlComprimento=".$comprimento."&nVlAltura=".$altura."&nVlLargura=".$largura."&sCdMaoPropria=n&nVlValorDeclarado=".$valor_declarado."&sCdAvisoRecebimento=n&nCdServico=".$cod_servico_SEDEX."&nVlDiametro=0&StrRetorno=xml";
+
+
+        try {
+            $xml_PAC = simplexml_load_file($correios_PAC);
+            $xml_SEDEX = simplexml_load_file($correios_SEDEX);
+
+            $_arr_ = array();
+            if($xml_PAC->cServico->Erro == '0'){
+                $_arr_['PAC']['codigo'] = (string)$xml_PAC->cServico->Codigo;
+                $_arr_['PAC']['valor'] = (string)$xml_PAC->cServico->Valor;
+                $_arr_['PAC']['prazo'] = $xml_PAC->cServico->PrazoEntrega.' Dias';
+            }
+
+            if($xml_SEDEX->cServico->Erro == '0'){
+                $_arr_['SEDEX']['codigo'] = (string)$xml_SEDEX->cServico->Codigo;
+                $_arr_['SEDEX']['valor'] = (string)$xml_SEDEX->cServico->Valor;
+                $_arr_['SEDEX']['prazo'] = $xml_SEDEX->cServico->PrazoEntrega.' Dias';
+            }
+
+            if($xml_PAC->cServico->Erro != '0' && $xml_SEDEX->cServico->Erro != '0'){
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel calcular o frete.'];
+                Log::create([
+                    'type' => 'product',
+                    'information' => 'It was not possible to calculate the shipping. - ERROR',
+                    'data' => "calculation didn't work"
+                ]);
+            }
+        } catch (\Exception $exception) {
+            $error = ['code' => 2, 'error_message' => 'Não foi possivel calcular o frete.'];
+            Log::create([
+                'type' => 'product',
+                'information' => 'It was not possible to calculate the shipping. - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
+        }
+
+        
+        if (isset($_arr_) && !isset($error) && $_arr_) {
+            return response()->json(['success' => true, 'data' => $_arr_, 'error' => $error ?? null], 200);
+        } 
+        return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
+        
+    }
 }
