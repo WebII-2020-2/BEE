@@ -132,7 +132,7 @@ function Purchase() {
             throw r.response.data.error;
           });
         if (resp.success) {
-          dispatch(clearCart);
+          dispatch(clearCart());
           history.push('/user/dashboard/pedidos');
         } else {
           throw resp.error;
