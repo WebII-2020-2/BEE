@@ -33,8 +33,8 @@ function Address(props) {
     if (tab === 1) getAddress();
   }, [tab]);
 
-  const handleSelected = (id) => {
-    handleUpdateValues({ address_id: id });
+  const handleSelected = (id, zipCode) => {
+    handleUpdateValues({ address_id: id, cep: zipCode });
   };
 
   const handleTab = (newTab, isDelete) => {
@@ -48,7 +48,7 @@ function Address(props) {
         addressId === value.id && 'card-selected'
       }`}
       key={value.id}
-      onClick={() => handleSelected(value.id)}
+      onClick={() => handleSelected(value.id, value.zip_code)}
       aria-hidden
     >
       <Row>
