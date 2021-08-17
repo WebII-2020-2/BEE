@@ -17,6 +17,7 @@ Route::get('/product/list/{id}', 'Api\ProductController@get');
 Route::get('/product/list', 'Api\ProductController@show');
 Route::get('/banner/list/{id}', 'Api\BannerController@get');
 Route::get('/banner/list', 'Api\BannerController@show');
+Route::get('/shipping', 'Api\OrderController@calShipping');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
@@ -53,7 +54,6 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'produ
     Route::post('/add', 'Api\ProductController@store');
     Route::post('/update/{id}', 'Api\ProductController@update');
     Route::post('/delete/{id}', 'Api\ProductController@delete');
-    Route::get('/shipping', 'Api\ProductController@calShipping');
 });
 
 // Categories
