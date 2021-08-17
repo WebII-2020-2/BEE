@@ -30,7 +30,7 @@ function UserRoutes(props) {
           <Logon />
         )}
       </Route>
-      <Route path={`${match.path}/login/:redirect`} component={Logon} />
+      <Route exact path={`${match.path}/login/comprar`} component={Logon} />
       <PrivateRoute
         path={`${match.path}/dashboard/:page`}
         component={Dashboard}

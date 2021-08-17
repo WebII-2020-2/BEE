@@ -47,10 +47,10 @@ function Logon(props) {
           name: user.name.split(' ', 1)[0],
         };
         loginUser(userData);
-        if (match.params.redirect) {
-          history.push(`/user/${match.params.redirect}`);
+        if (!match) {
+          history.push('/');
         } else {
-          history.push(`/`);
+          history.push(`/user/comprar`);
         }
       }
     } catch (err) {
