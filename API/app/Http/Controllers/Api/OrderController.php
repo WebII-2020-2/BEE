@@ -353,7 +353,7 @@ class OrderController extends Controller
                     'a.city',
                     'a.state',
                     'a.reference_point',
-                    'c.number',
+                    'c.number as card_number',
                     'c.flag'
                 )->first();
             if (!empty($order)) {
@@ -399,7 +399,7 @@ class OrderController extends Controller
                         'reference_point' => $order->reference_point
                     ),
                     'payment_method' => $order->payment_method,
-                    'card' => [substr_replace($order->number, '***********', 0, 11), $order->flag],
+                    'card' => [substr_replace($order->card_number, '***********', 0, 11), $order->flag],
                     'products' => $mounted_products_data
                 );
             } else {
