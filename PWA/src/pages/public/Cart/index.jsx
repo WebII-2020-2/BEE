@@ -72,21 +72,22 @@ function Search() {
     }
   };
 
+  const renderProducts = () => {
+    if (!productsStore.length)
+      return <h3>Você ainda não adicionou produtos ao carrinho!</h3>;
+    if (!productsCart.length) return <LoadingPage />;
+    return productsCart.map((p) => <CartProduct key={p.id} {...p} />);
+  };
+
   useEffect(() => {
     getAllProducts();
   }, []);
 
   return (
     <StoreContainer title="Carrinho de compras">
-      <h2 className="cart title">Meu Carrinho de compras</h2>
+      <h1 className="cart title">Meu Carrinho de compras</h1>
       <main className="cart-container">
-        <Container className="cart products">
-          {productsCart.length ? (
-            productsCart.map((p) => <CartProduct key={p.id} {...p} />)
-          ) : (
-            <LoadingPage />
-          )}
-        </Container>
+        <Container className="cart products">{renderProducts()}</Container>
         <Container className="cart info">
           <CartInfo values={{ discount, totalValue }} />
           <Button
