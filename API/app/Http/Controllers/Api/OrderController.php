@@ -53,12 +53,14 @@ class OrderController extends Controller
             $card_token = $response_request_card['id'];
             $card->update(['card_token' => $card_token]);
 
+            $estimated_date = Carbon::now()->addDays($data['send_estimated_date'])->format('Y-m-d');
+
             $order = $user_jwt->order()->create([
                 'quantity' => count($data['products']),
                 'value_total' => 0,
                 'invoice' => $invoice,
                 'status_order' => 1,
-                'estimated_date' => $data['send_estimated_date'],
+                'estimated_date' => $estimated_date,
                 'payment_method_id' => 1,
                 'card_id' => $card->id,
                 'address_id' => $address->id
@@ -449,7 +451,7 @@ class OrderController extends Controller
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
-    
+
     public function calShipping(Request $request){
         $cep_origem = '46430000';
         $cep_destino = $request->input('cep_destino');
@@ -459,7 +461,7 @@ class OrderController extends Controller
         $comprimento = '30';
         $valor_declarado='0';
 
-        $cod_servico_SEDEX = 40010; 
+        $cod_servico_SEDEX = 40010;
         $cod_servico_PAC = 41106;
 
         $correios_PAC = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?nCdEmpresa=&sDsSenha=&sCepOrigem=".$cep_origem."&sCepDestino=".$cep_destino."&nVlPeso=".$peso."&nCdFormato=1&nVlComprimento=".$comprimento."&nVlAltura=".$altura."&nVlLargura=".$largura."&sCdMaoPropria=n&nVlValorDeclarado=".$valor_declarado."&sCdAvisoRecebimento=n&nCdServico=".$cod_servico_PAC."&nVlDiametro=0&StrRetorno=xml";
@@ -474,13 +476,13 @@ class OrderController extends Controller
             if($xml_PAC->cServico->Erro == '0'){
                 $_arr_['PAC']['codigo'] = (string)$xml_PAC->cServico->Codigo;
                 $_arr_['PAC']['valor'] = (string)$xml_PAC->cServico->Valor;
-                $_arr_['PAC']['prazo'] = $xml_PAC->cServico->PrazoEntrega.' Dias';
+                $_arr_['PAC']['prazo'] = $xml_PAC->cServico->PrazoEntrega;
             }
 
             if($xml_SEDEX->cServico->Erro == '0'){
                 $_arr_['SEDEX']['codigo'] = (string)$xml_SEDEX->cServico->Codigo;
                 $_arr_['SEDEX']['valor'] = (string)$xml_SEDEX->cServico->Valor;
-                $_arr_['SEDEX']['prazo'] = $xml_SEDEX->cServico->PrazoEntrega.' Dias';
+                $_arr_['SEDEX']['prazo'] = $xml_SEDEX->cServico->PrazoEntrega;
             }
 
             if($xml_PAC->cServico->Erro != '0' && $xml_SEDEX->cServico->Erro != '0'){
@@ -500,11 +502,11 @@ class OrderController extends Controller
             ]);
         }
 
-        
+
         if (isset($_arr_) && !isset($error) && $_arr_) {
             return response()->json(['success' => true, 'data' => $_arr_, 'error' => $error ?? null], 200);
-        } 
+        }
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
-        
+
     }
 }
