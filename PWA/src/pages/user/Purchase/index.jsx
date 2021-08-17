@@ -106,9 +106,8 @@ function Purchase() {
         setValues({
           ...values,
           send_value: Number(resp.data.PAC.valor.replace(',', '.')),
-          send_estimated_time: resp.data.PAC.prazo[0],
+          send_estimated_date: resp.data.PAC.prazo[0],
         });
-        console.warn(resp);
       } else {
         throw resp.error;
       }
@@ -136,7 +135,7 @@ function Purchase() {
           throw resp.error;
         }
       } catch (err) {
-        console.warn(`ERRO ${err.code}: ${err.error_message}`);
+        console.error(`ERRO ${err.code}: ${err.error_message}`);
       } finally {
         setIsLoading(false);
       }
