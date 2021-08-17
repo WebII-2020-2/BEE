@@ -217,7 +217,7 @@ function Purchase() {
               discount,
               products: productsCart,
               frete: values.send_value,
-              dataEnvio: values.send_estimated_time,
+              dataEnvio: values.send_estimated_date,
             }}
           />
           <div className="purchase actions">
