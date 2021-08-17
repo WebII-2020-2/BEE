@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Container } from 'react-bootstrap';
 import { ArrowLeft, ArrowRight } from 'react-feather';
+import { clearCart } from '../../../store/actions/cart.actions';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductApiService from '../../../services/api/ProductApiService';
 import OrderApiService from '../../../services/api/OrderApiService';
@@ -25,6 +26,7 @@ const STEPS = {
 
 function Purchase() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { products: productsStore } = useSelector((state) => state.cart);
   const [products, setProducts] = useState([]);
   const [actualStep, setActualStep] = useState(1);
@@ -130,6 +132,7 @@ function Purchase() {
             throw r.response.data.error;
           });
         if (resp.success) {
+          dispatch(clearCart);
           history.push('/user/dashboard/pedidos');
         } else {
           throw resp.error;
