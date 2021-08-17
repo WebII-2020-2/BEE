@@ -6,11 +6,13 @@ import { ArrowLeft, ArrowRight } from 'react-feather';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 import ProductApiService from '../../../services/api/ProductApiService';
 import OrderApiService from '../../../services/api/OrderApiService';
+import ShippingApiService from '../../../services/api/ShippingApiService';
 import CartInfo from '../../../components/Shared/CartInfo';
-import './Purchase.css';
 import UserInfo from './steps/UserInfo';
 import PaymentMethod from './steps/PaymentMethod';
+import ReviewInfo from './steps/ReviewInfo';
 import Address from './steps/Address';
+import './Purchase.css';
 
 const STEPS = {
   0: 'Carrinho',
@@ -21,11 +23,6 @@ const STEPS = {
   5: 'Finalizar',
 };
 
-const shipping = {
-  send_value: 9.9,
-  send_estimated_date: new Date().setDate(new Date().getDate() + 10),
-};
-
 function Purchase() {
   const history = useHistory();
   const { products: productsStore } = useSelector((state) => state.cart);
@@ -33,7 +30,6 @@ function Purchase() {
   const [actualStep, setActualStep] = useState(1);
   const [values, setValues] = useState({
     products: productsStore || [],
-    ...shipping,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,10 +56,10 @@ function Purchase() {
         } = product;
         if (promoValue) return promoValue * quantity + accumulator;
         return unValue * quantity + accumulator;
-      }, values.send_value);
+      }, values.send_value || 0);
     }
     return 0;
-  }, [productsCart]);
+  }, [productsCart, values.send_value]);
 
   const discount = useMemo(() => {
     if (productsCart.length) {
@@ -98,11 +94,38 @@ function Purchase() {
     }
   };
 
+  const getShippingInfo = async () => {
+    setIsLoading(true);
+    try {
+      const resp = await ShippingApiService.getShippingInfo(values.cep)
+        .then((r) => r.data)
+        .catch((r) => {
+          throw r.response.data.error;
+        });
+      if (resp.success) {
+        setValues({
+          ...values,
+          send_value: Number(resp.data.PAC.valor.replace(',', '.')),
+          send_estimated_time: resp.data.PAC.prazo[0],
+        });
+        console.warn(resp);
+      } else {
+        throw resp.error;
+      }
+    } catch (err) {
+      console.error(`ERRO ${err.code}: ${err.error_message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleNextStep = async () => {
     if (actualStep === 4) {
       setIsLoading(true);
       try {
-        const resp = await OrderApiService.createNew(values)
+        const form = values;
+        delete form.cep;
+        const resp = await OrderApiService.createNew(form)
           .then((r) => r.data)
           .catch((r) => {
             throw r.response.data.error;
@@ -159,7 +182,7 @@ function Purchase() {
           />
         );
       case 4:
-        return <h5>{STEPS[actualStep]}</h5>;
+        return <ReviewInfo {...values} />;
       default:
         return '';
     }
@@ -168,6 +191,12 @@ function Purchase() {
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  useEffect(() => {
+    if (values.cep) {
+      getShippingInfo();
+    }
+  }, [values.cep]);
 
   return (
     <StoreContainer title={`Comprar - ${STEPS[actualStep]}`}>
@@ -186,6 +215,7 @@ function Purchase() {
               discount,
               products: productsCart,
               frete: values.send_value,
+              dataEnvio: values.send_estimated_time,
             }}
           />
           <div className="purchase actions">
