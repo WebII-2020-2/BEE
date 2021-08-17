@@ -100,7 +100,6 @@ function OrdersPage(props) {
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
       history.push('/user/dashboard/pedidos');
-      console.warn(values);
     }
     // setValues(valuesTest);
   };

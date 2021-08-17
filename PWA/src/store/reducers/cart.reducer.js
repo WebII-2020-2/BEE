@@ -39,8 +39,6 @@ const cartReducer = (state = INITIAL_DATA, action) => {
       const { id, operation } = action;
       return {
         products: state.products.map((product) => {
-          console.warn(product);
-          console.warn(id);
           if (Number(product.id) === id)
             return {
               id,

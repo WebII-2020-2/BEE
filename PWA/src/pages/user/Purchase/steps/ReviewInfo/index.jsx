@@ -25,7 +25,6 @@ function ReviewInfo(props) {
 
       if (resp.success) {
         setUser(resp.data);
-        console.warn(user);
       } else {
         throw resp.error;
       }
@@ -46,7 +45,6 @@ function ReviewInfo(props) {
         });
       if (resp.success) {
         setAddress(resp.data);
-        console.warn(address);
       } else {
         throw resp.error;
       }
@@ -67,7 +65,6 @@ function ReviewInfo(props) {
         });
       if (resp.success) {
         setCard(resp.data);
-        console.warn(card);
       } else {
         throw resp.error;
       }

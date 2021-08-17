@@ -48,7 +48,6 @@ function CampaignsNew() {
         }
       }
     } catch (err) {
-      console.warn(form);
       console.error(`ERRO ${err.code}: ${err.error_message}`);
     } finally {
       setIsSaving(false);
