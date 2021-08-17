@@ -2,7 +2,7 @@ import React from 'react';
 import './CartInfo.css';
 
 function CartInfo({ values }) {
-  const { totalValue, discount, products, frete } = values;
+  const { totalValue, discount, products, frete, dataEnvio } = values;
   return (
     <div className="info values">
       <h3>Resumo do pedido</h3>
@@ -23,7 +23,7 @@ function CartInfo({ values }) {
       )}
       {frete && (
         <p className="frete">
-          Envio em até 10 dias
+          Envio em até {dataEnvio} dias
           <span>
             {frete.toLocaleString('pt-BR', {
               style: 'currency',
