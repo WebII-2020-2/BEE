@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use Exception;
 use Illuminate\Http\Request;
 use JWTAuth;
 
@@ -145,7 +147,12 @@ class AddressController extends Controller
     {
         $user_authenticaded = JWTAuth::toUser();
 
+
         try{
+            $order = Order::where('address_id', $id)->first();
+            if(!is_null($order)){
+                throw new Exception();
+            }
             $result = $user_authenticaded->address()->where('id', $id)->delete();
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar o endereço.'];
