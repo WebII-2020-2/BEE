@@ -80,14 +80,16 @@ class ProductController extends Controller
 
             $mounted_products = [];
             foreach ($products as $product) {
+                $product_with_promotion = null;
                 $product_promotion = ProductPromotion::where('product_id', $product->id)
                     ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
 
-                if ($product_promotion) {
+                if (!is_null($product_promotion)) {
                     $product_with_promotion = $product_promotion->type == 1 ?
                         ($product->unitary_value - $product_promotion->value) :
-                        $product->unitary_value - ($product_promotion->value / 100);
+                        $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
                 }
+
                 array_push($mounted_products, array(
                     "id" => $product->id,
                     'name' => $product->name,
@@ -125,10 +127,10 @@ class ProductController extends Controller
             $product_promotion = ProductPromotion::where('product_id', $id)
                 ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
 
-            if ($product_promotion) {
+            if (!is_null($product_promotion)) {
                 $product_with_promotion = $product_promotion->type == 1 ?
                     ($product->unitary_value - $product_promotion->value) :
-                    $product->unitary_value - ($product_promotion->value / 100);
+                    $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
             }
 
             $mounted_product = array(
@@ -176,10 +178,10 @@ class ProductController extends Controller
                 $product_promotion = ProductPromotion::where('product_id', $product->id)
                 ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
 
-                if ($product_promotion) {
+                if (!is_null($product_promotion)) {
                     $product_with_promotion = $product_promotion->type == 1 ?
                         ($product->unitary_value - $product_promotion->value) :
-                        $product->unitary_value - ($product_promotion->value / 100);
+                        $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
                 }
 
 

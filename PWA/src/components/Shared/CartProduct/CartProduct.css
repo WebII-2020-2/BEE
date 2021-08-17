@@ -1,0 +1,68 @@
+.cart.product.card.container {
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-radius: 6px;
+  box-shadow: 0 0 8px var(--light-grey);
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cart.product.card.container img {
+  object-fit: cover;
+  border-radius: 50%;
+  max-width: 100px;
+  max-height: 100px;
+  align-self: center;
+  margin: 0 1rem;
+}
+
+.cart.product.card.container p {
+  flex-basis: 200px;
+  flex-grow: 1;
+  font-size: 1.5rem;
+  align-self: center;
+  line-height: 2rem;
+  margin: 0 1rem;
+}
+
+.cart.product.card.container p span {
+  font-size: 1.2rem;
+}
+
+.cart.product.card.container .price {
+  flex-basis: 100px;
+  flex-grow: 1;
+  align-self: center;
+  font-size: 1.3rem;
+  margin: 0 1rem;
+}
+
+.cart.product.card.container .quantity {
+  flex-basis: 150px;
+  align-self: center;
+  margin: 0 1rem;
+  flex-grow: 1;
+}
+
+.cart.product.card.container .quantity button {
+  padding: 0.25rem;
+}
+
+.cart.product.card.container .quantity span {
+  margin: 0 0.5rem;
+  background-color: var(--dark-grey);
+  color: var(--white);
+  padding: 0.2rem 0.5rem;
+  border-radius: 50%;
+}
+
+.cart.product.card.container .delete-product {
+  align-self: center;
+  flex-basis: 25px;
+  margin: 0 1rem;
+  cursor: pointer;
+  flex-grow: 1;
+}

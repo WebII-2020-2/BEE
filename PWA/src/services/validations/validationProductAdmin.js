@@ -26,7 +26,7 @@ const validationSchema = yup.object().shape({
     .string()
     .required('Campo obrigatório: Descrição')
     .nullable(false)
-    .max(100, 'Descrição deve conter menos de 100 caracteres'),
+    .max(250, 'Descrição deve conter menos de 250 caracteres'),
 });
 
 export default validationSchema;

@@ -33,7 +33,7 @@ class PromotionController extends Controller
 
                 $product_with_promotion = $data['type'] == 1 ?
                     ($product_info->unitary_value - $data['value']) :
-                    $product_info->unitary_value - ($data['value'] / 100);
+                    $product_info->unitary_value - ($product_info->unitary_value * ($data['value'] / 100));
 
                 $send_product['price'] = str_replace([',','.'], ['', ''], number_format($product_with_promotion, 2, '.', ''));
 
@@ -157,12 +157,12 @@ class PromotionController extends Controller
                 ->get();
 
 
-                $products = [];
-                foreach($product_promotions as $product_promotion){
-                if ($product_promotion) {
+            $products = [];
+            foreach($product_promotions as $product_promotion){
+                if (!is_null($product_promotion)) {
                     $product_with_promotion = $promotion->type == 1 ?
                         ($product_promotion->unitary_value - $promotion->value) :
-                        $product_promotion->unitary_value - ($promotion->value / 100);
+                        $product_promotion->unitary_value - ($product_promotion->unitary_value * ($promotion->value / 100));
                 }
                 array_push($products, array(
                     'id' => $product_promotion->id,
@@ -235,7 +235,7 @@ class PromotionController extends Controller
 
                 $product_with_promotion = $data['type'] == 1 ?
                 ($product_info->unitary_value - $data['value']) :
-                $product_info->unitary_value - ($data['value'] / 100);
+                $product_info->unitary_value - ($product_info->unitary_value * ($data['value'] / 100));
 
                 $send_product['price'] = str_replace([',','.'], ['', ''], number_format($product_with_promotion, 2, '.', ''));
 

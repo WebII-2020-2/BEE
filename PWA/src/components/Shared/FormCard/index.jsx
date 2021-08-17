@@ -16,6 +16,7 @@ function FormCard(props) {
     isNew,
     isSaving,
     isReadOnly,
+    path,
   } = props;
   const [focus, setFocus] = useState('number');
 
@@ -51,7 +52,7 @@ function FormCard(props) {
         return (
           <>
             <ButtonsForm
-              path="/user/dashboard/cartoes"
+              path={path}
               handleSubmit={isNew && handleSubmit}
               handleReset={handleReset}
               handleDelete={handleDelete}

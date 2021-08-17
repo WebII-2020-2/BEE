@@ -7,6 +7,7 @@ import './Dashboard.css';
 import DataUser from './pages/DataUser';
 import Cards from './pages/Cards';
 import Address from './pages/Address';
+import Orders from './pages/Orders';
 
 function Dashboard(props) {
   const { match } = props;
@@ -69,7 +70,7 @@ function Dashboard(props) {
       {page === 'dados' && <DataUser />}
       {page === 'cartoes' && <Cards path={match.path} />}
       {page === 'enderecos' && <Address path={match.path} />}
-      {page === 'pedidos' && 'Pedidos'}
+      {page === 'pedidos' && <Orders path={match.path} />}
     </StoreContainer>
   );
 }
