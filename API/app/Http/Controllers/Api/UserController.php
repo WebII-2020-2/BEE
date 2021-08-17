@@ -261,6 +261,10 @@ class UserController extends Controller
     public function delete(){
         $user_jwt = JWTAuth::toUser(JWTAuth::getToken());
 
+        $user_jwt->order()->delete();
+        $user_jwt->address()->delete();
+        $user_jwt->card()->delete();
+
         try {
             if($user_jwt->level_access != 2){
                 $user = User::where(['id' => $user_jwt->id])->delete();
