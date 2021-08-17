@@ -10,10 +10,12 @@ function ButtonsFormAdmin(props) {
     handleSubmit,
     handleDelete,
     handleEdit,
+    handleReset,
     isNew,
     isReadOnly,
     path,
     isSaving,
+    handleStep,
   } = props;
 
   const [showModal, setShowModal] = useState(false);
@@ -76,7 +78,10 @@ function ButtonsFormAdmin(props) {
         <Button
           variant="danger"
           className="btn-form-admin"
-          onClick={handleEdit}
+          onClick={() => {
+            if (handleReset) handleReset();
+            handleEdit();
+          }}
         >
           Cancelar
         </Button>
@@ -97,9 +102,18 @@ function ButtonsFormAdmin(props) {
   }
   return (
     <div className="actions-form-admin">
-      <Link to={path} className="btn btn-secondary btn-form-admin voltar">
-        <ArrowLeft /> Voltar
-      </Link>
+      {handleStep ? (
+        <Button
+          className="btn-secondary btn-form-admin voltar"
+          onClick={handleStep}
+        >
+          <ArrowLeft /> Voltar
+        </Button>
+      ) : (
+        <Link to={path} className="btn btn-secondary btn-form-admin voltar">
+          <ArrowLeft /> Voltar
+        </Link>
+      )}
       {getModal()}
       {isNew ? buttonsNew() : buttonsView()}
     </div>

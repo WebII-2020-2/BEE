@@ -1,0 +1,39 @@
+.campaign.nav {
+  margin-top: 1rem;
+  max-width: 900px;
+  align-self: center;
+  background-color: var(--white);
+}
+
+.campaign.nav .nav-item a {
+  color: var(--orange);
+}
+
+.campaign.nav .nav-item .active {
+  border: none;
+  background-color: var(--white);
+  color: var(--dark-grey);
+  cursor: default;
+}
+
+.form-campaign.container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 75%;
+  max-width: 900px;
+  min-width: 450px;
+  align-self: center;
+  border: 0.1rem solid var(--light-grey);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .form-campaign.container {
+    min-width: 300px;
+  }
+
+  .campaign.nav .nav-item .active {
+    border: none;
+  }
+}

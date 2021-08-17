@@ -1,0 +1,113 @@
+.product-page.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  min-height: calc(100vh - 100px);
+  max-width: 90%;
+  padding: 2.5rem;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-page .product-image {
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 2rem;
+  flex-basis: 200px;
+  max-width: 350px;
+  max-height: 350px;
+  flex-grow: 1;
+  box-shadow: 0 0 0.5rem 0 var(--dark-grey);
+}
+
+.product-page .product-info {
+  flex-grow: 1;
+  margin: 2rem;
+  flex-basis: 300px;
+  color: var(--dark-grey);
+}
+
+.product-page .product-info h3 {
+  font-family: 'Poppins';
+}
+
+.product-page .product-info p {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.product-page .product-info .form-product {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--light-grey);
+  padding-top: 1rem;
+  align-items: center;
+}
+
+.form-product .quantity-label {
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  margin-bottom: 0;
+  padding: 1rem 0;
+}
+
+.form-product .quantity-input {
+  width: 2.5rem;
+  padding: 0;
+  margin: 0 0.5rem;
+  text-align: center;
+  border-radius: 6px;
+  -moz-appearance: textfield;
+}
+
+.form-product .quantity-input::-webkit-outer-spin-button,
+.form-product .quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-product .quantity-button {
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.25rem;
+  border-radius: 6px;
+}
+
+.form-product .submit-button {
+  margin-left: 2.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  flex-basis: 250px;
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .product-page.container {
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+
+  .product-page .product-info .form-product {
+    justify-content: center;
+  }
+
+  .form-product .submit-button {
+    margin-left: 0;
+  }
+
+  .product-page .product-image {
+    max-width: 50vw;
+    max-height: 50vw;
+    margin-bottom: 1rem;
+  }
+
+  .product-page .product-info {
+    margin-top: 1rem;
+  }
+
+  .product-page .product-info p {
+    margin: 1rem 0;
+    font-size: 1rem;
+  }
+}

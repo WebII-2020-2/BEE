@@ -123,6 +123,10 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    // Stripe configs
+    'stripe_token' => env('STRIPE_TOKEN'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -1,0 +1,33 @@
+.table-cards{
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.table.table-cards tr {
+  text-align: center;
+}
+
+.table.table-cards tbody tr {
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px var(--grey);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.table.table-cards td{
+  padding: 2rem;
+  font-family: 'Poppins';
+}
+
+.table.table-cards td:first-child {
+  border-left: 1.5px solid var(--light-grey);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.table-cards td:last-child {
+  border-right: 1.5px solid var(--light-grey);
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}

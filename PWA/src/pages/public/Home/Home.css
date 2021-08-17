@@ -1,0 +1,137 @@
+.item-carousel {
+  width: 100%;
+  height: calc(200px + (0.2 * 100vw));
+  background-color: var(--black);
+}
+
+.image-carousel {
+  width: 75%;
+  height: 60%;
+  margin: 2.5% 12.5%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 16px;
+}
+
+.item-carousel .caption-carousel {
+  height: 20%;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--white);
+}
+
+.caption-carousel h3 {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.caption-carousel p {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.home-destaque {
+  align-self: center;
+}
+
+.home-destaque.info {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem;
+  max-width: 85%;
+  padding: 1rem;
+}
+
+.home-destaque .info-item {
+  display: flex;
+  flex-basis: 300px;
+  flex-grow: 1;
+  margin: 0.5rem 0;
+  align-items: flex-end;
+  color: var(--dark-grey);
+}
+
+.home-destaque .info-item svg {
+  height: 3.5rem;
+  width: auto;
+  margin-right: 1rem;
+}
+
+.home-destaque .info-item p {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.home-destaque .info-item p strong {
+  font-size: 1.5rem;
+}
+
+.separator {
+  width: 75%;
+  align-self: center;
+  margin: 1rem 0;
+  border-top: 2px solid var(--grey);
+}
+
+.home-destaque.products {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-destaque.products h3 {
+  color: var(--dark-grey);
+  margin: 1rem 0 2rem;
+}
+
+.home-destaque.products h3::first-letter {
+  font-weight: bold;
+}
+
+.home-destaque.products .loader {
+  margin: 1rem 0 2rem;
+  width: 200px;
+  border-radius: 50px;
+}
+
+@media screen and (max-width: 768px) {
+  .image-carousel {
+    margin-top: 5%;
+    height: 50%;
+  }
+
+  .caption-carousel h3 {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
+
+  .caption-carousel p {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+
+  .home-destaque.info {
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .home-destaque .info-item svg {
+    height: 2.5rem;
+    width: auto;
+    margin-right: 0.5rem;
+  }
+
+  .home-destaque .info-item p strong {
+    font-size: 1.2rem;
+  }
+
+  .home-destaque .info-item p {
+    font-size: 0.8rem;
+  }
+}

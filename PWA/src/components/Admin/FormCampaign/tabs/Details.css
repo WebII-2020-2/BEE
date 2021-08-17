@@ -1,0 +1,32 @@
+.form-campaign.group {
+  flex-basis: 300px;
+  height: auto;
+  flex-grow: 1;
+}
+
+.form-campaign.control.check {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2%;
+}
+
+.form-campaign.group.description {
+  flex-basis: 500px;
+}
+
+.form-campaign.group.image {
+  height: auto;
+  border: none;
+}
+
+.form-campaign.image {
+  width: 90%;
+  height: calc(100px + 0.1 * 100vw);
+  margin: 0 5% 2.5%;
+  min-width: 300px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid var(--light-grey);
+}

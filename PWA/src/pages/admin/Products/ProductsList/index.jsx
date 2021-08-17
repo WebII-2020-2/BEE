@@ -6,7 +6,7 @@ import CardProductAdmin from '../../../../components/Shared/CardProduct';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
 import ButtonsList from '../../../../components/Admin/ButtonsList';
 import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
-import ProductAdminApiService from '../../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../../services/api/ProductApiService';
 import './ProductsList.css';
 
 function ProductsList(props) {
@@ -20,7 +20,7 @@ function ProductsList(props) {
   const getProducts = async () => {
     try {
       setIsLoading(true);
-      const resp = await ProductAdminApiService.getAll().then((r) => r.data);
+      const resp = await ProductApiService.getAll().then((r) => r.data);
       if (resp.success) {
         setProducts(resp.data);
       } else {
@@ -79,7 +79,7 @@ function ProductsList(props) {
       ) : (
         <Row className="product-list admin">
           {productsPerPage.map((product) => (
-            <CardProductAdmin {...product} key={product.id} />
+            <CardProductAdmin {...product} admin key={product.id} />
           ))}
         </Row>
       )}

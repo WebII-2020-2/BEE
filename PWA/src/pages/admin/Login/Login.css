@@ -1,0 +1,52 @@
+.login {
+  background-color: var(--black);
+  background-image: url('../../../assets/img/login-background.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login-admin {
+  font-family: 'Roboto';
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-login-admin {
+  background-color: var(--black);
+  color: var(--orange);
+  border: 2px var(--orange) solid;
+  padding: 10px 0;
+  width: 60%;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-login:hover {
+  background-color: #2b2a2a;
+  border: 2px solid var(--yellow);
+}
+
+.input-login-admin-group {
+  width: 100%;
+}
+
+.input.input-login-admin {
+  background-color: var(--dark-grey);
+  color: var(--white);
+  border: none;
+  padding: 10px ;
+  border-radius: 5px;
+}
+
+.logo-login {
+  width: 50%;
+}

@@ -4,30 +4,54 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Rotas publicas
+Route::post('/forgot/password', 'Api\UserController@forgot');
+Route::post('/reset/password', 'Api\UserController@newPassword');
 Route::get('/category/list', 'Api\CategoryController@show');
 Route::get('/category/best', 'Api\CategoryController@getBestSelled');
+Route::get('/category/list/{id}', 'Api\CategoryController@get');
 Route::get('/promotion/list', 'Api\PromotionController@show');
+Route::get('/promotion/get/products/{id}', 'Api\PromotionController@getProducts');
 Route::get('/product/best', 'Api\ProductController@getBestSelled');
-Route::get('/product/search/{name}', 'Api\ProductController@getByName');
+Route::get('/product/search', 'Api\ProductController@getByName');
+Route::get('/product/list/{id}', 'Api\ProductController@get');
+Route::get('/product/list', 'Api\ProductController@show');
+Route::get('/banner/list/{id}', 'Api\BannerController@get');
+Route::get('/banner/list', 'Api\BannerController@show');
+Route::get('/shipping', 'Api\OrderController@calShipping');
 
 // Logon
 Route::group(['middleware' => 'api'], function ($router) {
     Route::post('register', 'Api\UserController@register');
     Route::post('login', 'Api\UserController@login');
+    Route::post('get', 'Api\UserController@getUser');
     Route::post('refresh', 'Api\UserController@refresh');
     Route::post('logout', 'Api\UserController@logout');
+    Route::post('user/update', 'Api\UserController@update');
+    Route::post('change/password', 'Api\UserController@changePassword');
+    Route::post('delete', 'Api\UserController@delete');
 });
 
 // Cards
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'card'], function ($router) {
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'card'], function ($router) {
     Route::post('/add', 'Api\CardController@store');
+    Route::get('/list', 'Api\CardController@show');
+    Route::get('/list/{id}', 'Api\CardController@get');
+    Route::post('/update/{id}', 'Api\CardController@update');
+    Route::post('/delete/{id}', 'Api\CardController@delete');
+});
+
+// Address
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'address'], function ($router) {
+    Route::post('/add', 'Api\AddressController@store');
+    Route::get('/list', 'Api\AddressController@show');
+    Route::get('/list/{id}', 'Api\AddressController@get');
+    Route::post('/update/{id}', 'Api\AddressController@update');
+    Route::post('/delete/{id}', 'Api\AddressController@delete');
 });
 
 // Products
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'product'], function ($router) {
     Route::post('/add', 'Api\ProductController@store');
-    Route::get('/list', 'Api\ProductController@show');
-    Route::get('/list/{id}', 'Api\ProductController@get');
     Route::post('/update/{id}', 'Api\ProductController@update');
     Route::post('/delete/{id}', 'Api\ProductController@delete');
 });
@@ -35,16 +59,18 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'produ
 // Categories
 Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'category'], function ($router) {
     Route::post('/add', 'Api\CategoryController@store');
-    Route::get('/list/{id}', 'Api\CategoryController@get');
     Route::post('/update/{id}', 'Api\CategoryController@update');
     Route::post('/delete/{id}', 'Api\CategoryController@delete');
 });
 
 // Orders
-Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'order'], function ($router) {
-    Route::get('/list', 'Api\OrderController@show');
-    Route::get('/list/{invoice}', 'Api\OrderController@get');
-    Route::post('/update/{invoice}', 'Api\OrderController@update');
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'order'], function ($router) {
+    Route::post('/add', 'Api\OrderController@store');
+    Route::get('/user/list', 'Api\OrderController@showWithUser');
+    Route::get('/user/list/{id}', 'Api\OrderController@getWithUser');
+    Route::get('/list', 'Api\OrderController@show')->middleware('access.level');
+    Route::get('/list/{invoice}', 'Api\OrderController@get')->middleware('access.level');
+    Route::post('/update/{invoice}', 'Api\OrderController@update')->middleware('access.level');
 });
 
 // Reports
@@ -61,3 +87,9 @@ Route::group(['middleware' => ['jwt.verify', 'access.level'], 'prefix' => 'promo
     Route::post('/delete/{id}', 'Api\PromotionController@delete');
 });
 
+// Banners
+Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'banner'], function ($router) {
+    Route::post('/add', 'Api\BannerController@store');
+    Route::post('/update/{id}', 'Api\BannerController@update');
+    Route::post('/delete/{id}', 'Api\BannerController@delete');
+});

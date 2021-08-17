@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Log;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductPromotion;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -20,6 +22,11 @@ class CategoryController extends Controller
             ]);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel salvar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'add category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($result_category) && !isset($error)){
@@ -36,16 +43,28 @@ class CategoryController extends Controller
             $categories = Category::orderBy('name', 'asc')->get();
             $mounted_categories = [];
             foreach($categories as $category){
-                $count = Product::where('category_id', $category->id)->count("id");
+                $products = Product::where('category_id', $category->id)->get();
+
+                $mounted_products = [];
+                foreach($products as $product){
+                    array_push($mounted_products, $product->id);
+                }
+
                 array_push($mounted_categories, array(
                     'id' => $category->id,
                     'name' => $category->name,
                     'description' => $category->description,
-                    'count_products' => $count
+                    'count_products' => count($mounted_products),
+                    'products' => $mounted_products
                 ));
             }
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar as categorias.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'show category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($mounted_categories) && !isset($error)){
@@ -58,15 +77,47 @@ class CategoryController extends Controller
     public function get($id){
         try{
             $category = Category::find($id);
-            $count = Product::where('category_id', $category->id)->count("id");
+            $products = Product::where('category_id', $category->id)->get();
+
+            $mounted_products = [];
+            foreach($products as $product){
+                unset($product_with_promotion);
+                $product_promotion = ProductPromotion::where('product_id', $product->id)
+                ->join('promotions as p', 'p.id', '=', 'product_promotions.promotion_id')->first();
+
+                if (!is_null($product_promotion)) {
+                    $product_with_promotion = $product_promotion->type == 1 ?
+                        ($product->unitary_value - $product_promotion->value) :
+                        $product->unitary_value - ($product->unitary_value * ($product_promotion->value / 100));
+                }
+
+                array_push($mounted_products, array(
+                    "id" => $product->id,
+                    'name' => $product->name,
+                    'unity' => $product->unity,
+                    'quantity' => $product->quantity,
+                    'unitary_value' => $product->unitary_value,
+                    'value_promotion' => isset($product_with_promotion) ? (float) number_format($product_with_promotion, 2, '.', '') : null,
+                    'description' => $product->description,
+                    'image' => 'data:'.$product->mime_type.';base64,'.base64_encode($product->image),
+                    'category_id' => $product->category_id
+                ));
+            }
+
             $mounted_categoriy = array(
                 'id' => $category->id,
                 'name' => $category->name,
                 'description' => $category->description,
-                'count_products' => $count
+                'count_products' => $products->count('id'),
+                'products' => $mounted_products
             );
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'get category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($mounted_categoriy) && !isset($error)){
@@ -88,6 +139,11 @@ class CategoryController extends Controller
                             ->get();
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel listar as categorias em destaque.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'get_best_seller category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($categories) && !isset($error)){
@@ -111,28 +167,60 @@ class CategoryController extends Controller
             $category = Category::where('id', $id)->update($update_values);
         }catch(\Exception $exception){
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'update category - ERROR',
+                'data' => substr($exception->getMessage(), 0, 300)
+            ]);
         }
 
         if(isset($category) && !isset($error) && $category){
             return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
         }else{
             $error = ['code' => 2, 'error_message' => 'Não foi possivel atualizar a categoria.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'update category - ERROR',
+                'data' => "no save data"
+            ]);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);
     }
 
     public function delete($id){
-        try{
-            $category = Category::where('id', $id)->delete();
-        }catch(\Exception $exception){
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
-        }
 
-        if(isset($category) && !isset($error) && $category){
-            return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+        $product = Product::where('category_id', $id)->first();
+
+        if(is_null($product)){
+            try{
+                $category = Category::where('id', $id)->delete();
+            }catch(\Exception $exception){
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+                Log::create([
+                    'type' => 'category',
+                    'information' => 'delete category - ERROR',
+                    'data' => substr($exception->getMessage(), 0, 300)
+                ]);
+            }
+
+            if(isset($category) && !isset($error) && $category){
+                return response()->json(['success' => true, 'data' => null, 'error' => $error ?? null], 200);
+            }else{
+                $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+                Log::create([
+                    'type' => 'category',
+                    'information' => 'delete category - ERROR',
+                    'data' => "no delete data"
+                ]);
+            }
         }else{
-            $error = ['code' => 2, 'error_message' => 'Não foi possivel deletar a categoria.'];
+            $error = ['code' => 2, 'error_message' => 'Essa categoria está relacionada a uma venda.'];
+            Log::create([
+                'type' => 'category',
+                'information' => 'delete category - ERROR',
+                'data' => "category is in product"
+            ]);
         }
 
         return response()->json(['success' => false, 'data' => null, 'error' => $error ?? null], 400);

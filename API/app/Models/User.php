@@ -11,7 +11,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'cpf', 'level_access', 'birth_date', 'phone', 'image', 'mime_type'
+        'name', 'email', 'password', 'cpf', 'level_access', 'birth_date', 'phone', 'image', 'mime_type', 'level_access'
     ];
 
     protected $hidden = [
@@ -37,14 +37,11 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function address(){
-        return $this->hasMany('App\Models\Adress');
+        return $this->hasMany('App\Models\Address');
     }
 
     public function order(){
-        return $this->hasMany('App\Models\Orders');
+        return $this->hasMany('App\Models\Order');
     }
 
-    public function shoppingCart(){
-        return $this->hasMany('App\Models\ShoppingCart');
-    }
 }

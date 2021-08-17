@@ -5,7 +5,7 @@ import ButtonsListAdmin from '../../../../components/Admin/ButtonsList';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
 import TableListAdmin from '../../../../components/Admin/TableList';
 import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
-import CategoryAdminApiService from '../../../../services/api/CategoryAdminApiService';
+import CategoryApiService from '../../../../services/api/CategoryApiService';
 
 function CategoriesList(props) {
   const { match } = props;
@@ -24,7 +24,7 @@ function CategoriesList(props) {
   const getCategories = async () => {
     try {
       setIsLoading(true);
-      const resp = await CategoryAdminApiService.getAll().then((r) => r.data);
+      const resp = await CategoryApiService.getAll().then((r) => r.data);
       if (resp.success) {
         setCategories(resp.data);
       } else {

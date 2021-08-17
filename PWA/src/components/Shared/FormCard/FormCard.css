@@ -1,0 +1,21 @@
+.cards-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px var(--grey);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.form-cards-dashboard{
+  padding: 2rem;
+}
+
+@media screen and (max-width: 1220px) {
+  .form-cards-dashboard{
+    padding-bottom: 1rem;
+  }
+}

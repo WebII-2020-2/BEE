@@ -1,13 +1,14 @@
 .product-list.admin {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
   min-height: 75%;
   max-width: 900px;
+  width: 100%;
   min-width: 450px;
   align-self: center;
   padding-bottom: 0.5rem;
+  justify-content: center;
 }
 
 @media screen and (max-width: 768px) {

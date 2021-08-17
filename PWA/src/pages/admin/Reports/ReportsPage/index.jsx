@@ -5,7 +5,7 @@ import AdminContainer from '../../../../components/Admin/Container';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import ReportCardAdmin from '../../../../components/Admin/Report/ReportCard';
 import ReportGraphAdmin from '../../../../components/Admin/Report/ReportGraph';
-import ReportsAdminApiService from '../../../../services/api/ReportsAdminApiService';
+import ReportsAdminApiService from '../../../../services/api/ReportsApiService';
 import orderStatistcs from '../../../../services/utils/orderStatistics';
 import './ReportsPage.css';
 
