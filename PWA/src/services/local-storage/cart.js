@@ -13,7 +13,7 @@ export const loadCartState = () => {
     }
     return INITIAL_DATA;
   } catch (err) {
-    console.warn(err);
+    console.error(err);
     return INITIAL_DATA;
   }
 };
@@ -22,6 +22,6 @@ export const storeCartState = (cartState) => {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartState));
   } catch (err) {
-    console.warn(err);
+    console.error(err);
   }
 };

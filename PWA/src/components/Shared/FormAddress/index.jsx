@@ -54,7 +54,7 @@ function FormAddress(props) {
               setFieldValue('state', '');
             }
           } catch (err) {
-            console.warn(err);
+            console.error(err);
           } finally {
             setLoadingCep(false);
           }
