@@ -9,7 +9,7 @@ function CartInfo({ values }) {
       {products && (
         <ul className="products-list">
           {products.map((p) => (
-            <li>
+            <li key={p.id}>
               {`${p.quantity}x - ${p.name} (${p.unity})`}
               <span>
                 {(p.unitary_value * p.quantity).toLocaleString('pt-BR', {
