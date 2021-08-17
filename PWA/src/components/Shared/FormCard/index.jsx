@@ -17,6 +17,7 @@ function FormCard(props) {
     isSaving,
     isReadOnly,
     path,
+    handleStep,
   } = props;
   const [focus, setFocus] = useState('number');
 
@@ -59,6 +60,7 @@ function FormCard(props) {
               isNew={isNew}
               isSaving={isSaving}
               isReadOnly={isReadOnly}
+              handleStep={handleStep}
             />
             <div className="cards-container">
               <Cards

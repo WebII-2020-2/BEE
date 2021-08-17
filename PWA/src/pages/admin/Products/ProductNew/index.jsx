@@ -5,7 +5,7 @@ import FormProductAdmin from '../../../../components/Admin/FormProduct';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
 import validationSchema from '../../../../services/validations/validationProductAdmin';
-import ProductAdminApiService from '../../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../../services/api/ProductApiService';
 
 function ProductNew() {
   const history = useHistory();
@@ -39,9 +39,7 @@ function ProductNew() {
           return undefined;
         });
       if (isValid !== undefined) {
-        const resp = await ProductAdminApiService.create(form).then(
-          (r) => r.data
-        );
+        const resp = await ProductApiService.create(form).then((r) => r.data);
         if (resp.success) {
           history.push('/admin/produtos/page/1');
         } else {

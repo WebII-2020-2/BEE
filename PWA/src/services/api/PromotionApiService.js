@@ -31,7 +31,7 @@ function update(id, form) {
   });
 }
 
-const PromotionAdminApiService = {
+const PromotionApiService = {
   getAll,
   getById,
   createNew,
@@ -39,4 +39,4 @@ const PromotionAdminApiService = {
   update,
 };
 
-export default PromotionAdminApiService;
+export default PromotionApiService;

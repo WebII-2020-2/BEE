@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Badge, Button, Col, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-feather';
 import LoadingPage from '../../../../../../components/Shared/LoadingPage';
-import OrderApiService from '../../../../../../services/api/OrderAdminApiService';
+import OrderApiService from '../../../../../../services/api/OrderApiService';
 import formatDate from '../../../../../../services/utils/formatDate';
 import formatFloat from '../../../../../../services/utils/formatFloat';
 import orderStatus from '../../../../../../services/utils/orderStatus';

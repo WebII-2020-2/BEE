@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { Form, Table } from 'react-bootstrap';
-import CategoryAdminApiService from '../../../../services/api/CategoryAdminApiService';
-import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
-import ProductAdminApiService from '../../../../services/api/ProductAdminApiService';
+import CategoryApiService from '../../../../services/api/CategoryApiService';
+import PromotionApiService from '../../../../services/api/PromotionApiService';
+import ProductApiService from '../../../../services/api/ProductApiService';
 
 import './Products.css';
 import CampaignProductsContext from '../../../../context/CampaignProductsContext';
@@ -30,7 +30,7 @@ function Products(props) {
 
   const getProducts = async () => {
     try {
-      const resp = await ProductAdminApiService.getAll()
+      const resp = await ProductApiService.getAll()
         .then((r) => r.data)
         .catch((r) => r.response.data);
       if (resp.success) {
@@ -45,7 +45,7 @@ function Products(props) {
 
   const getPromotions = async () => {
     try {
-      const resp = await PromotionAdminApiService.getAll()
+      const resp = await PromotionApiService.getAll()
         .then((r) => r.data)
         .catch((r) => r.response.data);
       if (resp.success) {
@@ -60,7 +60,7 @@ function Products(props) {
 
   const getCategories = async () => {
     try {
-      const resp = await CategoryAdminApiService.getAll()
+      const resp = await CategoryApiService.getAll()
         .then((r) => r.data)
         .catch((r) => r.response.data);
       if (resp.success) {

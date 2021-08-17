@@ -6,7 +6,7 @@ import ButtonsList from '../../../../components/Admin/ButtonsList';
 import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
 import MonthCardAdmin from '../../../../components/Admin/Report/MonthCard';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
-import ReportsAdminApiService from '../../../../services/api/ReportsAdminApiService';
+import ReportsAdminApiService from '../../../../services/api/ReportsApiService';
 import './ReportsList.css';
 
 function ReportsList(props) {

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import FormCard from '../../../../../../components/Shared/FormCard';
 import CardsApiService from '../../../../../../services/api/CardsApiService';
 
-function CardsNew() {
-  const history = useHistory();
+function PaymentMethodNew(props) {
+  const { handleTab } = props;
   const initialValuesCard = {
     number: '',
     flag: '',
@@ -29,7 +28,7 @@ function CardsNew() {
           throw r.response.data.error;
         });
       if (resp.success) {
-        history.push('/user/dashboard/cartoes');
+        handleTab();
       } else {
         console.error(`ERRO ${resp.error.code}: ${resp.error.error_message}`);
       }
@@ -41,17 +40,14 @@ function CardsNew() {
   };
 
   return (
-    <div className="container-dashboard">
-      <h2>Novo cartão</h2>
-      <FormCard
-        valuesCard={initialValuesCard}
-        isSaving={isSaving}
-        handleSubmitCard={handleSubmit}
-        isNew
-        path="/user/dashboard/cartoes"
-      />
-    </div>
+    <FormCard
+      valuesCard={initialValuesCard}
+      isSaving={isSaving}
+      handleSubmitCard={handleSubmit}
+      isNew
+      handleStep={handleTab}
+    />
   );
 }
 
-export default CardsNew;
+export default PaymentMethodNew;
