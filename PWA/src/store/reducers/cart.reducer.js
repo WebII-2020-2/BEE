@@ -56,10 +56,10 @@ const cartReducer = (state = INITIAL_DATA, action) => {
     case REMOVE_PRODUCT: {
       const { id } = action;
       const removedProduct = state.products.find(
-        (product) => product.id === id
+        (product) => Number(product.id) === id
       );
       return {
-        products: state.products.filter((product) => product.id !== id),
+        products: state.products.filter((product) => Number(product.id) !== id),
         count: state.count - removedProduct.quantity,
       };
     }

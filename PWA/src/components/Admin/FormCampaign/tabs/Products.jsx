@@ -140,7 +140,7 @@ function Products(props) {
         <Form.Control
           id="campaign-promotion"
           className="form-campaign control"
-          disabled={readOnly}
+          disabled={readOnly || selectedCategory !== 0}
           as="select"
           onChange={handleUpdatePromotion}
           value={selectedPromotion}
@@ -160,7 +160,7 @@ function Products(props) {
         <Form.Control
           id="campaign-category"
           className="form-campaign control"
-          disabled={readOnly}
+          disabled={readOnly || selectedPromotion !== 0}
           as="select"
           onChange={handleUpdateCategory}
           value={selectedCategory}

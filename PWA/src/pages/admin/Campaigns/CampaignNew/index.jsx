@@ -6,6 +6,7 @@ import CampaignApiService from '../../../../services/api/CampaignApiService';
 import FormCampaign from '../../../../components/Admin/FormCampaign';
 import ValidationErrorsContainer from '../../../../components/Shared/ValidationErrorsContainer';
 import validationSchema from '../../../../services/validations/validationCampaign';
+import CampaignProductsContext from '../../../../context/CampaignProductsContext';
 
 function CampaignsNew() {
   const history = useHistory();
@@ -58,6 +59,10 @@ function CampaignsNew() {
     setErrors([]);
   };
 
+  const handleSetProducts = (obj) => {
+    setValues({ ...values, ...obj });
+  };
+
   return (
     <AdminContainer link="campanhas">
       <ButtonsForm
@@ -70,7 +75,9 @@ function CampaignsNew() {
         errors={[...errors]}
         clear={handleClearErrors}
       />
-      <FormCampaign values={values} update={setValues} />
+      <CampaignProductsContext.Provider value={handleSetProducts}>
+        <FormCampaign values={values} update={setValues} />
+      </CampaignProductsContext.Provider>
     </AdminContainer>
   );
 }

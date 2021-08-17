@@ -108,7 +108,7 @@ function Purchase() {
         setValues({
           ...values,
           send_value: Number(resp.data.PAC.valor.replace(',', '.')),
-          send_estimated_date: resp.data.PAC.prazo[0],
+          send_estimated_time: resp.data.PAC.prazo[0],
         });
       } else {
         throw resp.error;
