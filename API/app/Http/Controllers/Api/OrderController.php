@@ -53,7 +53,7 @@ class OrderController extends Controller
             $card_token = $response_request_card['id'];
             $card->update(['card_token' => $card_token]);
 
-            $estimated_date = Carbon::now()->addDays($data['send_estimated_time'])->format('Y-m-d');
+            $estimated_date = Carbon::now()->addDays($data['send_estimated_date'])->format('Y-m-d');
 
             $order = $user_jwt->order()->create([
                 'quantity' => count($data['products']),
