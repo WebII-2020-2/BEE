@@ -1,6 +1,5 @@
 .purchase.title {
   margin: 1rem 2rem;
-  font-size: 1.5rem;
 }
 
 .purchase-container {
@@ -36,7 +35,7 @@
 }
 
 /* PAYMENT METHOD */
-.card-credit-card{
+.card-credit-card {
   border-radius: 5px;
   box-shadow: 0 2px 8px var(--grey);
   margin: 1rem 0;
@@ -44,11 +43,11 @@
   cursor: pointer;
 }
 
-.card-credit-card:hover{
+.card-credit-card:hover {
   background-color: rgb(221, 221, 221);
 }
 
-.card-selected{
+.card-selected {
   box-shadow: 0 2px 8px var(--yellow);
   border: 2px solid var(--orange);
 }
