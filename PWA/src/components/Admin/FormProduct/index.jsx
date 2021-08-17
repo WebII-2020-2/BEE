@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Image } from 'react-bootstrap';
-import CategoryAdminApiService from '../../../services/api/CategoryAdminApiService';
+import CategoryApiService from '../../../services/api/CategoryApiService';
 import emptyImage from '../../../assets/img/empty-image.png';
 import './FormProduct.css';
 
@@ -10,7 +10,7 @@ function FormProductAdmin(props) {
 
   const getCategories = async () => {
     try {
-      const resp = await CategoryAdminApiService.getAll().then((r) => r.data);
+      const resp = await CategoryApiService.getAll().then((r) => r.data);
       if (resp.success) {
         setCategories(resp.data);
       } else {

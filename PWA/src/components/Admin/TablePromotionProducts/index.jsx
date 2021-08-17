@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Button, Dropdown, FormControl, Table } from 'react-bootstrap';
 import { Trash2 } from 'react-feather';
 import LoadingPage from '../../Shared/LoadingPage';
-import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
 import formatFloat from '../../../services/utils/formatFloat';
 import './TablePromotionProducts.css';
 import PromotionValidationContext from '../../../context/PromotionValidationContext';
@@ -36,7 +36,7 @@ function TablePromotionProductsAdmin(props) {
   const getProducts = async () => {
     setIsLoading(true);
     try {
-      const resp = await ProductAdminApiService.getAll().then((r) => r.data);
+      const resp = await ProductApiService.getAll().then((r) => r.data);
       if (resp.success) {
         setProductsDropdown(resp.data);
       } else {

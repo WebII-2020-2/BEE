@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { addProduct } from '../../../store/actions/cart.actions';
 import LoadingPage from '../../../components/Shared/LoadingPage';
 import StoreContainer from '../../../components/Shared/StoreContainer';
-import ProductAdminApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
 import './Product.css';
 
 function Product(props) {
@@ -27,7 +27,7 @@ function Product(props) {
   const getProductData = async () => {
     setLoadingData(true);
     try {
-      const resp = await ProductAdminApiService.getById(match.params.id)
+      const resp = await ProductApiService.getById(match.params.id)
         .then((r) => r.data)
         .catch((r) => r.response.data);
 

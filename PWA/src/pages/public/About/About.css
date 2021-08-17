@@ -1,0 +1,13 @@
+.link-about {
+  color: var(--dark-grey);
+  text-decoration: underline;
+  transition: color 0.25s linear;
+}
+
+.link-about:hover {
+  color: var(--orange);
+}
+
+.dev-card {
+  width: 150px;
+}

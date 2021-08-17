@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { LogOut, Search, ShoppingCart, User } from 'react-feather';
 import { useHistory } from 'react-router-dom';
 import logoNav from '../../../assets/img/bee-logo-color.svg';
-import CategoryApiService from '../../../services/api/CategoryAdminApiService';
+import CategoryApiService from '../../../services/api/CategoryApiService';
 import {
   getUserData,
   isAuthenticated,

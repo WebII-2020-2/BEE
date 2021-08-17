@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import ListProducts from '../../../components/Shared/ListProducts';
 import StoreContainer from '../../../components/Shared/StoreContainer';
-import ProductApiService from '../../../services/api/ProductAdminApiService';
+import ProductApiService from '../../../services/api/ProductApiService';
 
 function Products() {
   const [products, setProducts] = useState([]);

@@ -3,7 +3,6 @@
   background-color: transparent;
   border-radius: 6px;
   box-shadow: 0 0 8px var(--light-grey);
-  padding: 1rem 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -16,16 +15,17 @@
   max-width: 100px;
   max-height: 100px;
   align-self: center;
-  margin: 0 1rem;
+  margin: 1rem;
 }
 
 .cart.product.card.container p {
-  flex-basis: 200px;
+  flex-basis: 150px;
   flex-grow: 1;
   font-size: 1.5rem;
   align-self: center;
   line-height: 2rem;
-  margin: 0 1rem;
+  margin: 1rem;
+  text-align: center;
 }
 
 .cart.product.card.container p span {
@@ -33,18 +33,18 @@
 }
 
 .cart.product.card.container .price {
-  flex-basis: 100px;
+  flex-basis: 80px;
   flex-grow: 1;
   align-self: center;
   font-size: 1.3rem;
-  margin: 0 1rem;
+  margin: 1rem;
+  text-align: center;
 }
 
 .cart.product.card.container .quantity {
-  flex-basis: 150px;
+  flex-basis: 120px;
   align-self: center;
-  margin: 0 1rem;
-  flex-grow: 1;
+  margin: 1rem;
 }
 
 .cart.product.card.container .quantity button {
@@ -61,8 +61,8 @@
 
 .cart.product.card.container .delete-product {
   align-self: center;
-  flex-basis: 25px;
-  margin: 0 1rem;
+  flex-basis: 30px;
+  margin: 1rem;
   cursor: pointer;
   flex-grow: 1;
 }

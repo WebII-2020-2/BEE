@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Container, Nav } from 'react-bootstrap';
 import AdminContainer from '../../../../components/Admin/Container';
 import ButtonsForm from '../../../../components/Admin/ButtonsForm';
-import OrderAdminApiService from '../../../../services/api/OrderAdminApiService';
+import OrderAdminApiService from '../../../../services/api/OrderApiService';
 import { Details, Shipping, Products } from './Tabs';
 import './OrderPage.css';
 

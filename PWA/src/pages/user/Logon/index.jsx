@@ -8,7 +8,8 @@ import './Logon.css';
 import LogonApiService from '../../../services/api/LogonApiService';
 import { loginUser } from '../../../services/local-storage/authUser';
 
-function Logon() {
+function Logon(props) {
+  const { match } = props;
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -46,7 +47,11 @@ function Logon() {
           name: user.name.split(' ', 1)[0],
         };
         loginUser(userData);
-        history.push('/');
+        if (!match) {
+          history.push('/');
+        } else {
+          history.push(`/user/comprar`);
+        }
       }
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);

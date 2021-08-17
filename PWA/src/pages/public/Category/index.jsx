@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import ListProducts from '../../../components/Shared/ListProducts';
 import StoreContainer from '../../../components/Shared/StoreContainer';
 
-import CategoryAdminApiService from '../../../services/api/CategoryAdminApiService';
+import CategoryApiService from '../../../services/api/CategoryApiService';
 import './Category.css';
 
 function CategoryPage(props) {
@@ -14,7 +14,7 @@ function CategoryPage(props) {
   const getCategoryData = async () => {
     setLoadingData(true);
     try {
-      const resp = await CategoryAdminApiService.getById(match.params.id)
+      const resp = await CategoryApiService.getById(match.params.id)
         .then((r) => r.data)
         .catch((r) => r.response.data);
 

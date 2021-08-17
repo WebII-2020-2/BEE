@@ -5,7 +5,7 @@ import ButtonsList from '../../../../components/Admin/ButtonsList';
 import PaginationAdmin from '../../../../components/Shared/Pagination';
 import LoadingPageAdmin from '../../../../components/Shared/LoadingPage';
 import TableListAdmin from '../../../../components/Admin/TableList';
-import PromotionAdminApiService from '../../../../services/api/PromotionAdminApiService';
+import PromotionApiService from '../../../../services/api/PromotionApiService';
 import formatDate from '../../../../services/utils/formatDate';
 import formatFloat from '../../../../services/utils/formatFloat';
 
@@ -27,7 +27,7 @@ function PromotionsList(props) {
   const getPromotions = async () => {
     try {
       setIsLoading(true);
-      const resp = await PromotionAdminApiService.getAll().then((r) => r.data);
+      const resp = await PromotionApiService.getAll().then((r) => r.data);
       if (resp.success) {
         const formattedPromotions = resp.data.map((promotion) => ({
           ...promotion,

@@ -17,6 +17,7 @@ function FormAddress(props) {
     isSaving,
     isReadOnly,
     path,
+    handleStep,
   } = props;
   const [loadingCep, setLoadingCep] = useState(false);
 
@@ -53,7 +54,7 @@ function FormAddress(props) {
               setFieldValue('state', '');
             }
           } catch (err) {
-            console.warn(err);
+            console.error(err);
           } finally {
             setLoadingCep(false);
           }
@@ -70,6 +71,7 @@ function FormAddress(props) {
               isNew={isNew}
               isSaving={isSaving}
               isReadOnly={isReadOnly}
+              handleStep={handleStep}
             />
             <Form className="form-address-dashboard">
               <Form.Row>

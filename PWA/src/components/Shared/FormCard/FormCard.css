@@ -7,17 +7,14 @@
   box-shadow: 0 2px 8px var(--grey);
   margin-top: 1rem;
   margin-bottom: 2rem;
+  padding: 1rem;
 }
 
 .form-cards-dashboard{
-  padding: 3rem;
+  padding: 2rem;
 }
 
 @media screen and (max-width: 1220px) {
-  .rccs{
-    margin-bottom: 2rem;
-  }
-
   .form-cards-dashboard{
     padding-bottom: 1rem;
   }

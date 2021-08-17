@@ -1,6 +1,6 @@
 import api from './api';
 
-const ENDPOINT_BASE = '/category';
+const ENDPOINT_BASE = '/product';
 
 /** traz todos */
 function getAll() {
@@ -13,15 +13,10 @@ function getById(id) {
 }
 
 /** cria um novo */
-function createNew(form) {
+function create(form) {
   return api.post(`${ENDPOINT_BASE}/add`, {
     ...form,
   });
-}
-
-/** deleta */
-function remove(id) {
-  return api.post(`${ENDPOINT_BASE}/delete/${id}`);
 }
 
 /** atualiza */
@@ -31,12 +26,30 @@ function update(id, form) {
   });
 }
 
-const CategoryAdminApiService = {
+function remove(id) {
+  return api.post(`${ENDPOINT_BASE}/delete/${id}`);
+}
+
+function getBest() {
+  return api.get(`${ENDPOINT_BASE}/best`);
+}
+
+function getByName(name) {
+  return api.get(`${ENDPOINT_BASE}/search`, {
+    params: {
+      ...name,
+    },
+  });
+}
+
+const ProductApiService = {
   getAll,
+  getBest,
   getById,
-  createNew,
-  remove,
+  getByName,
+  create,
   update,
+  remove,
 };
 
-export default CategoryAdminApiService;
+export default ProductApiService;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Badge, Col, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import OrderApiService from '../../../../../../services/api/OrderAdminApiService';
+import OrderApiService from '../../../../../../services/api/OrderApiService';
 import orderStatus from '../../../../../../services/utils/orderStatus';
 import formatDate from '../../../../../../services/utils/formatDate';
 import visa from '../../../../../../assets/img/visa-card.png';
 import mastercard from '../../../../../../assets/img/master-card.png';
+
 // import imageTest from '../../../../../../assets/img/user.jpeg';
 
 function OrdersPage(props) {
@@ -99,7 +100,6 @@ function OrdersPage(props) {
     } catch (err) {
       console.error(`ERRO ${err.code}: ${err.error_message}`);
       history.push('/user/dashboard/pedidos');
-      console.warn(values);
     }
     // setValues(valuesTest);
   };
