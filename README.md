@@ -46,7 +46,7 @@
     React.JS e o framework Bootstrap. Para consumo dos dados da API foi
     utilizado o Axios e Redux para persistência de dados pela aplicação.
     Também foram utilizadas bibliotecas de validação e CPF e Cartão de
-    Crédito, além de consulta de endereço por CEP.
+    Crédito, além de consulta de endereço por CEP. O deploy da SPA foi realizado no Vercel.
 </p>
 
 <h3>Back-End</h3>
@@ -61,7 +61,7 @@
 <p align="justify">
     A parte do back-end do projeto foi construída no modelo de API REST e
     arquitetura MVC. Para isso, foram utilizados o framework Laravel e a
-    persistência dos dados feita com a ajuda do MySQL e Google Cloud.
+    persistência dos dados feita com a ajuda do MySQL e Google Cloud. O deploy da API foi realizado no Heroku.
 </p>
 
 <h2 id="links">Links úteis</h2>
