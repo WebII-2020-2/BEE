@@ -86,25 +86,25 @@ Este projeto está sob licença do MIT que permite a qualquer pessoa que obtém 
 <div align="center">
 
 Tela inicial do sistema
-<img src="./images/home-bee.png" alt="Tela inicial do sistema" />
+<img src="./screenshots/home-bee.png" alt="Tela inicial do sistema" />
 
 Login do usuário
-<img src="./images/login-user.png" alt="Tela de login do usuário" />
+<img src="./screenshots/login-user.png" alt="Tela de login do usuário" />
 
 Informações do produto
-<img src="./images/product-bee.png" alt="Tela dos detalhes do produto" />
+<img src="./screenshots/product-bee.png" alt="Tela dos detalhes do produto" />
 
 Carrinho de compras
-<img src="./images/cart-bee.png" alt="Carrinho de compras do sistema" />
+<img src="./screenshots/cart-bee.png" alt="Carrinho de compras do sistema" />
 
 Revisão de compra
-<img src="./images/shopping-bee.png" alt="Tela de revisão de compra" />
+<img src="./screenshots/shopping-bee.png" alt="Tela de revisão de compra" />
 
 Login do administrador
-<img src="./images/login-admin.png" alt="Tela de login do administrador" />
+<img src="./screenshots/login-admin.png" alt="Tela de login do administrador" />
 
 Tela inicial da parte do administrador
-<img src="./images/home-admin.png" alt="Tela inicial da parte do administrador" />
+<img src="./screenshots/home-admin.png" alt="Tela inicial da parte do administrador" />
 </div>
 
 <h2 id="autores">Autores</h2>
